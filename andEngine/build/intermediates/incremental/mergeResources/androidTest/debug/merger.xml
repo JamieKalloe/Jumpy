@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="debug"><source path="D:\IntelliJ_Workspace\Jumpy\andEngine\build\intermediates\bundles\debug\res"/></dataSet><dataSet config="main"><source path="D:\IntelliJ_Workspace\Jumpy\andEngine\src\androidTest\res"/><source path="D:\IntelliJ_Workspace\Jumpy\andEngine\build\generated\res\rs\androidTest\debug"/><source path="D:\IntelliJ_Workspace\Jumpy\andEngine\build\generated\res\generated\androidTest\debug"/></dataSet><mergedItems/></merger>
