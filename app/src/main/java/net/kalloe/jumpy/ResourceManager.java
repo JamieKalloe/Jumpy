@@ -1,5 +1,9 @@
 package net.kalloe.jumpy;
 
+import org.andengine.audio.music.Music;
+import org.andengine.audio.music.MusicFactory;
+import org.andengine.audio.sound.Sound;
+import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.texture.TextureOptions;
@@ -35,6 +39,13 @@ public class ResourceManager {
     //A collection of textures (subimages) on a single image.
     private BuildableBitmapTextureAtlas gameTextureAtlas;
 
+    //Sounds
+    public Sound soundFall;
+    public Sound soundJump;
+
+    //music
+    public Music music;
+
     //Singleton, object only gets created once.
     private static final ResourceManager INSTANCE = new ResourceManager();
 
@@ -55,20 +66,24 @@ public class ResourceManager {
         this.vbom = vbom;
     }
 
+    /**
+     * Creates a texture atlas / spritesheet of all the assets and loads it into specific resources.
+     */
     public void loadGameGraphics() {
-        //Selects the directory in which the assets are saved.
+        //Selects the directory in which the assets (game graphics) are saved.
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 
         //Creates a full texture atlas / spritesheet of all the elements in out assets folder.
         gameTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(),
                 1024, 512, BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+                //RGBA_8888 has 31-bit textures (highest quality and stores alpha channel (transparency).
 
         //Creates the player (atlas) texture, from player.png, from the GameTextureAtlas object.
         playerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(gameTextureAtlas,
                 activity.getAssets(), "player.png", 3, 1);
 
         //Creates the enemy (atlas) texture, from the enemy.png, from the GameTextureAtlas object.
-        enemyTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(, gameTextureAtlas,
+        enemyTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(gameTextureAtlas,
                 activity.getAssets(), "enemy.png", 1, 2);
 
         //Creates the platform (atlas) texture, from the platform.png, from the GameTextureAtlas object.
@@ -88,6 +103,26 @@ public class ResourceManager {
             gameTextureAtlas.load();
         } catch (final ITextureAtlasBuilder.TextureAtlasBuilderException e) {
             throw new RuntimeException("Error while loading the game textures", e);
+        }
+    }
+
+    /**
+     * Loads the audio files from the assets folder into specified audio (Sound / Music) objects.
+     */
+    public void loadGameAudio() {
+        try {
+            //Selects the directory in which the assets (game audio) are saved.
+            SoundFactory.setAssetBasePath("sfx/");
+            MusicFactory.setAssetBasePath("mfx/");
+
+            //Loads the audio files data (from the sfx directory) into the specified Sound objects.
+            soundJump = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "jumping.ogg");
+            soundFall = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "falling.ogg");
+
+            //Loads the audio file data (form the mfx directory) into the music object.
+            music = MusicFactory.createMusicFromAsset(activity.getMusicManager(), activity, "music.ogg");
+        } catch (Exception e) {
+            throw new RuntimeException("Error while loading the game audio", e);
         }
     }
 
