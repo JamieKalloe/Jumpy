@@ -18,7 +18,7 @@ import java.io.IOException;
 public class GameActivity extends BaseGameActivity {
 
     //Variables
-    public static final int CAMERA_WDITH = 480;
+    public static final int CAMERA_WIDTH = 480;
     public static final int CAMERA_HEIGHT = 800;
 
     /**
@@ -27,7 +27,7 @@ public class GameActivity extends BaseGameActivity {
      */
     @Override
     public EngineOptions onCreateEngineOptions() {
-        Camera visibleArea = new Camera(0, 0, CAMERA_WDITH, CAMERA_HEIGHT);
+        Camera visibleArea = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
         IResolutionPolicy sceneScaling = new FillResolutionPolicy();
         EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
                 sceneScaling, visibleArea);
@@ -46,7 +46,7 @@ public class GameActivity extends BaseGameActivity {
      */
     @Override
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws IOException {
-        //empty for now.
+        pOnCreateResourcesCallback.onCreateResourcesFinished();
     }
 
     /**
@@ -61,6 +61,7 @@ public class GameActivity extends BaseGameActivity {
         Scene scene = new Scene();
         scene.getBackground().setColor(Color.CYAN);
         pOnCreateSceneCallback.onCreateSceneFinished(scene);
+        Debug.i("Scene configured");
     }
 
     /**
