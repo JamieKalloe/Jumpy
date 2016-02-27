@@ -106,6 +106,8 @@ public class ResourceManager {
         }
     }
 
+    //TODO: load fonts
+
     /**
      * Loads the audio files from the assets folder into specified audio (Sound / Music) objects.
      */
