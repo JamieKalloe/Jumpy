@@ -20,7 +20,7 @@ import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder
 import org.andengine.opengl.texture.bitmap.BitmapTextureFormat;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
-import org.andengine.opengl.vbo.VertexBufferObject;
+import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.adt.color.Color;
 
 /**
@@ -32,7 +32,7 @@ public class ResourceManager {
     public GameActivity activity;
     public Engine engine;
     public Camera camera;
-    public VertexBufferObject vbom;
+    public VertexBufferObjectManager vbom;
 
     //Game textures
     public ITiledTextureRegion playerTextureRegion;
@@ -67,7 +67,7 @@ public class ResourceManager {
      * @param camera Instance of the Camera object.
      * @param vbom Uploads vertex data (points, colors, vectors) into the video memory.
      */
-    public void create(GameActivity activity, Engine engine, Camera camera, VertexBufferObject vbom) {
+    public void create(GameActivity activity, Engine engine, Camera camera, VertexBufferObjectManager vbom) {
         this.activity = activity;
         this.engine = engine;
         this.camera = camera;
