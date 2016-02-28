@@ -1,5 +1,8 @@
 package net.kalloe.jumpy.scene;
 
+import net.kalloe.jumpy.entity.Player;
+import net.kalloe.jumpy.factory.PlayerFactory;
+
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.background.EntityBackground;
 import org.andengine.entity.sprite.Sprite;
@@ -9,12 +12,21 @@ import org.andengine.entity.sprite.Sprite;
  */
 public class GameScene extends AbstractScene {
 
+    //Variables
+    private Player player;
+
+    public GameScene() {
+        //Creates a new instance of the Player
+        PlayerFactory.getInstance().create(vbom);
+    }
+
     /**
      * Creates and loads the entities for the scene.
      */
     @Override
     public void populate() {
         createBackground();
+        createPlayer();
     }
 
     @Override
@@ -45,5 +57,13 @@ public class GameScene extends AbstractScene {
         //Set an EntityBackground (simple entity) to the Scene passing in the background object,
         //Containing the 2 Sprite object / entities.
         setBackground(new EntityBackground(0.82f, 0.96f, 0.97f, background));
+    }
+
+    private void createPlayer() {
+        //Creates a new instance of the Player class with specified coordinates.
+        this.player = PlayerFactory.getInstance().createPlayer(240, 400);
+
+        //Attaches the Player entity / object to the Scene entity.
+        attachChild(player);
     }
 }
