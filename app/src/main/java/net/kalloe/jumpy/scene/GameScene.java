@@ -9,6 +9,9 @@ import org.andengine.entity.sprite.Sprite;
  */
 public class GameScene extends AbstractScene {
 
+    /**
+     * Creates and loads the entities for the scene.
+     */
     @Override
     public void populate() {
         createBackground();

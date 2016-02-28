@@ -29,12 +29,25 @@ public class GameActivity extends BaseGameActivity {
      */
     @Override
     public EngineOptions onCreateEngineOptions() {
+        //Sets the visible (screen) area, passing in the required screen resolution.
         Camera visibleArea = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+
+        //Scales the visible (screen) area to fill the entire screen.
         IResolutionPolicy sceneScaling = new FillResolutionPolicy();
+
+        //Sets the screen rotation / mode to portrait (disables landscape rotation mode).
         EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED,
                 sceneScaling, visibleArea);
+
+        //Enables the use of game audio / music.
         engineOptions.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);
+
+        //Sets the wake / lock options; the screen will never dim or turn off after x time.
         engineOptions.setWakeLockOptions(WakeLockOptions.SCREEN_ON);
+
+        //Improves the image rendering, the engine will now use 32-bit colors using small dot sof 16-bit colors.
+        engineOptions.getRenderOptions().setDithering(true);
+
         Debug.i("Engine configured");
 
         return engineOptions;
@@ -71,8 +84,12 @@ public class GameActivity extends BaseGameActivity {
      */
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws IOException {
+        //Creates a new GameScene
         Scene scene = new GameScene();
+
+        //Calls callback to tell the engine the scene is created.
         pOnCreateSceneCallback.onCreateSceneFinished(scene);
+
         Debug.i("Scene configured");
     }
 
@@ -84,16 +101,18 @@ public class GameActivity extends BaseGameActivity {
      */
     @Override
     public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException {
+        //Casts the given scene to an Abstract Scene.
         AbstractScene scene = (AbstractScene) pScene;
+
+        //Calls the populate method, which creates and loads the entities from the ResourceManager for the scene.
         scene.populate();
+
+        //Tells the engine the scene is done populating (loading of resources for the scene).
         pOnPopulateSceneCallback.onPopulateSceneFinished();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
