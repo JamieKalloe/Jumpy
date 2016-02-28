@@ -1,11 +1,15 @@
 package net.kalloe.jumpy;
 
+import android.graphics.Typeface;
+
 import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
 import org.andengine.audio.sound.Sound;
 import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
+import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -17,6 +21,7 @@ import org.andengine.opengl.texture.bitmap.BitmapTextureFormat;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObject;
+import org.andengine.util.adt.color.Color;
 
 /**
  * Created by Jamie on 24-2-2016.
@@ -43,8 +48,11 @@ public class ResourceManager {
     public Sound soundFall;
     public Sound soundJump;
 
-    //music
+    //Music
     public Music music;
+
+    //Font
+    public Font font;
 
     //Singleton, object only gets created once.
     private static final ResourceManager INSTANCE = new ResourceManager();
@@ -106,8 +114,6 @@ public class ResourceManager {
         }
     }
 
-    //TODO: load fonts
-
     /**
      * Loads the audio files from the assets folder into specified audio (Sound / Music) objects.
      */
@@ -126,6 +132,19 @@ public class ResourceManager {
         } catch (Exception e) {
             throw new RuntimeException("Error while loading the game audio", e);
         }
+    }
+
+    /**
+     * Load the system font and stores it in textures (similair to loading graphics).
+     * Every character will be defined as a small texture region on a big texture atlas.
+     * The result of this font is a character with white text and a black stroke.
+     * The texture size is 256x256px and the font size is 50px.
+     */
+    public void loadFont() {
+        font = FontFactory.createStroke(activity.getFontManager(), activity.getTextureManager(),
+                256, 256, Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD), 50, true, Color.WHITE_ABGR_PACKED_INT,
+                2, Color.BLACK_ABGR_PACKED_INT);
+        font.load();
     }
 
     /**
