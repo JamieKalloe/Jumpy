@@ -144,6 +144,7 @@ public class ResourceManager {
         font = FontFactory.createStroke(activity.getFontManager(), activity.getTextureManager(),
                 256, 256, Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD), 50, true, Color.WHITE_ABGR_PACKED_INT,
                 2, Color.BLACK_ABGR_PACKED_INT);
+        font.prepareLetters("01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ.,!?".toCharArray());
         font.load();
     }
 
