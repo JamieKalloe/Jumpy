@@ -33,14 +33,14 @@ public class Player extends TiledSprite {
     }
 
     /**
-     * Mirrors the displayed Player Sprite (tile) to the left.
+     * Mirrors / flips the displayed Player Sprite (tile) to the left.
      */
     public void turnLeft() {
         setFlippedHorizontal(true);
     }
 
     /**
-     * Mirrors the displayed Player Sprite (tile) to the right.
+     * Mirrors  / flips the displayed Player Sprite (tile) to the right.
      */
     public void turnRight() {
         setFlippedHorizontal(false);
