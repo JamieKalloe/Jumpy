@@ -1,24 +1,23 @@
 package net.kalloe.jumpy.scene;
 
+import android.hardware.SensorManager;
 import android.widget.Toast;
+
+import com.badlogic.gdx.math.Vector2;
 
 import net.kalloe.jumpy.entity.Player;
 import net.kalloe.jumpy.factory.PlayerFactory;
 
 import org.andengine.engine.camera.hud.HUD;
-import org.andengine.engine.handler.collision.CollisionHandler;
-import org.andengine.engine.handler.collision.ICollisionCallback;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.background.EntityBackground;
-import org.andengine.entity.shape.IShape;
-import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
+import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.sensor.acceleration.AccelerationData;
 import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.util.adt.align.HorizontalAlign;
-import org.andengine.util.adt.color.Color;
 
 /**
  * Created by Jamie on 28-2-2016.
@@ -27,12 +26,13 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
 
     //Variables
     private Player player;
-    private Text scoreText;
-    private AnimatedSprite fly;
     private float lastX = 0;
-
+    private PhysicsWorld physicsWorld;
 
     public GameScene() {
+        //Initializes the (Box2D) Physics World (the whole simulation including all bodies / entities).
+        physicsWorld = new PhysicsWorld(new Vector2(0, -SensorManager.GRAVITY_EARTH * 4), false);
+
         //Creates a new instance of the Player
         PlayerFactory.getInstance().create(vbom);
     }
@@ -50,20 +50,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
         //Enables the accelerometer and registers the listener to the engine.
         engine.enableAccelerationSensor(activity, this);
 
-        //Collision detection of the player and enemies.
-        ICollisionCallback playerCollision = new ICollisionCallback() {
-
-            @Override
-            public boolean onCollision(IShape pCheckShape, IShape pTargetShape) {
-                fly.setColor(Color.RED);
-                return false;
-            }
-
-        };
-
-        //Binds the player and enemy objects to check for collision of the sprites.
-        CollisionHandler collisionHandler = new CollisionHandler(playerCollision, fly, player);
-        registerUpdateHandler(collisionHandler);
+        //Register the physics world to the engine (as an update handler / thread).
+        registerUpdateHandler(physicsWorld);
     }
 
     @Override
@@ -133,7 +121,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
         HUD hud = new HUD();
 
         //Creates a new text label using the font from the ResourceManager.
-        scoreText = new Text(16, 789, res.font, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+        Text scoreText = new Text(16, 789, res.font, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
         scoreText.setAnchorCenter(0, 1);
 
         //Attaches the text object to the hud.

@@ -1,5 +1,7 @@
 package net.kalloe.jumpy.entity;
 
+import com.badlogic.gdx.physics.box2d.Body;
+
 import org.andengine.entity.sprite.TiledSprite;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -7,13 +9,42 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 /**
  * Created by Jamie on 28-2-2016.
  */
-public class Player extends TiledSprite {
+public class Player extends TiledSprite implements CollidableEntity {
 
     //Variables
     boolean dead = false;
+    private Body body;
+    public static final String TYPE = "Player";
 
     public Player(float pX, float pY, ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
+    }
+
+    /**
+     * Sets the physics body of the Player entity.
+     * @param body physics body of the Player.
+     */
+    @Override
+    public void setBody(Body body) {
+        this.body = body;
+    }
+
+    /**
+     * Sets the physics body of the Player entity.
+     * @return the physics body of the Player.
+     */
+    @Override
+    public Body getBody() {
+        return this.body;
+    }
+
+    /**
+     * Returns the String type of the Player entity.
+     * @return String type
+     */
+    @Override
+    public String getType() {
+        return TYPE;
     }
 
     /**
