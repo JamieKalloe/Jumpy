@@ -9,9 +9,6 @@ import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.handler.collision.CollisionHandler;
 import org.andengine.engine.handler.collision.ICollisionCallback;
 import org.andengine.entity.Entity;
-import org.andengine.entity.modifier.MoveModifier;
-import org.andengine.entity.scene.IOnSceneTouchListener;
-import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.EntityBackground;
 import org.andengine.entity.shape.IShape;
 import org.andengine.entity.sprite.AnimatedSprite;
@@ -20,7 +17,6 @@ import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
 import org.andengine.input.sensor.acceleration.AccelerationData;
 import org.andengine.input.sensor.acceleration.IAccelerationListener;
-import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.adt.align.HorizontalAlign;
 import org.andengine.util.adt.color.Color;
 
@@ -33,6 +29,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
     private Player player;
     private Text scoreText;
     private AnimatedSprite fly;
+    private float lastX = 0;
+
 
     public GameScene() {
         //Creates a new instance of the Player
@@ -47,30 +45,10 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
         //Create and load the game entities.
         createBackground();
         createPlayer();
-        createEnemy();
         createHUD();
-
-        //Enables touch events for the player object (sprite).
-        registerTouchArea(player);
 
         //Enables the accelerometer and registers the listener to the engine.
         engine.enableAccelerationSensor(activity, this);
-
-        setOnSceneTouchListener(new IOnSceneTouchListener() {
-
-            @Override
-            public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
-                //Checks whether the TouchEvent is an ACTION_DOWN event (tap on the screen).
-                if (pSceneTouchEvent.isActionDown()) {
-                    player.clearEntityModifiers();
-                    player.registerEntityModifier(new MoveModifier(1, player.getX(), player.getY(),
-                            pSceneTouchEvent.getX(), pSceneTouchEvent.getY()));
-                    return true;
-                }
-                return false;
-            }
-
-        });
 
         //Collision detection of the player and enemies.
         ICollisionCallback playerCollision = new ICollisionCallback() {
@@ -93,7 +71,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
 
     }
 
-    float lastX = 0;
     @Override
     public void onAccelerationChanged(final AccelerationData pAccelerationData) {
         //The following code is responsible for calculating the direction the player is facing.
@@ -106,8 +83,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
             }
             lastX = pAccelerationData.getX();
         }
-
-        player.setX(player.getX() + pAccelerationData.getX());
     }
 
     @Override
@@ -182,25 +157,5 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
                 Toast.makeText(activity, text, length).show();
             }
         });
-    }
-
-
-    public void createEnemy() {
-        fly = new AnimatedSprite(240, 200, res.enemyTextureRegion, vbom) {
-
-            @Override
-            protected void onManagedUpdate(float pSecondsElapsed) {
-                super.onManagedUpdate(pSecondsElapsed);
-
-                if(collidesWith(player)) {
-                    setScale(2);
-                } else {
-                    setScale(1);
-                }
-            }
-        };
-
-        fly.animate(125);
-        attachChild(fly);
     }
 }
