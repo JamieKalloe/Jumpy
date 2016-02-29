@@ -34,7 +34,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
         physicsWorld = new PhysicsWorld(new Vector2(0, -SensorManager.GRAVITY_EARTH * 4), false);
 
         //Creates a new instance of the Player
-        PlayerFactory.getInstance().create(vbom);
+        PlayerFactory.getInstance().create(physicsWorld, vbom);
     }
 
     /**

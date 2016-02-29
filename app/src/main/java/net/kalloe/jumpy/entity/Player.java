@@ -21,6 +21,22 @@ public class Player extends TiledSprite implements CollidableEntity {
     }
 
     /**
+     * Changes the Player entity sprite based on the up or down movement.
+     * @param pSecondsElapsed
+     */
+    @Override
+    protected void onManagedUpdate(float pSecondsElapsed) {
+        super.onManagedUpdate(pSecondsElapsed);
+        if(getCurrentTileIndex() < 2) {
+            if(body.getLinearVelocity().y < 0) {
+                fall();
+            } else {
+                fly();
+            }
+        }
+    }
+
+    /**
      * Sets the physics body of the Player entity.
      * @param body physics body of the Player.
      */

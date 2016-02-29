@@ -1,8 +1,15 @@
 package net.kalloe.jumpy.factory;
 
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+
 import net.kalloe.jumpy.ResourceManager;
 import net.kalloe.jumpy.entity.Player;
 
+import org.andengine.extension.physics.box2d.PhysicsConnector;
+import org.andengine.extension.physics.box2d.PhysicsFactory;
+import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 /**
@@ -13,6 +20,8 @@ public class PlayerFactory {
     //Variables
     private static PlayerFactory INSTANCE = new PlayerFactory();
     private VertexBufferObjectManager vbom;
+    private PhysicsWorld physicsWorld;
+    public static final FixtureDef PLAYER_FIXTURE = PhysicsFactory.createFixtureDef(1f, 0f, 1f, false);
 
     //Singleton
     private PlayerFactory() { }
@@ -29,7 +38,8 @@ public class PlayerFactory {
      * Sets the VertexBufferObjectManager for the PlayerFactory.
      * @param vbom Uploads vertex data (points, colors, vectors) into the video memory.
      */
-    public void create(VertexBufferObjectManager vbom) {
+    public void create(PhysicsWorld physicsWorld, VertexBufferObjectManager vbom) {
+        this.physicsWorld = physicsWorld;
         this.vbom = vbom;
     }
 
@@ -46,6 +56,20 @@ public class PlayerFactory {
         //Sets the z-index (z-coordinate) of the player (on which texture layer the player is displayed).
         player.setZIndex(2);
 
+        //Creates the physical Body of the Player entity (resembles the sprite, optimized shape for collision).
+        Body playerBody = PhysicsFactory.createBoxBody(physicsWorld, player, BodyDef.BodyType.DynamicBody, PLAYER_FIXTURE);
+        playerBody.setLinearDamping(1f);
+        playerBody.setFixedRotation(true);
+
+        //Binds the Player object to the physics body of the player in the physics world (whole simulation).
+        playerBody.setUserData(player);
+        physicsWorld.registerPhysicsConnector(new PhysicsConnector(player, playerBody));
+
+        //Set the playerBody to the Player entity.
+        player.setBody(playerBody);
+
         return player;
     }
+
+
 }
