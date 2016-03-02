@@ -16,6 +16,13 @@ public class Player extends TiledSprite implements CollidableEntity {
     private Body body;
     public static final String TYPE = "Player";
 
+    /**
+     * Creates a new instance of the Player entity.
+     * @param pX X coordinates / postion of the player sprite.
+     * @param pY Y coordinates / position of the player sprite.
+     * @param pTiledTextureRegion Player sprite / texture
+     * @param pVertexBufferObjectManager vbom manager.
+     */
     public Player(float pX, float pY, ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         super(pX, pY, pTiledTextureRegion, pVertexBufferObjectManager);
     }

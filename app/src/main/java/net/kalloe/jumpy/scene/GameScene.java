@@ -29,6 +29,9 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
     private float lastX = 0;
     private PhysicsWorld physicsWorld;
 
+    /**
+     * Creates a new instance of the GameScene (main scene).
+     */
     public GameScene() {
         //Initializes the (Box2D) Physics World (the whole simulation including all bodies / entities).
         physicsWorld = new PhysicsWorld(new Vector2(0, -SensorManager.GRAVITY_EARTH * 4), false);
@@ -105,6 +108,9 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
         setBackground(new EntityBackground(0.82f, 0.96f, 0.97f, background));
     }
 
+    /**
+     * Creates a new instance of the Player entity and adds it as a child to the scene.
+     */
     private void createPlayer() {
         //Creates a new instance of the Player class with specified coordinates.
         this.player = PlayerFactory.getInstance().createPlayer(240, 400);
