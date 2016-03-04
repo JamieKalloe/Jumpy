@@ -115,7 +115,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
         //Creates a new instance of the Player class with specified coordinates.
         this.player = PlayerFactory.getInstance().createPlayer(240, 400);
 
-        //Attaches the Player entity / object to the Scene entity.
+        //Attaches the Player entity (object) to the Scene entity.
         attachChild(player);
     }
 
