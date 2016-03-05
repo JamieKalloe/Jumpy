@@ -34,6 +34,7 @@ public class Player extends TiledSprite implements CollidableEntity {
     @Override
     protected void onManagedUpdate(float pSecondsElapsed) {
         super.onManagedUpdate(pSecondsElapsed);
+        Utils.wrapAround(this);
         if(getCurrentTileIndex() < 2) {
             if(body.getLinearVelocity().y < 0) {
                 fall();
