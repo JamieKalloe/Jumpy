@@ -5,7 +5,9 @@ import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
 
+import net.kalloe.jumpy.entity.Platform;
 import net.kalloe.jumpy.entity.Player;
+import net.kalloe.jumpy.factory.PlatformFactory;
 import net.kalloe.jumpy.factory.PlayerFactory;
 
 import org.andengine.engine.camera.hud.HUD;
@@ -19,6 +21,9 @@ import org.andengine.input.sensor.acceleration.AccelerationData;
 import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.util.adt.align.HorizontalAlign;
 
+import java.util.LinkedList;
+import java.util.Random;
+
 /**
  * Created by Jamie on 28-2-2016.
  */
@@ -28,6 +33,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
     private Player player;
     private float lastX = 0;
     private PhysicsWorld physicsWorld;
+    Random rand = new Random();
+    private LinkedList<Platform> platforms = new LinkedList<>();
 
     /**
      * Creates a new instance of the GameScene (main scene).
@@ -37,8 +44,11 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
         //Initializes the (Box2D) Physics World (the whole simulation including all bodies / entities).
         physicsWorld = new PhysicsWorld(new Vector2(0, -SensorManager.GRAVITY_EARTH * 4), false);
 
-        //Creates a new instance of the Player
+        //Initializes the PlayerFactory with the physicsworld and vertex buffer object manager.
         PlayerFactory.getInstance().create(physicsWorld, vbom);
+
+        //Initializes the PlatformFactory with the physicsworld and vertex buffer object manager.
+        PlatformFactory.getInstance().create(physicsWorld, vbom);
     }
 
     /**
@@ -50,6 +60,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
         createBackground();
         createPlayer();
         createHUD();
+
+        addPlatform(340, 50, false);
 
         //Enables the accelerometer and registers the listener to the engine.
         engine.enableAccelerationSensor(activity, this);
@@ -118,6 +130,30 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
 
         //Attaches the Player entity (object) to the Scene entity.
         attachChild(player);
+    }
+
+    /**
+     * Creates a new instance of the Platform entity (static of moving) and adds it as a child to the scene.
+     * @param tx x coordinates of the platform.
+     * @param ty y coordinates of the platform.
+     * @param moving boolean moving (results in a static or moving platform).
+     */
+    private void addPlatform(float tx, float ty, boolean moving) {
+        Platform platform;
+
+        //Checks if the the requested platform is a moving or static platform.
+        if(moving) {
+            platform = PlatformFactory.getInstance().createMovingPlatform(tx, ty, (rand.nextFloat() - 0.5f) * 10f);
+
+        } else {
+            platform = PlatformFactory.getInstance().createPlatform(tx, ty);
+        }
+
+        //Attaches the platform to the scene.
+        attachChild(platform);
+
+        //Adds the platform to the list of platforms.
+        platforms.add(platform);
     }
 
     /**
