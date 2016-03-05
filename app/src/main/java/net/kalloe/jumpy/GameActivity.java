@@ -30,7 +30,7 @@ public class GameActivity extends BaseGameActivity {
     @Override
     public EngineOptions onCreateEngineOptions() {
         //Sets the visible (screen) area, passing in the required screen resolution.
-        Camera visibleArea = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+        Camera visibleArea = new EntityCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
 
         //Scales the visible (screen) area to fill the entire screen.
         IResolutionPolicy sceneScaling = new FillResolutionPolicy();

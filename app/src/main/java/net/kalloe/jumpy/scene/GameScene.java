@@ -66,6 +66,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
         //Create and load the game entities.
         createBackground();
         createPlayer();
+        camera.setChaseEntity(player);
         createHUD();
 
         addPlatform(240, 100, false);
