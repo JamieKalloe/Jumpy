@@ -53,7 +53,7 @@ public class Player extends TiledSprite implements CollidableEntity {
     }
 
     /**
-     * Sets the physics body of the Player entity.
+     * Gets the physics body of the Player entity.
      * @return the physics body of the Player.
      */
     @Override
