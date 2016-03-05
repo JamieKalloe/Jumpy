@@ -17,6 +17,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
+import org.andengine.extension.physics.box2d.util.Vector2Pool;
 import org.andengine.input.sensor.acceleration.AccelerationData;
 import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.util.adt.align.HorizontalAlign;
@@ -87,6 +88,11 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
             }
             lastX = pAccelerationData.getX();
         }
+
+        //Obtain a vector object (use and recycle) from a pool of objects (prevents garbage collection).
+        final  Vector2 gravity = Vector2Pool.obtain(pAccelerationData.getX() * 8, -SensorManager.GRAVITY_EARTH * 4);
+        this.physicsWorld.setGravity(gravity);
+        Vector2Pool.recycle(gravity);
     }
 
     @Override
