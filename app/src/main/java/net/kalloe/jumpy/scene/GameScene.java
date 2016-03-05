@@ -47,6 +47,9 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
     private static final float MIN = 50f;
     private static final float MAX = 250f;
 
+    private Text scoreText;
+    private int score;
+
     /**
      * Creates a new instance of the GameScene (main scene).
      */
@@ -121,6 +124,9 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
             if(added) {
                 sortChildren();
             }
+
+            //Calculates the score the player has reached.
+            calculateScore();
 
             //Clean up (remove) the unused entities from the game scene (no longer in view).
             cleanEntities(platforms, camera.getYMin());
@@ -237,8 +243,12 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
         HUD hud = new HUD();
 
         //Creates a new text label using the font from the ResourceManager.
-        Text scoreText = new Text(16, 789, res.font, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+        scoreText = new Text(16, 789, res.font, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
         scoreText.setAnchorCenter(0, 1);
+
+        //Initializes the score and sets it as the HUD score text.
+        score = 0;
+        scoreText.setText(String.valueOf(score));
 
         //Attaches the text object to the hud.
         hud.attachChild(scoreText);
@@ -266,6 +276,13 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
                 collidableEntity.detachSelf();
                 physicsWorld.destroyBody(collidableEntity.getBody());
             }
+        }
+    }
+
+    private void calculateScore() {
+        if(camera.getYMin() > score) {
+            score = Math.round(camera.getYMin());
+            scoreText.setText(String.valueOf(score));
         }
     }
 
