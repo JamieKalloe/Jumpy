@@ -33,6 +33,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
      * Creates a new instance of the GameScene (main scene).
      */
     public GameScene() {
+        super();
         //Initializes the (Box2D) Physics World (the whole simulation including all bodies / entities).
         physicsWorld = new PhysicsWorld(new Vector2(0, -SensorManager.GRAVITY_EARTH * 4), false);
 
