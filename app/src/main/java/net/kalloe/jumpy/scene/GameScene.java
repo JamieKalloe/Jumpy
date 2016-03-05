@@ -18,6 +18,7 @@ import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.background.EntityBackground;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.AutoWrap;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
@@ -49,6 +50,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
 
     private Text scoreText;
     private int score;
+
+    private Text endGameText;
 
     /**
      * Creates a new instance of the GameScene (main scene).
@@ -98,7 +101,17 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
         super.onManagedUpdate(pSecondsElapsed);
         boolean added = false;
 
+        //Shows a message if the player dies.
+        if(player.isDead()) {
+            endGameText.setVisible(true);
+        }
+
         while(camera.getYMax() > platforms.getLast().getY()) {
+
+            //Shows a message if the player dies.
+            if(player.isDead()) {
+                endGameText.setVisible(true);
+            }
 
             //x position of the next platform.
             float tx = rand.nextFloat() * GameActivity.CAMERA_WIDTH;
@@ -252,6 +265,14 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
 
         //Attaches the text object to the hud.
         hud.attachChild(scoreText);
+
+        //Initialize the game over message for when the player dies.
+        endGameText = new Text(GameActivity.CAMERA_WIDTH / 2, GameActivity.CAMERA_HEIGHT / 2, res.font,
+                "GAME OVER! TAP TO CONTINUE", new TextOptions(HorizontalAlign.CENTER), vbom);
+        endGameText.setAutoWrap(AutoWrap.WORDS);
+        endGameText.setAutoWrapWidth(300f);
+        endGameText.setVisible(false);
+        hud.attachChild(endGameText);
 
         //A HUD needs to be attached to the camera, because it uses a special camera-scene.
         //If the HUD is attached to the game scene, the text would leave the screen when the player moves.

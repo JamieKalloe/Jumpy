@@ -26,6 +26,11 @@ public class Enemy extends AnimatedSprite implements CollidableEntity {
         super(pX, pY, pITiledTextureRegion, pVertexBufferObjectManager);
     }
 
+    @Override
+    protected void onManagedUpdate(float pSecondsElapsed) {
+        super.onManagedUpdate(pSecondsElapsed);
+        Utils.wrapAround(this);
+    }
 
     /**
      * Sets the physics body of the Enemy entity.

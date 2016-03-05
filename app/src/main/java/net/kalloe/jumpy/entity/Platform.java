@@ -29,6 +29,7 @@ public class Platform extends Sprite implements CollidableEntity {
     @Override
     protected void onManagedUpdate(float pSecondsElapsed) {
         super.onManagedUpdate(pSecondsElapsed);
+        Utils.wrapAround(this);
     }
 
     /**
