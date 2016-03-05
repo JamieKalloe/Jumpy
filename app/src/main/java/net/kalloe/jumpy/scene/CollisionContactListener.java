@@ -1,10 +1,13 @@
 package net.kalloe.jumpy.scene;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
+import net.kalloe.jumpy.entity.CollidableEntity;
+import net.kalloe.jumpy.entity.Platform;
 import net.kalloe.jumpy.entity.Player;
 
 /**
@@ -25,7 +28,7 @@ public class CollisionContactListener implements ContactListener {
 
     /**
      * The beginContact method is called when two fixtures from two different bodies start to overlap.
-     * @param contact
+     * @param contact A contact object is passed when a collision is detected (in the physics world).
      */
     @Override
     public void beginContact(Contact contact) {
@@ -48,7 +51,15 @@ public class CollisionContactListener implements ContactListener {
      */
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
+        if(checkContact(contact, Player.TYPE, Platform.TYPE)) {
 
+            //On contact (after the fall) the platform propels the player upwards.
+            if(!player.isDead() && player.getBody().getLinearVelocity().y < 0) {
+                player.getBody().setLinearVelocity(new Vector2(0, 40));
+            } else {
+                contact.setEnabled(false);
+            }
+        }
     }
 
     /**
@@ -59,5 +70,26 @@ public class CollisionContactListener implements ContactListener {
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
+    }
+
+    /**
+     * Checks if both fixtures belong to bodies that are pard of CollidableEntities.
+     * @param contact contact object that gets passed when a collison is detected
+     * @param typeA Type of a collidable entity.
+     * @param typeB Type of a collidable entity
+     * @return boolean
+     */
+    private boolean checkContact(Contact contact, String typeA, String typeB) {
+        if(contact.getFixtureA().getBody().getUserData() instanceof CollidableEntity &&
+                contact.getFixtureB().getBody().getUserData() instanceof CollidableEntity) {
+            CollidableEntity ceA = (CollidableEntity) contact.getFixtureA().getBody().getUserData();
+            CollidableEntity ceB = (CollidableEntity) contact.getFixtureB().getBody().getUserData();
+
+            if(typeA.equals(ceA.getType()) && typeB.equals(ceB.getType()) ||
+                    typeA.equals(ceB.getType()) && typeB.equals(ceA.getType())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

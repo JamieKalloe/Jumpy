@@ -13,7 +13,7 @@ public class Platform extends Sprite implements CollidableEntity {
 
     //Variables
     private Body body;
-    private static final String TYPE = "Platform";
+    public static final String TYPE = "Platform";
 
     /**
      * Creates a new instance of the Platform entity.

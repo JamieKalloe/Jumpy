@@ -62,13 +62,17 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
         createPlayer();
         createHUD();
 
-        addPlatform(340, 50, false);
+        addPlatform(240, 100, false);
+        addPlatform(340, 400, false);
 
         //Enables the accelerometer and registers the listener to the engine.
         engine.enableAccelerationSensor(activity, this);
 
         //Register the physics world to the engine (as an update handler / thread).
         registerUpdateHandler(physicsWorld);
+
+        //Sets the Contact Listener (responsible for collision detection) to the Physics World (game simulation).
+        physicsWorld.setContactListener(new CollisionContactListener(this.player));
     }
 
     @Override
