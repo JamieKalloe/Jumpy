@@ -43,7 +43,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
     public GameScene() {
         super();
         //Initializes the (Box2D) Physics World (the whole simulation including all bodies / entities).
-        physicsWorld = new PhysicsWorld(new Vector2(0, -SensorManager.GRAVITY_EARTH * 4), false);
+        physicsWorld = new PhysicsWorld(new Vector2(0, -SensorManager.GRAVITY_EARTH), false);
 
         //Initializes the PlayerFactory with the physicsworld and vertex buffer object manager.
         PlayerFactory.getInstance().create(physicsWorld, vbom);
@@ -62,7 +62,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
         createPlayer();
         createHUD();
 
-        addPlatform(240, 100, false);
+        addPlatform(240, 50, false);
         addPlatform(340, 400, false);
 
         //Enables the accelerometer and registers the listener to the engine.

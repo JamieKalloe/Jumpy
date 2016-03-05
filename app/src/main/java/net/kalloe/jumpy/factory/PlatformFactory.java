@@ -57,7 +57,7 @@ public class PlatformFactory {
         Platform platform = new Platform(x, y, ResourceManager.getInstance().platformTextureRegion, vbom);
 
         //Sets the platform to the center.
-        platform.setAnchorCenterX(1);
+        platform.setAnchorCenterY(1);
 
         //Gets the x and y (center) coordinates for the given scene.
         final float[] sceneCenterCoordinates = platform.getSceneCenterCoordinates();
