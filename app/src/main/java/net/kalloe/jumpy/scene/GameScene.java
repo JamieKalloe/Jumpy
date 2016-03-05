@@ -5,8 +5,10 @@ import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
 
+import net.kalloe.jumpy.entity.Enemy;
 import net.kalloe.jumpy.entity.Platform;
 import net.kalloe.jumpy.entity.Player;
+import net.kalloe.jumpy.factory.EnemyFactory;
 import net.kalloe.jumpy.factory.PlatformFactory;
 import net.kalloe.jumpy.factory.PlayerFactory;
 
@@ -36,6 +38,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
     private PhysicsWorld physicsWorld;
     Random rand = new Random();
     private LinkedList<Platform> platforms = new LinkedList<>();
+    private LinkedList<Enemy> enemies = new LinkedList<>();
 
     /**
      * Creates a new instance of the GameScene (main scene).
@@ -50,6 +53,9 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
 
         //Initializes the PlatformFactory with the physicsworld and vertex buffer object manager.
         PlatformFactory.getInstance().create(physicsWorld, vbom);
+
+        //Initializes the EnemyFactory with the physicsworld and vertex buffer object manager.
+        EnemyFactory.getInstance().create(physicsWorld, vbom);
     }
 
     /**
@@ -62,8 +68,9 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
         createPlayer();
         createHUD();
 
-        addPlatform(240, 50, false);
+        addPlatform(240, 100, false);
         addPlatform(340, 400, false);
+        addEnemy(140, 400);
 
         //Enables the accelerometer and registers the listener to the engine.
         engine.enableAccelerationSensor(activity, this);
@@ -140,6 +147,16 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
 
         //Attaches the Player entity (object) to the Scene entity.
         attachChild(player);
+    }
+
+    private void addEnemy(float tx, float ty) {
+        Enemy enemy = EnemyFactory.getInstance().createEnemy(tx, ty);
+
+        //Attaches the enemy to the scene.
+        attachChild(enemy);
+
+        //Adds the enemy to the list of enemies.
+        enemies.add(enemy);
     }
 
     /**
