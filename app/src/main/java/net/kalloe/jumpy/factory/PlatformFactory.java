@@ -30,7 +30,7 @@ public class PlatformFactory {
 
     /**
      * Returns the singleton instance of the PlatformFactory.
-     * @return
+     * @return PlatformFactory
      */
     public static PlatformFactory getInstance() {
         return INSTANCE;
@@ -64,7 +64,7 @@ public class PlatformFactory {
         final float centerX = sceneCenterCoordinates[Constants.VERTEX_INDEX_X];
         final float centerY = sceneCenterCoordinates[Constants.VERTEX_INDEX_Y];
 
-        //Creates the physical Body of the Platform entity (resembles the sprite, optimized shape for collision)
+        //Creates the physical Body of the Platform entity (resembles the sprite, optimized shape for collision).
         Body platformBody = PhysicsFactory.createBoxBody(physicsWorld, centerX, centerY, platform.getWidth() - 20,
                 1, BodyDef.BodyType.KinematicBody, PLATFORM_FIXTURE);
 
