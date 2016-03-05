@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 import net.kalloe.jumpy.entity.CollidableEntity;
+import net.kalloe.jumpy.entity.Enemy;
 import net.kalloe.jumpy.entity.Platform;
 import net.kalloe.jumpy.entity.Player;
 
@@ -32,7 +33,10 @@ public class CollisionContactListener implements ContactListener {
      */
     @Override
     public void beginContact(Contact contact) {
-
+        //Check ifs the player collides with the enemy, if so; the player dies.
+        if(checkContact(contact, Player.TYPE, Enemy.TYPE)) {
+            player.die();
+        }
     }
 
     /**
