@@ -5,6 +5,8 @@ import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
 
+import net.kalloe.jumpy.GameActivity;
+import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.Enemy;
 import net.kalloe.jumpy.entity.Platform;
 import net.kalloe.jumpy.entity.Player;
@@ -24,7 +26,9 @@ import org.andengine.input.sensor.acceleration.AccelerationData;
 import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.util.adt.align.HorizontalAlign;
 
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -39,6 +43,9 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
     Random rand = new Random();
     private LinkedList<Platform> platforms = new LinkedList<>();
     private LinkedList<Enemy> enemies = new LinkedList<>();
+
+    private static final float MIN = 50f;
+    private static final float MAX = 250f;
 
     /**
      * Creates a new instance of the GameScene (main scene).
@@ -81,6 +88,44 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
 
         //Sets the Contact Listener (responsible for collision detection) to the Physics World (game simulation).
         physicsWorld.setContactListener(new CollisionContactListener(this.player));
+    }
+
+    @Override
+    protected void onManagedUpdate(float pSecondsElapsed) {
+        super.onManagedUpdate(pSecondsElapsed);
+        boolean added = false;
+
+        while(camera.getYMax() > platforms.getLast().getY()) {
+
+            //x position of the next platform.
+            float tx = rand.nextFloat() * GameActivity.CAMERA_WIDTH;
+
+            //y position of the next platform.
+            float ty = platforms.getLast().getY() + MIN + rand.nextFloat() * (MAX - MIN);
+
+            //the player is below the last platform (will fall and die).
+            if(player.getY() < platforms.getFirst().getY()) {
+                player.die();
+            }
+
+            //10% chance to add enemy on the platform.
+            if(rand.nextFloat() < 0.1) {
+                addEnemy(tx, ty);
+            }
+
+            //Add a random moving platform.
+            boolean moving = rand.nextBoolean();
+            addPlatform(tx, ty, moving);
+            added = true;
+
+            if(added) {
+                sortChildren();
+            }
+
+            //Clean up (remove) the unused entities from the game scene (no longer in view).
+            cleanEntities(platforms, camera.getYMin());
+            cleanEntities(enemies, camera.getYMin());
+        }
     }
 
     @Override
@@ -201,6 +246,27 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
         //A HUD needs to be attached to the camera, because it uses a special camera-scene.
         //If the HUD is attached to the game scene, the text would leave the screen when the player moves.
         camera.setHUD(hud);
+    }
+
+    /**
+     * Removes entities from a collection of entities if it meets the criteria of a certian threshold.
+     * @param list list of collidables entities.
+     * @param bound threshold.
+     */
+    private void cleanEntities(List<? extends CollidableEntity> list, float bound) {
+        Iterator<? extends CollidableEntity> iterator = list.iterator();
+        while(iterator.hasNext()) {
+            CollidableEntity collidableEntity = iterator.next();
+
+            //If the collidable entities's y coordinate is lower the the specified bound.
+            //The entity will be removed from the list, the sprite detached from the scene.
+            //And the physics body of the collidable entity is destroyed.
+            if(collidableEntity.getY() < bound) {
+                iterator.remove();
+                collidableEntity.detachSelf();
+                physicsWorld.destroyBody(collidableEntity.getBody());
+            }
+        }
     }
 
     /**
