@@ -3,6 +3,7 @@ package net.kalloe.jumpy;
 import android.os.AsyncTask;
 
 import net.kalloe.jumpy.scene.AbstractScene;
+import net.kalloe.jumpy.scene.GameScene;
 import net.kalloe.jumpy.scene.LoadingScene;
 import net.kalloe.jumpy.scene.MenuSceneWrapper;
 import net.kalloe.jumpy.scene.SplashScene;
@@ -48,8 +49,9 @@ public class SceneManager {
     public AbstractScene showSplashAndMenuScene() {
         final SplashScene splashScene = new SplashScene();
         splashScene.populate();
-        setCurentScene(splashScene);
+        setCurrentScene(splashScene);
 
+        //Creates a new async task (background thread) to initialize and show the splash scene.
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
@@ -76,7 +78,7 @@ public class SceneManager {
 
                 //Initializes the next scene.
                 nextScene.populate();
-                setCurentScene(nextScene);
+                setCurrentScene(nextScene);
 
                 //Destroys the SplashScene and unloads the SplashScene graphics from the Engine to free memory.
                 splashScene.destory();
@@ -89,12 +91,61 @@ public class SceneManager {
     }
 
     /**
-     * Sets the specified scene to the engine.
-     * @param curentScene the current scene.
+     * Creates a extra thread to initialize and start a new instance of the game scene.
      */
-    public void setCurentScene(AbstractScene curentScene) {
-        this.currentScene = curentScene;
-        res.engine.setScene(curentScene);
-        Debug.i("Current scene: " + curentScene.getClass().getName());
+    public void showGameScene() {
+        //Gets the current scene and sets the loading as the current scene.
+        final AbstractScene previousScene = getCurrentScene();
+        setCurrentScene(loadingScene);
+
+        //Creates a new async task (background thread) to initialize and start the game scene.
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                //Initializes and sets new instance of the game scene as the current scene.
+                GameScene gameScene = new GameScene();
+                gameScene.populate();
+                setCurrentScene(gameScene);
+
+                //Destroys the previous scene to free memory from the engine.
+                previousScene.destory();
+
+                return null;
+            }
+        }.execute();
+    }
+
+    /**
+     * Creates a extra thread to initialize and start a new instance of the menu scene.
+     */
+    public void showMenuScene() {
+        //Gets the current scene and sets the loading as the current scene.
+        final AbstractScene previousScene = getCurrentScene();
+        setCurrentScene(loadingScene);
+
+        //Creates a new async task (background thread) to initialize and start the menu scene.
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                //Creates and initializes a new instance of the menu scene.
+                MenuSceneWrapper menuSceneWrapper = new MenuSceneWrapper();
+                menuSceneWrapper.populate();
+
+                //Destroys the previous scene to free memory from the engine.
+                previousScene.destory();
+
+                return null;
+            }
+        }.execute();
+    }
+
+    /**
+     * Sets the specified scene to the engine.
+     * @param currentScene the current scene.
+     */
+    public void setCurrentScene(AbstractScene currentScene) {
+        this.currentScene = currentScene;
+        res.engine.setScene(currentScene);
+        Debug.i("Current scene: " + currentScene.getClass().getName());
     }
 }
