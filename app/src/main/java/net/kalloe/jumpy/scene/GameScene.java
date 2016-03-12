@@ -96,7 +96,11 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
      */
     @Override
     public void onBackKeyPressed() {
-        SceneManager.getInstance().showMenuScene();
+        if(!player.isDead()) {
+            showToast("You're in a game!", Toast.LENGTH_SHORT);
+        } else {
+            SceneManager.getInstance().showMenuScene();
+        }
     }
 
     /**
