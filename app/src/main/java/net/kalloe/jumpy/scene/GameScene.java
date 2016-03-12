@@ -133,6 +133,11 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         super.onManagedUpdate(pSecondsElapsed);
         boolean added = false;
 
+        //the player is below the last platform (will fall and die).
+        if(player.getY() < platforms.getFirst().getY() && !platforms.isEmpty()) {
+            player.die();
+        }
+
         //Shows a message if the player dies.
         if(player.isDead()) {
             endGameText.setVisible(true);
@@ -182,11 +187,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
     @Override
     public void onAccelerationChanged(final AccelerationData pAccelerationData) {
-        //the player is below the last platform (will fall and die).
-        if(player.getY() < platforms.getFirst().getY()) {
-            player.die();
-        }
-
         //The following code is responsible for calculating the direction the player is facing.
         //According to the result, the player will turn left or right (the sprite will be flipped).
         if(Math.abs(pAccelerationData.getX() - lastX) > 0.5) {
