@@ -41,6 +41,10 @@ public class ResourceManager {
     public ITextureRegion cloud1TextureRegion;
     public ITextureRegion cloud2TextureRegion;
 
+    //Splash scene graphics
+    public ITextureRegion splashTextureRegion;
+    private BitmapTextureAtlas splashTextureAtlas;
+
     //A collection of textures (subimages) on a single image.
     private BuildableBitmapTextureAtlas gameTextureAtlas;
 
@@ -146,6 +150,32 @@ public class ResourceManager {
                 2, Color.BLACK_ABGR_PACKED_INT);
         font.prepareLetters("01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ.,!?".toCharArray());
         font.load();
+    }
+
+    /**
+     * Loads the resources for the Splashscreen scene (shown when the game is started).
+     */
+    public void loadSplashGraphics() {
+        //Selects the directory in which the assets (splash graphics) are saved.
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx");
+
+        //Loads the splashscreen logo into the TextureAtlas object with a specified width and height.
+        splashTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
+                BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+
+        //Loads the image 'logo.png' into the TextureRegion.
+        splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(splashTextureAtlas,
+                activity.getAssets(), "logo.png", 0, 0);
+
+        //Loads the image into the game memory.
+        splashTextureAtlas.load();
+    }
+
+    /**
+     * Frees the memory from the Splashscreen scene resources.
+     */
+    public void unloadSplashGraphics() {
+        splashTextureAtlas.unload();
     }
 
     /**
