@@ -72,7 +72,26 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
         //Initializes the EnemyFactory with the physicsworld and vertex buffer object manager.
         EnemyFactory.getInstance().create(physicsWorld, vbom);
+
+        this.setOnSceneTouchListener(this);
     }
+
+    @Override
+    public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
+
+        //Checks if the player has touched the screen and if the player is dead.
+        //If the condition is met, the game will clear all it's entities and restart.
+        boolean touchAction = pSceneTouchEvent.isActionUp();
+        boolean playerState = player.isDead();
+        if(pSceneTouchEvent.isActionUp() && player.isDead()) {
+            restartGame();
+            return true;
+        }
+
+        return false;
+    }
+
+
 
     /**
      * Creates and loads the entities for the scene.
@@ -150,18 +169,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         }
     }
 
-    @Override
-    public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
-
-        //Checks if the player has touched the screen and if the player is dead.
-        //If the condition is met, the game will clear all it's entities and restart.
-        if(pSceneTouchEvent.isActionUp() && player.isDead()) {
-            restartGame();
-            return true;
-        }
-
-        return false;
-    }
 
     @Override
     public void onAccelerationAccuracyChanged(AccelerationData pAccelerationData) {
