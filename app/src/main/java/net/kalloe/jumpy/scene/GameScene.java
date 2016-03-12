@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.badlogic.gdx.math.Vector2;
 
 import net.kalloe.jumpy.GameActivity;
+import net.kalloe.jumpy.SceneManager;
 import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.Enemy;
 import net.kalloe.jumpy.entity.Platform;
@@ -90,7 +91,13 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         return false;
     }
 
-
+    /**
+     * Redirects the user to the game menu when the user presses the back key in the game scene.
+     */
+    @Override
+    public void onBackKeyPressed() {
+        SceneManager.getInstance().showMenuScene();
+    }
 
     /**
      * Creates and loads the entities for the scene.

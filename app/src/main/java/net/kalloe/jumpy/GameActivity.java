@@ -1,9 +1,6 @@
 package net.kalloe.jumpy;
 
-import android.view.MenuItem;
-
-import net.kalloe.jumpy.scene.AbstractScene;
-import net.kalloe.jumpy.scene.GameScene;
+import android.view.KeyEvent;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
@@ -64,12 +61,10 @@ public class GameActivity extends BaseGameActivity {
         //Instantiate the singleton ResourceManager, passing all the important objects.
         ResourceManager.getInstance().create(this, getEngine(), getEngine().getCamera(), getVertexBufferObjectManager());
 
-        //Load in the game resources from the ResourceManager.
-        ResourceManager.getInstance().loadFont();
-        ResourceManager.getInstance().loadGameAudio();
-        ResourceManager.getInstance().loadGameGraphics();
+        //Load in the game splash resources from the ResourceManager.
+        ResourceManager.getInstance().loadSplashGraphics();
 
-        Debug.i("Successfully loaded all the game resources");
+        Debug.i("Successfully loaded all the game splash resources");
 
         //Call the callback, indication we are done loading the game resources.
         pOnCreateResourcesCallback.onCreateResourcesFinished();
@@ -84,12 +79,7 @@ public class GameActivity extends BaseGameActivity {
      */
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws IOException {
-        //Creates a new GameScene
-        Scene scene = new GameScene();
-
-        //Calls callback to tell the engine the scene is created.
-        pOnCreateSceneCallback.onCreateSceneFinished(scene);
-
+        pOnCreateSceneCallback.onCreateSceneFinished(null);
         Debug.i("Scene configured");
     }
 
@@ -101,25 +91,28 @@ public class GameActivity extends BaseGameActivity {
      */
     @Override
     public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException {
-        //Casts the given scene to an Abstract Scene.
-        AbstractScene scene = (AbstractScene) pScene;
-
-        //Calls the populate method, which creates and loads the entities from the ResourceManager for the scene.
-        scene.populate();
+        //Initializes and shows the SplashScreen scene and the game menu scene.
+        SceneManager.getInstance().showSplashAndMenuScene();
 
         //Tells the engine the scene is done populating (loading of resources for the scene).
         pOnPopulateSceneCallback.onPopulateSceneFinished();
     }
 
+    /**
+     * Handles the user input of the back key.
+     * @param keyCode code for the generated event.
+     * @param event event object.
+     * @return boolean pressed.
+     */
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        //Calls the appropriate scene when the user presses the back key.
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            SceneManager.getInstance().getCurrentScene().onBackKeyPressed();
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        return super.onKeyDown(keyCode, event);
     }
 }
