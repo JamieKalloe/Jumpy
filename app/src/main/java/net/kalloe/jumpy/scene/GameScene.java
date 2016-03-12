@@ -151,11 +151,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             //y position of the next platform.
             float ty = platforms.getLast().getY() + MIN + rand.nextFloat() * (MAX - MIN);
 
-            //the player is below the last platform (will fall and die).
-            if(player.getY() < platforms.getFirst().getY()) {
-                player.die();
-            }
-
             //10% chance to add enemy on the platform.
             if(rand.nextFloat() < 0.1) {
                 addEnemy(tx, ty);
@@ -187,6 +182,11 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
     @Override
     public void onAccelerationChanged(final AccelerationData pAccelerationData) {
+        //the player is below the last platform (will fall and die).
+        if(player.getY() < platforms.getFirst().getY()) {
+            player.die();
+        }
+
         //The following code is responsible for calculating the direction the player is facing.
         //According to the result, the player will turn left or right (the sprite will be flipped).
         if(Math.abs(pAccelerationData.getX() - lastX) > 0.5) {
