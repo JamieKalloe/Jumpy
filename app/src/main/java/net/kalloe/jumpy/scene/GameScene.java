@@ -73,6 +73,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         //Initializes the EnemyFactory with the physicsworld and vertex buffer object manager.
         EnemyFactory.getInstance().create(physicsWorld, vbom);
 
+        //Registers the scene to the touch listener to listen for user input.
         this.setOnSceneTouchListener(this);
     }
 
@@ -81,8 +82,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
         //Checks if the player has touched the screen and if the player is dead.
         //If the condition is met, the game will clear all it's entities and restart.
-        boolean touchAction = pSceneTouchEvent.isActionUp();
-        boolean playerState = player.isDead();
         if(pSceneTouchEvent.isActionUp() && player.isDead()) {
             restartGame();
             return true;
