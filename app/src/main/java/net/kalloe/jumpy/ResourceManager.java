@@ -157,7 +157,7 @@ public class ResourceManager {
      */
     public void loadSplashGraphics() {
         //Selects the directory in which the assets (splash graphics) are saved.
-        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx");
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 
         //Loads the splashscreen logo into the TextureAtlas object with a specified width and height.
         splashTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,

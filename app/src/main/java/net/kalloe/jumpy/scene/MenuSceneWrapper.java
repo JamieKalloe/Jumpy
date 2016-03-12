@@ -1,5 +1,7 @@
 package net.kalloe.jumpy.scene;
 
+import net.kalloe.jumpy.SceneManager;
+
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.TextMenuItem;
@@ -64,7 +66,7 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
 
         switch (pMenuItem.getID()) {
             case 0:
-                //Show the game scene.
+                SceneManager.getInstance().showGameScene();
                 return true;
 
             default:
