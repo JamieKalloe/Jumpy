@@ -16,6 +16,8 @@ import net.kalloe.jumpy.factory.PlayerFactory;
 
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.Entity;
+import org.andengine.entity.scene.IOnSceneTouchListener;
+import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.EntityBackground;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.AutoWrap;
@@ -25,6 +27,7 @@ import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.extension.physics.box2d.util.Vector2Pool;
 import org.andengine.input.sensor.acceleration.AccelerationData;
 import org.andengine.input.sensor.acceleration.IAccelerationListener;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.adt.align.HorizontalAlign;
 
 import java.util.Iterator;
@@ -35,7 +38,7 @@ import java.util.Random;
 /**
  * Created by Jamie on 28-2-2016.
  */
-public class GameScene extends AbstractScene implements IAccelerationListener {
+public class GameScene extends AbstractScene implements IAccelerationListener, IOnSceneTouchListener {
 
     //Variables
     private Player player;
@@ -145,6 +148,19 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
             cleanEntities(platforms, camera.getYMin());
             cleanEntities(enemies, camera.getYMin());
         }
+    }
+
+    @Override
+    public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
+
+        //Checks if the player has touched the screen and if the player is dead.
+        //If the condition is met, the game will clear all it's entities and restart.
+        if(pSceneTouchEvent.isActionUp() && player.isDead()) {
+            restartGame();
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -300,11 +316,44 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
         }
     }
 
+    /**
+     * Calculates and sets the players's score to the HUD text.
+     */
     private void calculateScore() {
         if(camera.getYMin() > score) {
             score = Math.round(camera.getYMin());
             scoreText.setText(String.valueOf(score));
         }
+    }
+
+    /**
+     * Clears all entities from the game and loads / recreates them all for a new game.
+     */
+    private void restartGame() {
+        //Clears and empties all lists containing game entities.
+        setIgnoreUpdate(true);
+        unregisterUpdateHandler(physicsWorld);
+        enemies.clear();
+        platforms.clear();
+        physicsWorld.clearForces();
+        physicsWorld.clearPhysicsConnectors();
+
+        //Loops through all entity bodies and clears them all from the physicsworld.
+        while(physicsWorld.getBodies().hasNext()) {
+            physicsWorld.destroyBody(physicsWorld.getBodies().next());
+        }
+
+        //Resets the view of the camera to the center.
+        //Clears the HUD.
+        //Clears the chase entity (which is the player) from the camera.
+        camera.reset();
+        camera.setHUD(null);
+        camera.setChaseEntity(null);
+        detachChildren();
+
+        //Creates and loads all the entities for the game.
+        this.populate();
+        setIgnoreUpdate(false);
     }
 
     /**
@@ -321,4 +370,5 @@ public class GameScene extends AbstractScene implements IAccelerationListener {
             }
         });
     }
+
 }

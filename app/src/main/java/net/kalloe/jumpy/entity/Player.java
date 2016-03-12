@@ -2,6 +2,8 @@ package net.kalloe.jumpy.entity;
 
 import com.badlogic.gdx.physics.box2d.Body;
 
+import net.kalloe.jumpy.ResourceManager;
+
 import org.andengine.entity.sprite.TiledSprite;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -120,6 +122,13 @@ public class Player extends TiledSprite implements CollidableEntity {
      * Sets the displayed Sprite of the Player to the last sprite.
      */
     public void die() {
+
+        //Checks if the player is not dead (yet), if so, the falling sound is played
+        //And the state of the player will change to dead.
+        if(!dead) {
+            ResourceManager.getInstance().soundFall.play();
+        }
+
         this.setDead(true);
         setCurrentTileIndex(2);
     }

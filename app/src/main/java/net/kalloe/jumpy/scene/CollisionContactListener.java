@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
+import net.kalloe.jumpy.ResourceManager;
 import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.Enemy;
 import net.kalloe.jumpy.entity.Platform;
@@ -58,8 +59,10 @@ public class CollisionContactListener implements ContactListener {
         if(checkContact(contact, Player.TYPE, Platform.TYPE)) {
 
             //On contact (after the fall) the platform propels the player upwards.
+            //Also a sound is played which resembles the jump action of the player.
             if(!player.isDead() && player.getBody().getLinearVelocity().y < 0) {
                 player.getBody().setLinearVelocity(new Vector2(0, 40));
+                ResourceManager.getInstance().soundJump.play();
             } else {
                 contact.setEnabled(false);
             }

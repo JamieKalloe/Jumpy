@@ -50,4 +50,15 @@ public class EntityCamera extends SmoothCamera {
             }
         }
     }
+
+    /**
+     * Resets the chasing camera to the center of the screen if the player dies and restarts a new game.
+     */
+    @Override
+    public void reset() {
+        super.reset();
+        gameOver = false;
+        set(0, 0, GameActivity.CAMERA_WIDTH, GameActivity.CAMERA_HEIGHT);
+        setCenterDirect(GameActivity.CAMERA_WIDTH / 2, GameActivity.CAMERA_HEIGHT / 2);
+    }
 }
