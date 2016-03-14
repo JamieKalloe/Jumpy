@@ -2,11 +2,18 @@ package net.kalloe.jumpy.scene;
 
 import net.kalloe.jumpy.SceneManager;
 
+import org.andengine.entity.particle.BatchedSpriteParticleSystem;
+import org.andengine.entity.particle.emitter.RectangleOutlineParticleEmitter;
+import org.andengine.entity.particle.initializer.ColorParticleInitializer;
+import org.andengine.entity.particle.initializer.ExpireParticleInitializer;
+import org.andengine.entity.particle.initializer.VelocityParticleInitializer;
+import org.andengine.entity.particle.modifier.AlphaParticleModifier;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.TextMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ColorMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.sprite.UncoloredSprite;
 import org.andengine.entity.text.Text;
 import org.andengine.util.adt.color.Color;
 
@@ -25,6 +32,19 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
         //Creates a new MenuScene object and sets the background color.
         MenuScene menuScene = new MenuScene(camera);
         menuScene.getBackground().setColor(0.82f, 0.96f, 0.97f);
+
+        //Create a particle system of clouds (animated).
+        float timeToLive = 12f;
+        final BatchedSpriteParticleSystem particleSystem = new BatchedSpriteParticleSystem(
+                new RectangleOutlineParticleEmitter(192, 900, 300, 0), 1, 4, 25, res.cloud1TextureRegion, vbom);
+        particleSystem.addParticleInitializer(new VelocityParticleInitializer<UncoloredSprite>(0, 0, -50, -90));
+        particleSystem.addParticleInitializer(new ExpireParticleInitializer<UncoloredSprite>(timeToLive));
+
+        particleSystem.addParticleInitializer(new ColorParticleInitializer<UncoloredSprite>(Color.WHITE,
+                new Color(0.9f, 0.9f, 0.9f)));
+        particleSystem.addParticleModifier(new AlphaParticleModifier<UncoloredSprite>(timeToLive - 1, timeToLive, 1f, 0f));
+
+        menuScene.attachChild(particleSystem);
 
         //Initializes the Menu Items (passes the font, text and colors).
         playMenuItem = new ColorMenuItemDecorator(new TextMenuItem(0, res.font, "PLAY", vbom), Color.CYAN, Color.WHITE);
