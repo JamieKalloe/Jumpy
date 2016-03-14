@@ -133,6 +133,8 @@ public class ResourceManager {
 
             //Loads the audio file data (form the mfx directory) into the music object.
             music = MusicFactory.createMusicFromAsset(activity.getMusicManager(), activity, "music.ogg");
+            music.setVolume(2.5f);
+            music.setLooping(true);
         } catch (Exception e) {
             throw new RuntimeException("Error while loading the game audio", e);
         }

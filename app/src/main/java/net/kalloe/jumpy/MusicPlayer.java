@@ -41,7 +41,7 @@ public class MusicPlayer {
     }
 
     /**
-     * Stops / reset the background music audio track (if the music is playing).
+     * Stops / rewinds the background music audio track (if the music is playing).
      */
     public void stop() {
         if(res.music.isPlaying()) {

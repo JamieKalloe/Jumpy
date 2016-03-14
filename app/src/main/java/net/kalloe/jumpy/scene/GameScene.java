@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.badlogic.gdx.math.Vector2;
 
 import net.kalloe.jumpy.GameActivity;
+import net.kalloe.jumpy.MusicPlayer;
 import net.kalloe.jumpy.SceneManager;
 import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.Enemy;
@@ -129,6 +130,9 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
             //Sets the Contact Listener (responsible for collision detection) to the Physics World (game simulation).
             physicsWorld.setContactListener(new CollisionContactListener(this.player));
+
+            //Starts the playing of the background music.
+            MusicPlayer.getInstance().play();
         } catch (Exception e) {
             SceneManager.getInstance().showMenuScene();
             clearGame();
@@ -219,12 +223,22 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     public void onPause() {
         //Disables the accelerometer sensor when the activity is not active.
         engine.disableAccelerationSensor(activity);
+        MusicPlayer.getInstance().pause();
     }
 
     @Override
     public void onResume() {
         //Enables the accelerometer sensor when the activity is being resumed.
         engine.enableAccelerationSensor(activity, this);
+        MusicPlayer.getInstance().play();
+    }
+
+    @Override
+    public void destory() {
+//        camera.reset();
+//        camera.setHUD(null);
+        clearGame();
+        MusicPlayer.getInstance().stop();
     }
 
     /**

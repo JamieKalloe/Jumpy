@@ -127,6 +127,18 @@ public class GameActivity extends BaseGameActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    public synchronized void onResumeGame() {
+        super.onResumeGame();
+        SceneManager.getInstance().getCurrentScene().onResume();
+    }
+
+    @Override
+    public synchronized void onPauseGame() {
+        super.onPauseGame();
+        SceneManager.getInstance().getCurrentScene().onPause();
+    }
+
     /**
      * Enables or disables the game's background music settings (with sharedpreferences).
      * @param sound true / false indicating if the sound should be set on or off.
