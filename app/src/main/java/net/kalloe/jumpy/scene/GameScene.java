@@ -12,6 +12,7 @@ import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.Enemy;
 import net.kalloe.jumpy.entity.Platform;
 import net.kalloe.jumpy.entity.Player;
+import net.kalloe.jumpy.entity.VerticalParallaxEntity;
 import net.kalloe.jumpy.factory.EnemyFactory;
 import net.kalloe.jumpy.factory.PlatformFactory;
 import net.kalloe.jumpy.factory.PlayerFactory;
@@ -21,6 +22,7 @@ import org.andengine.entity.Entity;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.EntityBackground;
+import org.andengine.entity.scene.background.ParallaxBackground;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.AutoWrap;
 import org.andengine.entity.text.Text;
@@ -49,6 +51,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     Random rand = new Random();
     private LinkedList<Platform> platforms = new LinkedList<>();
     private LinkedList<Enemy> enemies = new LinkedList<>();
+
+    private ParallaxBackground parallaxBackground;
 
     private static final float MIN = 50f;
     private static final float MAX = 250f;
@@ -113,7 +117,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     public void populate() {
         try {
             //Create and load the game entities.
-            createBackground();
+//            createBackground();
+            createParallaxBackground();
             createPlayer();
             camera.setChaseEntity(player);
             createHUD();
@@ -142,6 +147,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     @Override
     protected void onManagedUpdate(float pSecondsElapsed) {
         super.onManagedUpdate(pSecondsElapsed);
+        parallaxBackground.setParallaxValue(camera.getCenterY());
+
         boolean added = false;
 
         //Calculates the lives the player has remaining.
@@ -265,6 +272,64 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         //Containing the 2 Sprite object / entities.
         setBackground(new EntityBackground(0.82f, 0.96f, 0.97f, background));
     }
+
+    /**
+     * Creates a simple parallax background entity containing several Sprite object entities, which are passed in
+     */
+    private void createParallaxBackground() {
+        parallaxBackground = new ParallaxBackground(0.82f, 0.96f, 0.97f);
+
+        //Layers in the back.
+        Entity clouds = new Entity();
+        clouds.setSize(480, 800);
+        clouds.setAnchorCenter(0, 0);
+
+        //Cloud sprites.
+        Sprite cloud1 = new Sprite(200, 300, res.cloud1TextureRegion, vbom);
+        Sprite cloud2 = new Sprite(300, 600, res.cloud2TextureRegion, vbom);
+
+        //Attach the cloud sprites to the clouds entity object.
+        clouds.attachChild(cloud1);
+        clouds.attachChild(cloud2);
+
+        //Pass in the clouds entity (containing the sprites) to our own parallax background entity and attach it to the parallax background object.
+        VerticalParallaxEntity cloudsLayer = new VerticalParallaxEntity(-0.1f, clouds);
+        parallaxBackground.attachParallaxEntity(cloudsLayer);
+
+        //Layer in the front.
+        Entity platforms = new Entity();
+        platforms.setSize(480, 800);
+        platforms.setAnchorCenter(0, 0);
+
+        //Platform sprites
+        Sprite platform1 = new Sprite(150, 200, res.platformTextureRegion, vbom);
+        Sprite platform2 = new Sprite(250, 550, res.platformTextureRegion, vbom);
+        Sprite platform3 = new Sprite(350, 450, res.platformTextureRegion, vbom);
+
+        //Platforms are made slightly transparent with the alpha channel.
+        platform1.setColor(0.3f, 0.3f, 0.3f, 0.3f);
+        platform2.setColor(0.3f, 0.3f, 0.3f, 0.3f);
+        platform3.setColor(0.3f, 0.3f, 0.3f, 0.3f);
+
+        //Platforms are made slightly smaller to enhance the difference of the real platforms.
+        platform1.setScale(0.8f);
+        platform2.setScale(0.8f);
+        platform3.setScale(0.8f);
+
+        //Attach the platform sprites to the clouds entity object.
+        platforms.attachChild(platform1);
+        platforms.attachChild(platform2);
+        platforms.attachChild(platform3);
+
+        //Pass in the platform entity (containing the sprites) to our own parallax background entity and attach it to the parallax background object.
+        VerticalParallaxEntity platformsLayer = new VerticalParallaxEntity(-0.5f, platforms);
+        parallaxBackground.attachParallaxEntity(platformsLayer);
+
+        //Finally set the parallax background, as background to the game scene.
+        setBackground(parallaxBackground);
+    }
+
+
 
     /**
      * Creates a new instance of the Player entity and adds it as a child to the scene.
