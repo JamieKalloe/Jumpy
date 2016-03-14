@@ -138,9 +138,13 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             player.die();
         }
 
-        //Shows a message if the player dies.
+        //Shows a message if the player dies and save the high score if achieved.
         if(player.isDead()) {
             endGameText.setVisible(true);
+
+            if(score > activity.getHighScore()) {
+                activity.setHighScore(score);
+            }
         }
 
         while(camera.getYMax() > platforms.getLast().getY()) {

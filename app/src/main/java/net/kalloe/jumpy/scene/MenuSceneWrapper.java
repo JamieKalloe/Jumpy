@@ -7,6 +7,7 @@ import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.TextMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ColorMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.Text;
 import org.andengine.util.adt.color.Color;
 
 /**
@@ -42,6 +43,12 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
         //Creates and attaches a player sprite into the game's menu scene.
         Sprite player = new Sprite(240, 280, res.playerTextureRegion, vbom);
         menuScene.attachChild(player);
+
+        //Retrieves the player's high score and displays it in an Text object which is attached to the menu scene.
+        Text highScoreTextLabel = new Text(240, 700, res.font, "HIGH SCORE", vbom);
+        Text highScoreText = new Text(240, 645, res.font, String.valueOf(activity.getHighScore()), vbom);
+        menuScene.attachChild(highScoreTextLabel);
+        menuScene.attachChild(highScoreText);
 
         setChildScene(menuScene);
     }

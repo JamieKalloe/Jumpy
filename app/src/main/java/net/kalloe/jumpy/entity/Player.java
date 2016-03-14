@@ -126,7 +126,7 @@ public class Player extends TiledSprite implements CollidableEntity {
         //Checks if the player is not dead (yet), if so, the falling sound is played
         //And the state of the player will change to dead.
         if(!dead) {
-            ResourceManager.getInstance().soundFall.play();
+            ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundFall);
         }
 
         this.setDead(true);

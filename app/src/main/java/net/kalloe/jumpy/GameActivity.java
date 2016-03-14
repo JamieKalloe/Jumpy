@@ -3,6 +3,7 @@ package net.kalloe.jumpy;
 import android.content.SharedPreferences;
 import android.view.KeyEvent;
 
+import org.andengine.audio.sound.Sound;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
@@ -127,7 +128,7 @@ public class GameActivity extends BaseGameActivity {
     }
 
     /**
-     * Enables or disables the game's background music (with sharedpreferences).
+     * Enables or disables the game's background music settings (with sharedpreferences).
      * @param sound true / false indicating if the sound should be set on or off.
      */
     public void setSound(boolean sound) {
@@ -142,6 +143,16 @@ public class GameActivity extends BaseGameActivity {
      */
     public boolean isSound() {
         return settings.getBoolean(KEY_SOUND, true);
+    }
+
+    /**
+     * Plays the given sound resource.
+     * @param soundToPlay sound resource.
+     */
+    public void playSound(Sound soundToPlay) {
+        if(isSound()) {
+            soundToPlay.play();
+        }
     }
 
     /**

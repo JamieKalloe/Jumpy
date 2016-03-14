@@ -62,7 +62,7 @@ public class CollisionContactListener implements ContactListener {
             //Also a sound is played which resembles the jump action of the player.
             if(!player.isDead() && player.getBody().getLinearVelocity().y < 0) {
                 player.getBody().setLinearVelocity(new Vector2(0, 35));
-                ResourceManager.getInstance().soundJump.play();
+                ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundJump);
             } else {
                 contact.setEnabled(false);
             }
