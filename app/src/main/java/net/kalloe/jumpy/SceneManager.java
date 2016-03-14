@@ -102,6 +102,13 @@ public class SceneManager {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
+
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    Debug.e("Interrupted", e);
+//                }
+
                 //Initializes and sets new instance of the game scene as the current scene.
                 GameScene gameScene = new GameScene();
                 gameScene.populate();
@@ -130,6 +137,7 @@ public class SceneManager {
                 //Creates and initializes a new instance of the menu scene.
                 MenuSceneWrapper menuSceneWrapper = new MenuSceneWrapper();
                 menuSceneWrapper.populate();
+                setCurrentScene(menuSceneWrapper);
 
                 //Destroys the previous scene to free memory from the engine.
                 previousScene.destory();

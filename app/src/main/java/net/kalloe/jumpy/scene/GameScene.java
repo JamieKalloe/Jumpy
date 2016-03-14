@@ -99,6 +99,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         if(!player.isDead()) {
             showToast("You're in a game!", Toast.LENGTH_SHORT);
         } else {
+            endGameText.setVisible(false);
+            clearGame();
             SceneManager.getInstance().showMenuScene();
         }
     }
@@ -345,6 +347,29 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             score = Math.round(camera.getYMin());
             scoreText.setText(String.valueOf(score));
         }
+    }
+
+    //Clear game
+    private void clearGame() {
+        setIgnoreUpdate(true);
+        unregisterUpdateHandler(physicsWorld);
+        enemies.clear();
+        platforms.clear();
+        physicsWorld.clearForces();
+        physicsWorld.clearPhysicsConnectors();
+
+        //Loops through all entity bodies and clears them all from the physicsworld.
+        while(physicsWorld.getBodies().hasNext()) {
+            physicsWorld.destroyBody(physicsWorld.getBodies().next());
+        }
+
+        //Resets the view of the camera to the center.
+        //Clears the HUD.
+        //Clears the chase entity (which is the player) from the camera.
+        camera.reset();
+        camera.setHUD(null);
+        camera.setChaseEntity(null);
+        detachChildren();
     }
 
     /**
