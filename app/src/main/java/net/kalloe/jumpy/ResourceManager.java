@@ -51,6 +51,7 @@ public class ResourceManager {
     //Sounds
     public Sound soundFall;
     public Sound soundJump;
+    public Sound soundHit;
 
     //Music
     public Music music;
@@ -130,6 +131,7 @@ public class ResourceManager {
             //Loads the audio files data (from the sfx directory) into the specified Sound objects.
             soundJump = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "jumping.ogg");
             soundFall = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "falling.ogg");
+            soundHit = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "hit.ogg");
 
             //Loads the audio file data (form the mfx directory) into the music object.
             music = MusicFactory.createMusicFromAsset(activity.getMusicManager(), activity, "music.ogg");

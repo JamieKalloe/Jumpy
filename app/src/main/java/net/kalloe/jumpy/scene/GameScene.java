@@ -53,7 +53,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     private static final float MIN = 50f;
     private static final float MAX = 250f;
 
-    private Text scoreText;
+    private Text scoreText, lifeText;
     private int score;
 
     private Text endGameText;
@@ -144,6 +144,9 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         super.onManagedUpdate(pSecondsElapsed);
         boolean added = false;
 
+        //Calculates the lives the player has remaining.
+        calculateLives();
+
         //the player is below the last platform (will fall and die).
         if(player.getY() < platforms.getFirst().getY() && !platforms.isEmpty()) {
             player.die();
@@ -164,6 +167,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             if(player.isDead()) {
                 endGameText.setVisible(true);
             }
+
+
 
             //x position of the next platform.
             float tx = rand.nextFloat() * GameActivity.CAMERA_WIDTH;
@@ -317,12 +322,21 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         scoreText = new Text(16, 789, res.font, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
         scoreText.setAnchorCenter(0, 1);
 
+        //Create a new text label for the amount of lives.
+        lifeText = new Text(425, 789, res.font, "III", new TextOptions(HorizontalAlign.RIGHT), vbom);
+        lifeText.setAnchorCenter(0, 1);
+
         //Initializes the score and sets it as the HUD score text.
         score = 0;
         scoreText.setText(String.valueOf(score));
 
+        //Initializes the amount of lifes and sets it as the hud lifes text.
+        String lives = getLives(player.getHealth());
+        lifeText.setText(lives);
+
         //Attaches the text object to the hud.
         hud.attachChild(scoreText);
+        hud.attachChild(lifeText);
 
         //Initialize the game over message for when the player dies.
         endGameText = new Text(GameActivity.CAMERA_WIDTH / 2, GameActivity.CAMERA_HEIGHT / 2, res.font,
@@ -366,6 +380,24 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             score = Math.round(camera.getYMin());
             scoreText.setText(String.valueOf(score));
         }
+    }
+
+    private void calculateLives() {
+        lifeText.setText(getLives(player.getHealth()));
+    }
+
+    /**
+     * Returns a string representation of the given amount of lifes/
+     * @param lifes int amount
+     * @return
+     */
+    public String getLives(int lifes) {
+        String amount = "";
+        for(int i = 0; i < lifes; i++) {
+            amount += "I";
+        }
+
+        return amount;
     }
 
     //Clear game

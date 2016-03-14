@@ -36,12 +36,17 @@ public class CollisionContactListener implements ContactListener {
     public void beginContact(Contact contact) {
         //Check ifs the player collides with the enemy, if so; the player dies.
         if(checkContact(contact, Player.TYPE, Enemy.TYPE)) {
-            player.die();
+            if(player.getHealth() != 0) {
+                ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundHit);
+                player.dealDamage();
+            } else {
+                player.die();
+            }
         }
     }
 
     /**
-     * The endContac method is called when two fixtures stop overlapping.
+     * The endContact method is called when two fixtures stop overlapping.
      * @param contact
      */
     @Override

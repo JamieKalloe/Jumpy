@@ -2,6 +2,7 @@ package net.kalloe.jumpy;
 
 import android.content.SharedPreferences;
 import android.view.KeyEvent;
+import android.widget.Toast;
 
 import org.andengine.audio.sound.Sound;
 import org.andengine.engine.camera.Camera;
@@ -183,5 +184,20 @@ public class GameActivity extends BaseGameActivity {
      */
     public int getHighScore() {
         return settings.getInt(KEY_HIGHSCORE, 0);
+    }
+
+    /**
+     * Creates and shows a Toast message using the Android Toast widget.
+     * A Toast is run on te UI Thread which every activity has.
+     * @param text Text to be displayed by the Toast.
+     * @param length Length of the Toast to be displayed.
+     */
+    public void showToast(final String text, final int length) {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), text, length).show();
+            }
+        });
     }
 }

@@ -17,6 +17,7 @@ public class Player extends TiledSprite implements CollidableEntity {
     boolean dead = false;
     private Body body;
     public static final String TYPE = "Player";
+    private int health = 3;
 
     /**
      * Creates a new instance of the Player entity.
@@ -44,6 +45,21 @@ public class Player extends TiledSprite implements CollidableEntity {
                 fly();
             }
         }
+    }
+
+    /**
+     * Reduces the amount of health pints the player has left.
+     */
+    public void dealDamage() {
+        this.health--;
+    }
+
+    /**
+     * Returns the amount of life points the player has left.
+     * @return health points / lives.
+     */
+    public int getHealth() {
+        return this.health;
     }
 
     /**
