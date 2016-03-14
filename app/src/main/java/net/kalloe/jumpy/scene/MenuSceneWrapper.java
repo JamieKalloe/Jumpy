@@ -16,6 +16,7 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
 
     //Variables
     private IMenuItem playMenuItem;
+    private MenuSceneTextItemDecorator soundMenuItem;
 
     @Override
     public void populate() {
@@ -26,9 +27,11 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
 
         //Initializes the Menu Items (passes the font, text and colors).
         playMenuItem = new ColorMenuItemDecorator(new TextMenuItem(0, res.font, "PLAY", vbom), Color.CYAN, Color.WHITE);
+        soundMenuItem = new MenuSceneTextItemDecorator(new TextMenuItem(1, res.font, getSoundLabel(), vbom), Color.CYAN, Color.WHITE);
 
         //Adds the menu items to the game's menu scene.
         menuScene.addMenuItem(playMenuItem);
+        menuScene.addMenuItem(soundMenuItem);
 
         //Enables animation of the game's menu scene.
         menuScene.buildAnimations();
@@ -54,6 +57,14 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
     }
 
     /**
+     * Returns a char sequence based on the settings for sound (on or off).
+     * @return char sequennce text on or off.
+     */
+    private CharSequence getSoundLabel() {
+        return activity.isSound() ? "SOUND ON" : "SOUND OFF";
+    }
+
+    /**
      * Gets called when the user presses the device's back key, in this case it closes the game (when the game menu is showed).
      */
     @Override
@@ -65,8 +76,17 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
     public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY) {
 
         switch (pMenuItem.getID()) {
+            //When this menu item is clicked, the game (scene) will start.
             case 0:
                 SceneManager.getInstance().showGameScene();
+                return true;
+
+            //When this menu item is clicked, the sound is turned on or off.
+            case 1:
+                boolean soundState = activity.isSound();
+                soundState = !soundState;
+                activity.setSound(soundState);
+                soundMenuItem.setText(getSoundLabel());
                 return true;
 
             default:
