@@ -1,5 +1,6 @@
 package net.kalloe.jumpy;
 
+import android.content.SharedPreferences;
 import android.view.KeyEvent;
 
 import org.andengine.engine.camera.Camera;
@@ -19,6 +20,12 @@ public class GameActivity extends BaseGameActivity {
     //Variables
     public static final int CAMERA_WIDTH = 480;
     public static final int CAMERA_HEIGHT = 800;
+
+    //SharedPreferences (for saving settings and scores)
+    private final String KEY_SOUND = "Sound";
+    private final String KEY_HIGHSCORE = "Highscore";
+
+    private SharedPreferences settings;
 
     /**
      * This method defines the (AndEngine) engine options. It's run by the onCreate method first.
@@ -44,6 +51,9 @@ public class GameActivity extends BaseGameActivity {
 
         //Improves the image rendering, the engine will now use 32-bit colors using small dot sof 16-bit colors.
         engineOptions.getRenderOptions().setDithering(true);
+
+        //Initializes the shared preferences for the game.
+        settings = getSharedPreferences("jumpy_game_prefs", MODE_PRIVATE);
 
         Debug.i("Engine configured");
 
@@ -114,5 +124,41 @@ public class GameActivity extends BaseGameActivity {
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * Enables or disables the game's background music (with sharedpreferences).
+     * @param sound true / false indicating if the sound should be set on or off.
+     */
+    public void setSound(boolean sound) {
+        SharedPreferences.Editor settingsEditor = settings.edit();
+        settingsEditor.putBoolean(KEY_SOUND, sound);
+        settingsEditor.commit();
+    }
+
+    /**
+     * Retrieves the user's settings for sound (game background music).
+     * @return boolean indicating if the user has sound enabled or disabled.
+     */
+    public boolean isSound() {
+        return settings.getBoolean(KEY_SOUND, true);
+    }
+
+    /**
+     * Sets (saves) the highscore the player has achieved.
+     * @param score score the player has achieved.
+     */
+    public void setHighScore(int score) {
+        SharedPreferences.Editor settingsEditor = settings.edit();
+        settingsEditor.putInt(KEY_HIGHSCORE, score);
+        settingsEditor.commit();
+    }
+
+    /**
+     * Retrieves the highscore of the player.
+     * @return int highscore.
+     */
+    public int getHighScore() {
+        return settings.getInt(KEY_HIGHSCORE, 0);
     }
 }
