@@ -100,8 +100,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             showToast("You're in a game!", Toast.LENGTH_SHORT);
         } else {
             endGameText.setVisible(false);
-            clearGame();
             SceneManager.getInstance().showMenuScene();
+            clearGame();
         }
     }
 
@@ -110,24 +110,29 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
      */
     @Override
     public void populate() {
-        //Create and load the game entities.
-        createBackground();
-        createPlayer();
-        camera.setChaseEntity(player);
-        createHUD();
+        try {
+            //Create and load the game entities.
+            createBackground();
+            createPlayer();
+            camera.setChaseEntity(player);
+            createHUD();
 
-        addPlatform(240, 100, false);
-        addPlatform(340, 400, false);
-        addEnemy(140, 400);
+            addPlatform(240, 100, false);
+            addPlatform(340, 400, false);
+            addEnemy(140, 400);
 
-        //Enables the accelerometer and registers the listener to the engine.
-        engine.enableAccelerationSensor(activity, this);
+            //Enables the accelerometer and registers the listener to the engine.
+            engine.enableAccelerationSensor(activity, this);
 
-        //Register the physics world to the engine (as an update handler / thread).
-        registerUpdateHandler(physicsWorld);
+            //Register the physics world to the engine (as an update handler / thread).
+            registerUpdateHandler(physicsWorld);
 
-        //Sets the Contact Listener (responsible for collision detection) to the Physics World (game simulation).
-        physicsWorld.setContactListener(new CollisionContactListener(this.player));
+            //Sets the Contact Listener (responsible for collision detection) to the Physics World (game simulation).
+            physicsWorld.setContactListener(new CollisionContactListener(this.player));
+        } catch (Exception e) {
+            SceneManager.getInstance().showMenuScene();
+            clearGame();
+        }
     }
 
     @Override
