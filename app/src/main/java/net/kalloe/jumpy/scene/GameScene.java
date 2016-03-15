@@ -24,6 +24,7 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.EntityBackground;
 import org.andengine.entity.scene.background.ParallaxBackground;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.sprite.TiledSprite;
 import org.andengine.entity.text.AutoWrap;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
@@ -51,6 +52,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     Random rand = new Random();
     private LinkedList<Platform> platforms = new LinkedList<>();
     private LinkedList<Enemy> enemies = new LinkedList<>();
+    private TiledSprite lifePoints;
 
     private ParallaxBackground parallaxBackground;
 
@@ -152,7 +154,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         boolean added = false;
 
         //Calculates the lives the player has remaining.
-        calculateLives();
+        calculateLifes();
 
         //the player is below the last platform (will fall and die).
         if(player.getY() < platforms.getFirst().getY() && !platforms.isEmpty()) {
@@ -174,8 +176,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             if(player.isDead()) {
                 endGameText.setVisible(true);
             }
-
-
 
             //x position of the next platform.
             float tx = rand.nextFloat() * GameActivity.CAMERA_WIDTH;
@@ -388,20 +388,22 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         scoreText.setAnchorCenter(0, 1);
 
         //Create a new text label for the amount of lives.
-        lifeText = new Text(425, 789, res.font, "III", new TextOptions(HorizontalAlign.RIGHT), vbom);
-        lifeText.setAnchorCenter(0, 1);
+//        lifeText = new Text(425, 789, res.font, "III", new TextOptions(HorizontalAlign.RIGHT), vbom);
+//        lifeText.setAnchorCenter(0, 1);
+        lifePoints = new TiledSprite(430, 755, res.lifeTextureRegion, vbom);
+
 
         //Initializes the score and sets it as the HUD score text.
         score = 0;
         scoreText.setText(String.valueOf(score));
 
         //Initializes the amount of lifes and sets it as the hud lifes text.
-        String lives = getLives(player.getHealth());
-        lifeText.setText(lives);
+//        String lives = getLives(player.getHealth());
+//        lifeText.setText(lives);
 
         //Attaches the text object to the hud.
         hud.attachChild(scoreText);
-        hud.attachChild(lifeText);
+        hud.attachChild(lifePoints);
 
         //Initialize the game over message for when the player dies.
         endGameText = new Text(GameActivity.CAMERA_WIDTH / 2, GameActivity.CAMERA_HEIGHT / 2, res.font,
@@ -447,8 +449,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         }
     }
 
-    private void calculateLives() {
-        lifeText.setText(getLives(player.getHealth()));
+    private void calculateLifes() {
+        lifePoints.setCurrentTileIndex(player.getHealth());
     }
 
     /**

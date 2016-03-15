@@ -36,11 +36,11 @@ public class ResourceManager {
 
     //Game textures
     public ITiledTextureRegion playerTextureRegion;
+    public ITiledTextureRegion lifeTextureRegion;
     public ITiledTextureRegion enemyTextureRegion;
     public ITextureRegion platformTextureRegion;
     public ITextureRegion cloud1TextureRegion;
     public ITextureRegion cloud2TextureRegion;
-    public ITextureRegion lifeTextureRegion;
 
     //Splash scene graphics
     public ITextureRegion splashTextureRegion;
