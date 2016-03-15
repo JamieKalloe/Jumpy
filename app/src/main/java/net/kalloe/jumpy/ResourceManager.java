@@ -96,6 +96,10 @@ public class ResourceManager {
         playerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(gameTextureAtlas,
                 activity.getAssets(), "player.png", 3, 1);
 
+        //Creates the life/hearts (atlas) texture, from life.png, from the GameTextureAtlas object.
+        lifeTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(gameTextureAtlas,
+                activity.getAssets(), "life.png", 4, 1);
+
         //Creates the enemy (atlas) texture, from the enemy.png, from the GameTextureAtlas object.
         enemyTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(gameTextureAtlas,
                 activity.getAssets(), "enemy.png", 1, 2);
