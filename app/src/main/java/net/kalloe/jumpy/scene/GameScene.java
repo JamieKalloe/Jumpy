@@ -59,7 +59,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     private static final float MIN = 50f;
     private static final float MAX = 250f;
 
-    private Text scoreText, lifeText;
+    private Text scoreText;
     private int score;
 
     private Text endGameText;
@@ -387,19 +387,12 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         scoreText = new Text(16, 789, res.font, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
         scoreText.setAnchorCenter(0, 1);
 
-        //Create a new text label for the amount of lives.
-//        lifeText = new Text(425, 789, res.font, "III", new TextOptions(HorizontalAlign.RIGHT), vbom);
-//        lifeText.setAnchorCenter(0, 1);
+        //Create a new text tiled sprite for the amount of lives.
         lifePoints = new TiledSprite(430, 755, res.lifeTextureRegion, vbom);
-
 
         //Initializes the score and sets it as the HUD score text.
         score = 0;
         scoreText.setText(String.valueOf(score));
-
-        //Initializes the amount of lifes and sets it as the hud lifes text.
-//        String lives = getLives(player.getHealth());
-//        lifeText.setText(lives);
 
         //Attaches the text object to the hud.
         hud.attachChild(scoreText);
@@ -449,6 +442,9 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         }
     }
 
+    /**
+     * Retrieves the health (hit points) of the player, and shows them in a tiled sprite.
+     */
     private void calculateLifes() {
         lifePoints.setCurrentTileIndex(player.getHealth());
     }
