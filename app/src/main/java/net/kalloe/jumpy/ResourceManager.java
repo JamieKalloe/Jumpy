@@ -40,6 +40,7 @@ public class ResourceManager {
     public ITextureRegion platformTextureRegion;
     public ITextureRegion cloud1TextureRegion;
     public ITextureRegion cloud2TextureRegion;
+    public ITextureRegion lifeTextureRegion;
 
     //Splash scene graphics
     public ITextureRegion splashTextureRegion;
