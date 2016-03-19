@@ -199,6 +199,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
             //Calculates the score the player has reached.
             calculateScore();
+//            calculateCoins(true);
 
             //Clean up (remove) the unused entities from the game scene (no longer in view).
             cleanEntities(platforms, camera.getYMin());
@@ -439,6 +440,17 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         if(camera.getYMin() > score) {
             score = Math.round(camera.getYMin());
             scoreText.setText(String.valueOf(score));
+        }
+    }
+
+    private void calculateCoins(boolean allow) {
+        int playerScore = score;
+        if(allow) {
+            if(playerScore > (score + 1000)) {
+                playerScore = 0;
+                player.addCoins(10);
+                showToast(String.valueOf(player.getCoins()), Toast.LENGTH_SHORT);
+            }
         }
     }
 
