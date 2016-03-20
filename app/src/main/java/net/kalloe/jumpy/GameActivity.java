@@ -26,6 +26,7 @@ public class GameActivity extends BaseGameActivity {
     //SharedPreferences (for saving settings and scores)
     private final String KEY_SOUND = "Sound";
     private final String KEY_HIGHSCORE = "Highscore";
+    private final String KEY_COINS = "Coins";
 
     private SharedPreferences settings;
 
@@ -185,6 +186,8 @@ public class GameActivity extends BaseGameActivity {
     public int getHighScore() {
         return settings.getInt(KEY_HIGHSCORE, 0);
     }
+
+    
 
     /**
      * Creates and shows a Toast message using the Android Toast widget.

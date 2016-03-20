@@ -61,6 +61,11 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
     private Text scoreText;
     private int score;
+    private boolean cal = true;
+    private int oldScore = 0;
+    private int pointsAchieved = 0;
+    private final int coinsThreshold = 5000;
+
 
     private Text endGameText;
 
@@ -92,6 +97,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         //If the condition is met, the game will clear all it's entities and restart.
         if(pSceneTouchEvent.isActionUp() && player.isDead()) {
             restartGame();
+            cal = true;
             return true;
         }
 
@@ -118,6 +124,9 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     @Override
     public void populate() {
         try {
+
+            //Allow calculation of coins.
+            cal = true;
             //Create and load the game entities.
 //            createBackground();
             createParallaxBackground();
@@ -159,6 +168,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         //the player is below the last platform (will fall and die).
         if(player.getY() < platforms.getFirst().getY() && !platforms.isEmpty()) {
             player.die();
+            cal = false;
         }
 
         //Shows a message if the player dies and save the high score if achieved.
@@ -168,6 +178,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             if(score > activity.getHighScore()) {
                 activity.setHighScore(score);
             }
+
+            //TODO: add coins to player, via activity
         }
 
         while(camera.getYMax() > platforms.getLast().getY()) {
@@ -199,7 +211,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
             //Calculates the score the player has reached.
             calculateScore();
-//            calculateCoins(true);
+            calculateCoins(cal);
 
             //Clean up (remove) the unused entities from the game scene (no longer in view).
             cleanEntities(platforms, camera.getYMin());
@@ -438,18 +450,22 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
      */
     private void calculateScore() {
         if(camera.getYMin() > score) {
+            oldScore = score;
             score = Math.round(camera.getYMin());
+            pointsAchieved += (score - oldScore);
             scoreText.setText(String.valueOf(score));
         }
     }
 
+    /**
+     * Awards the player an x amount of coins for every y amount of points achieved.
+     * @param allow boolean, award coins.
+     */
     private void calculateCoins(boolean allow) {
-        int playerScore = score;
         if(allow) {
-            if(playerScore > (score + 1000)) {
-                playerScore = 0;
+            if(pointsAchieved >= coinsThreshold) {
+                pointsAchieved = 0;
                 player.addCoins(10);
-                showToast(String.valueOf(player.getCoins()), Toast.LENGTH_SHORT);
             }
         }
     }
