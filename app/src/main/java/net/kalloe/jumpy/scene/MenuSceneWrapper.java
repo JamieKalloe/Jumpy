@@ -65,10 +65,18 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
         menuScene.attachChild(player);
 
         //Retrieves the player's high score and displays it in an Text object which is attached to the menu scene.
-        Text highScoreTextLabel = new Text(240, 700, res.font, "HIGH SCORE", vbom);
-        Text highScoreText = new Text(240, 645, res.font, String.valueOf(activity.getHighScore()), vbom);
+        Text highScoreTextLabel = new Text(240, 740, res.font, "HIGH SCORE", vbom);
+        Text highScoreText = new Text(240, 685, res.font, String.valueOf(activity.getHighScore()), vbom);
+
+        //Retrieves the player's coins and displays it with a sprite and text object.
+        Sprite coinSprite = new Sprite(240, 590, res.coinTextureRegion, vbom);
+        Text coinText = new Text(240, 540, res.font, String.valueOf(activity.getCoins()), vbom);
+
+        //Attach all the text / sprite objects to the menu scene HUD.
         menuScene.attachChild(highScoreTextLabel);
         menuScene.attachChild(highScoreText);
+        menuScene.attachChild(coinSprite);
+        menuScene.attachChild(coinText);
 
         setChildScene(menuScene);
     }
