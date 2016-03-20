@@ -34,7 +34,6 @@ import org.andengine.input.sensor.acceleration.AccelerationData;
 import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.adt.align.HorizontalAlign;
-import org.andengine.util.debug.Debug;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -60,7 +59,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     private static final float MIN = 50f;
     private static final float MAX = 250f;
 
-    private Text scoreText;
+    private Text scoreText, coinsText;
     private int score;
     private boolean cal = true;
     private int oldScore = 0;
@@ -186,7 +185,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             //Saves the amount of coins the player was awarded.
             if(player.getCoins() > 0) {
                 activity.setCoins(activity.getCoins() + player.getCoins());
-                Debug.i("Saved " + player.getCoins() + " amount of coins\nTotal amount:" + activity.getCoins());
                 player.setCoins(0);
             }
         }
@@ -405,9 +403,15 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         //Creates a new heads-up display (HUD)
         HUD hud = new HUD();
 
-        //Creates a new text label using the font from the ResourceManager.
+        //Creates a new text label for the amount of points, using the font from the ResourceManager.
         scoreText = new Text(16, 789, res.font, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
         scoreText.setAnchorCenter(0, 1);
+
+        //Creates a new text label for the amount of coins, using the font from the ResourceManager.
+        coinsText = new Text(94, 700, res.font, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+
+        //Create a new sprite for the coin icon.
+        Sprite coinSprite = new Sprite(40, 700, res.coinTextureRegion, vbom);
 
         //Create a new text tiled sprite for the amount of lives.
         lifePoints = new TiledSprite(430, 755, res.lifeTextureRegion, vbom);
@@ -415,9 +419,12 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         //Initializes the score and sets it as the HUD score text.
         score = 0;
         scoreText.setText(String.valueOf(score));
+        coinsText.setText(String.valueOf(player.getCoins()));
 
-        //Attaches the text object to the hud.
+        //Attaches the text objects to the hud.
         hud.attachChild(scoreText);
+        hud.attachChild(coinsText);
+        hud.attachChild(coinSprite);
         hud.attachChild(lifePoints);
 
         //Initialize the game over message for when the player dies.
@@ -474,8 +481,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         if(allow) {
             if(pointsAchieved >= coinsThreshold) {
                 pointsAchieved = 0;
-                player.addCoins(10);
-                Debug.i("+10 coins were awarded");
+                player.addCoins((int)((Math.random() * (10 - 1)) + 1) * 10);
+                coinsText.setText(String.valueOf(player.getCoins()));
             }
         }
     }

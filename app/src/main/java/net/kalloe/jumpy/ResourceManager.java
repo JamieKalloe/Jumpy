@@ -41,6 +41,7 @@ public class ResourceManager {
     public ITextureRegion platformTextureRegion;
     public ITextureRegion cloud1TextureRegion;
     public ITextureRegion cloud2TextureRegion;
+    public ITextureRegion coinTextureRegion;
 
     //Splash scene graphics
     public ITextureRegion splashTextureRegion;
@@ -115,6 +116,9 @@ public class ResourceManager {
         //Creates the cloud number 2 (atlas) texture, from the enemy.png, from the GameTextureAtlas object.
         cloud2TextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
                 activity.getAssets(), "cloud2.png");
+
+        coinTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
+                activity.getAssets(), "coin.png");
 
         try {
             gameTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(2, 0, 3));
