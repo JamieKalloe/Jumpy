@@ -64,11 +64,19 @@ public class Player extends TiledSprite implements CollidableEntity {
     }
 
     /**
-     * Ads a specific amount of coins to the current amount of coins.
+     * Adds a specific amount of coins to the current amount of coins.
      * @param coins amount.
      */
     public void addCoins(int coins) {
         this.coins += coins;
+    }
+
+    /**
+     * Sets a specific amount of coins as the current amount of coins.
+     * @param coins amount.
+     */
+    public void setCoins(int coins) {
+        this.coins = coins;
     }
 
     /**

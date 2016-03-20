@@ -34,6 +34,7 @@ import org.andengine.input.sensor.acceleration.AccelerationData;
 import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.adt.align.HorizontalAlign;
+import org.andengine.util.debug.Debug;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -169,17 +170,25 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         if(player.getY() < platforms.getFirst().getY() && !platforms.isEmpty()) {
             player.die();
             cal = false;
+            pointsAchieved = 0;
         }
 
         //Shows a message if the player dies and save the high score if achieved.
         if(player.isDead()) {
             endGameText.setVisible(true);
 
+            //Saves the score of the player, if a new high score is achieved.
             if(score > activity.getHighScore()) {
                 activity.setHighScore(score);
+                score = 0;
             }
 
-            //TODO: add coins to player, via activity
+            //Saves the amount of coins the player was awarded.
+            if(player.getCoins() > 0) {
+                activity.setCoins(activity.getCoins() + player.getCoins());
+                Debug.i("Saved " + player.getCoins() + " amount of coins\nTotal amount:" + activity.getCoins());
+                player.setCoins(0);
+            }
         }
 
         while(camera.getYMax() > platforms.getLast().getY()) {
@@ -466,6 +475,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             if(pointsAchieved >= coinsThreshold) {
                 pointsAchieved = 0;
                 player.addCoins(10);
+                Debug.i("+10 coins were awarded");
             }
         }
     }

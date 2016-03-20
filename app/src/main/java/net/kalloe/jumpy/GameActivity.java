@@ -187,7 +187,23 @@ public class GameActivity extends BaseGameActivity {
         return settings.getInt(KEY_HIGHSCORE, 0);
     }
 
-    
+    /**
+     * Sets (saves) the coins the player was awarded.
+     * @param coins coins the player was awarded.
+     */
+    public void setCoins(int coins) {
+        SharedPreferences.Editor settingsEditor = settings.edit();
+        settingsEditor.putInt(KEY_COINS, coins);
+        settingsEditor.commit();
+    }
+
+    /**
+     * Retrieves the coins of the player.
+     * @return int coins.
+     */
+    public int getCoins() {
+        return settings.getInt(KEY_COINS, 0);
+    }
 
     /**
      * Creates and shows a Toast message using the Android Toast widget.
