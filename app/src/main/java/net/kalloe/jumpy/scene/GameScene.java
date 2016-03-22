@@ -64,7 +64,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     private boolean cal = true;
     private int oldScore = 0;
     private int pointsAchieved = 0;
-    private final int coinsThreshold = 5000;
+    private final int coinsThreshold = 1000;
 
 
     private Text endGameText;
@@ -408,7 +408,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         scoreText.setAnchorCenter(0, 1);
 
         //Creates a new text label for the amount of coins, using the font from the ResourceManager.
-        coinsText = new Text(94, 700, res.font, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+        coinsText = new Text(93, 700, res.font, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 
         //Create a new sprite for the coin icon.
         Sprite coinSprite = new Sprite(40, 700, res.coinTextureRegion, vbom);
@@ -483,6 +483,11 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
                 pointsAchieved = 0;
                 player.addCoins((int)((Math.random() * (10 - 1)) + 1) * 10);
                 coinsText.setText(String.valueOf(player.getCoins()));
+
+                //Adjust placement of Text object, when the coins score increases.
+                if(coinsText.getText().length() > 2) {
+                    coinsText.setPosition(93 + (((coinsText.getText().length() - 2) * 13)),700);
+                }
             }
         }
     }
