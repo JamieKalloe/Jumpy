@@ -51,9 +51,7 @@ public class ResourceManager {
     private BuildableBitmapTextureAtlas gameTextureAtlas;
 
     //Sounds
-    public Sound soundFall;
-    public Sound soundJump;
-    public Sound soundHit;
+    public Sound soundFall, soundJump, soundHit, soundCash;
 
     //Music
     public Music music;
@@ -141,6 +139,7 @@ public class ResourceManager {
             soundJump = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "jumping.ogg");
             soundFall = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "falling.ogg");
             soundHit = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "hit.ogg");
+            soundCash = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "cash.ogg");
 
             //Loads the audio file data (form the mfx directory) into the music object.
             music = MusicFactory.createMusicFromAsset(activity.getMusicManager(), activity, "music.ogg");

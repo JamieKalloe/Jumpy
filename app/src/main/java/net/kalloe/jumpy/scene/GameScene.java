@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import net.kalloe.jumpy.GameActivity;
 import net.kalloe.jumpy.MusicPlayer;
+import net.kalloe.jumpy.ResourceManager;
 import net.kalloe.jumpy.SceneManager;
 import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.Enemy;
@@ -483,6 +484,9 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
                 pointsAchieved = 0;
                 player.addCoins((int)((Math.random() * (10 - 1)) + 1) * 10);
                 coinsText.setText(String.valueOf(player.getCoins()));
+
+                //Play cash sound
+                ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
 
                 //Adjust placement of Text object, when the coins score increases.
                 if(coinsText.getText().length() > 2) {
