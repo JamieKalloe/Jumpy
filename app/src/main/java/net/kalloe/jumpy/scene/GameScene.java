@@ -65,7 +65,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     private boolean cal = true;
     private int oldScore = 0;
     private int pointsAchieved = 0;
-    private final int coinsThreshold = 1000;
+    private final int coinsThreshold = 4000;
 
 
     private Text endGameText;
