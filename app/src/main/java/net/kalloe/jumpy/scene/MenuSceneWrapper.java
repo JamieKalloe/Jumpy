@@ -1,5 +1,7 @@
 package net.kalloe.jumpy.scene;
 
+import android.widget.Toast;
+
 import net.kalloe.jumpy.SceneManager;
 
 import org.andengine.entity.particle.BatchedSpriteParticleSystem;
@@ -23,7 +25,7 @@ import org.andengine.util.adt.color.Color;
 public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenuItemClickListener {
 
     //Variables
-    private IMenuItem playMenuItem;
+    private IMenuItem playMenuItem, shopMenuItem;
     private MenuSceneTextItemDecorator soundMenuItem;
 
     @Override
@@ -48,11 +50,13 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
 
         //Initializes the Menu Items (passes the font, text and colors).
         playMenuItem = new ColorMenuItemDecorator(new TextMenuItem(0, res.font, "PLAY", vbom), Color.CYAN, Color.WHITE);
+        shopMenuItem = new ColorMenuItemDecorator(new TextMenuItem(2, res.font, "SHOP", vbom), Color.CYAN, Color.WHITE);
         soundMenuItem = new MenuSceneTextItemDecorator(new TextMenuItem(1, res.font, getSoundLabel(), vbom), Color.CYAN, Color.WHITE);
 
         //Adds the menu items to the game's menu scene.
         menuScene.addMenuItem(playMenuItem);
         menuScene.addMenuItem(soundMenuItem);
+        menuScene.addMenuItem(shopMenuItem);
 
         //Enables animation of the game's menu scene.
         menuScene.buildAnimations();
@@ -69,7 +73,7 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
         Text highScoreText = new Text(240, 685, res.font, String.valueOf(activity.getHighScore()), vbom);
 
         //Retrieves the player's coins and displays it with a sprite and text object.
-        Sprite coinSprite = new Sprite(240, 590, res.coinTextureRegion, vbom);
+        Sprite coinSprite = new Sprite(240, 550, res.coinTextureRegion, vbom);
         Text coinText = new Text(240, 540, res.font, String.valueOf(activity.getCoins()), vbom);
 
         //Attach all the text / sprite objects to the menu scene HUD.
@@ -124,8 +128,28 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
                 soundMenuItem.setText(getSoundLabel());
                 return true;
 
+            //The user opens the shop
+            case 2:
+                showToast("Shop was selected", Toast.LENGTH_SHORT);
+                return true;
+
             default:
                 return false;
         }
+    }
+
+    /**
+     * Creates and shows a Toast message using the Android Toast widget.
+     * A Toast is run on te UI Thread which every activity has.
+     * @param text Text to be displayed by the Toast.
+     * @param length Length of the Toast to be displayed.
+     */
+    public void showToast(final String text, final int length) {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(activity, text, length).show();
+            }
+        });
     }
 }
