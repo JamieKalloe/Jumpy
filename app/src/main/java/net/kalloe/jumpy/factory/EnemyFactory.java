@@ -68,4 +68,29 @@ public class EnemyFactory {
 
         return enemy;
     }
+
+    /**
+     * Creates a new slime enemy entity with the specified x and y coordinates.
+     * @param x x coordinates of the slime enemy.
+     * @param y y coordinates of the slime enemy.
+     * @return new instance of the slime enemy entity.
+     */
+    public Enemy createSlimeEnemy(float x, float y) {
+        //Create a new instance of the enemy entity with the given x and y coordinates, setting the sprite.
+        Enemy enemy = new Enemy((x + 20), (y + 10), ResourceManager.getInstance().slimeEnemyTextureRegion, vbom);
+
+        //Creates the physical Body of the Enemy entity (resembles the sprite, optimized shape for collision).
+        Body enemyBody = PhysicsFactory.createBoxBody(physicsWorld, enemy, BodyDef.BodyType.KinematicBody, ENEMY_FIXTURE);
+
+        //Binds the Enemy object to the physics body of the enemy in the physics world (whole simulation).
+        enemyBody.setUserData(enemy);
+        physicsWorld.registerPhysicsConnector(new PhysicsConnector(enemy, enemyBody));
+
+        enemy.setBody(enemyBody);
+//        enemyBody.setLinearVelocity(-1, 0);
+        enemy.animate(75);
+        enemy.setZIndex(1);
+
+        return enemy;
+    }
 }
