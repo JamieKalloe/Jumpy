@@ -16,7 +16,6 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.sprite.UncoloredSprite;
 import org.andengine.entity.text.Text;
 import org.andengine.util.adt.color.Color;
-import org.andengine.util.debug.Debug;
 
 /**
  * Created by Jamie on 12-3-2016.
@@ -129,7 +128,7 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
 
             //The user opens the shop
             case 2:
-                Debug.i("shop was clicked");
+                SceneManager.getInstance().showShopScene();
                 return true;
 
             default:

@@ -6,6 +6,7 @@ import net.kalloe.jumpy.scene.AbstractScene;
 import net.kalloe.jumpy.scene.GameScene;
 import net.kalloe.jumpy.scene.LoadingScene;
 import net.kalloe.jumpy.scene.MenuSceneWrapper;
+import net.kalloe.jumpy.scene.ShopScene;
 import net.kalloe.jumpy.scene.SplashScene;
 
 import org.andengine.util.debug.Debug;
@@ -138,6 +139,31 @@ public class SceneManager {
                 MenuSceneWrapper menuSceneWrapper = new MenuSceneWrapper();
                 menuSceneWrapper.populate();
                 setCurrentScene(menuSceneWrapper);
+
+                //Destroys the previous scene to free memory from the engine.
+                previousScene.destory();
+
+                return null;
+            }
+        }.execute();
+    }
+
+    /**
+     * Creates a extra thread to initialize and start a new instance of the shop scene.
+     */
+    public void showShopScene() {
+        //Gets the current scene and sets the loading as the current scene.
+        final AbstractScene previousScene = getCurrentScene();
+        setCurrentScene(loadingScene);
+
+        //Creates a new async task (background thread) to initialize and start the menu scene.
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                //Creates and initializes a new instance of the menu scene.
+                ShopScene shopScene = new ShopScene();
+                shopScene.populate();
+                setCurrentScene(shopScene);
 
                 //Destroys the previous scene to free memory from the engine.
                 previousScene.destory();
