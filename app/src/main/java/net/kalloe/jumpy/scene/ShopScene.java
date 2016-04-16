@@ -28,7 +28,7 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
 
         //Initializes the Menu (shop) Items (passes the font, text and colors).
         option1 = new ColorMenuItemDecorator(new TextMenuItem(0, res.font, "1 EXTRA LIFE 1000G", vbom), Color.CYAN, Color.WHITE);
-        amountGold = new MenuSceneTextItemDecorator(new TextMenuItem(1, res.font, "GOLD: " +String.valueOf(res.activity.getCoins()), vbom), Color.CYAN, Color.WHITE);
+        amountGold = new MenuSceneTextItemDecorator(new TextMenuItem(1, res.font, "GOLD: " + String.valueOf(res.activity.getCoins()), vbom), Color.CYAN, Color.WHITE);
 
         //Adds the menu (shop) items to the game's menu scene.
         shopScene.addMenuItem(amountGold);
