@@ -79,8 +79,15 @@ public class EnemyFactory {
      * @return new instance of the slime enemy entity.
      */
     public Enemy createSlimeEnemy(float x, float y) {
+        int platformSide = random.nextInt((40 - -40) + 1) + -40;
+
         //Create a new instance of the enemy entity with the given x and y coordinates, setting the sprite.
-        Enemy enemy = new Enemy((x + random.nextInt((40 - -40) + 1) + -40), (y - 5), ResourceManager.getInstance().slimeEnemyTextureRegion, vbom);
+        Enemy enemy = new Enemy((x + platformSide), (y - 5), ResourceManager.getInstance().slimeEnemyTextureRegion, vbom);
+
+        //Set the way the enemy is facing
+        if(platformSide > 0) {
+            enemy.setFlippedHorizontal(true);
+        }
 
         //Creates the physical Body of the Enemy entity (resembles the sprite, optimized shape for collision).
         Body enemyBody = PhysicsFactory.createBoxBody(physicsWorld, enemy, BodyDef.BodyType.KinematicBody, ENEMY_FIXTURE);
