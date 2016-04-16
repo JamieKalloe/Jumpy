@@ -105,7 +105,7 @@ public class ResourceManager {
                 activity.getAssets(), "enemy.png", 1, 2);
 
         //Creates the slime enemy (atlas) texture, from the slimeenemy.png, from the GameTextureAtlas object.
-        enemyTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(gameTextureAtlas,
+        slimeEnemyTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(gameTextureAtlas,
                 activity.getAssets(), "slimeenemy.png", 1, 2);
 
         //Creates the platform (atlas) texture, from the platform.png, from the GameTextureAtlas object.

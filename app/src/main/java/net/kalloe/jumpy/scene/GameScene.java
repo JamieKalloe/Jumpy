@@ -213,6 +213,10 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             addPlatform(tx, ty, moving);
             added = true;
 
+            if(rand.nextFloat() < 0.2 && !moving) {
+                addSlimeEnemy(tx, ty);
+            }
+
             if(added) {
                 sortChildren();
             }
@@ -237,7 +241,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     public void onAccelerationChanged(final AccelerationData pAccelerationData) {
         //The following code is responsible for calculating the direction the player is facing.
         //According to the result, the player will turn left or right (the sprite will be flipped).
-        if(Math.abs(pAccelerationData.getX() - lastX) > 0.5) {
+        if (Math.abs(pAccelerationData.getX() - lastX) > 0.5) {
             if(pAccelerationData.getX() > 0) {
                 player.turnRight();
             } else {
@@ -365,6 +369,16 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
     private void addEnemy(float tx, float ty) {
         Enemy enemy = EnemyFactory.getInstance().createEnemy(tx, ty);
+
+        //Attaches the enemy to the scene.
+        attachChild(enemy);
+
+        //Adds the enemy to the list of enemies.
+        enemies.add(enemy);
+    }
+
+    private void addSlimeEnemy(float tx, float ty) {
+        Enemy enemy = EnemyFactory.getInstance().createSlimeEnemy(tx, ty);
 
         //Attaches the enemy to the scene.
         attachChild(enemy);

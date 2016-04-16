@@ -56,8 +56,10 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
 
         switch (pMenuItem.getID()) {
             case 0:
-                showToast("1 Life was purchased for 1000 gold", Toast.LENGTH_LONG);
-                res.activity.setCoins((res.activity.getCoins() - 1000));
+                if(res.activity.getCoins() >= 1000) {
+                    showToast("1 Life was purchased for 1000 gold", Toast.LENGTH_LONG);
+                    res.activity.setCoins((res.activity.getCoins() - 1000));
+                }
                 return true;
 
             default:

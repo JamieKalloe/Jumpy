@@ -12,6 +12,8 @@ import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
+import java.util.Random;
+
 /**
  * Created by Jamie on 5-3-2016.
  */
@@ -22,6 +24,7 @@ public class EnemyFactory {
     private static EnemyFactory INSTANCE = new EnemyFactory();
     private PhysicsWorld physicsWorld;
     private VertexBufferObjectManager vbom;
+    private Random random = new Random();
 
     //Singleton
     private EnemyFactory() {}
@@ -77,7 +80,7 @@ public class EnemyFactory {
      */
     public Enemy createSlimeEnemy(float x, float y) {
         //Create a new instance of the enemy entity with the given x and y coordinates, setting the sprite.
-        Enemy enemy = new Enemy((x + 20), (y + 10), ResourceManager.getInstance().slimeEnemyTextureRegion, vbom);
+        Enemy enemy = new Enemy((x + random.nextInt((40 - -40) + 1) + -40), (y - 5), ResourceManager.getInstance().slimeEnemyTextureRegion, vbom);
 
         //Creates the physical Body of the Enemy entity (resembles the sprite, optimized shape for collision).
         Body enemyBody = PhysicsFactory.createBoxBody(physicsWorld, enemy, BodyDef.BodyType.KinematicBody, ENEMY_FIXTURE);
@@ -88,7 +91,7 @@ public class EnemyFactory {
 
         enemy.setBody(enemyBody);
 //        enemyBody.setLinearVelocity(-1, 0);
-        enemy.animate(75);
+//        enemy.animate(75);
         enemy.setZIndex(1);
 
         return enemy;
