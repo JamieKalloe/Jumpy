@@ -38,6 +38,7 @@ public class ResourceManager {
     public ITiledTextureRegion playerTextureRegion;
     public ITiledTextureRegion lifeTextureRegion;
     public ITiledTextureRegion enemyTextureRegion;
+    public ITiledTextureRegion slimeEnemyTextureRegion;
     public ITextureRegion platformTextureRegion;
     public ITextureRegion cloud1TextureRegion;
     public ITextureRegion cloud2TextureRegion;
@@ -102,6 +103,10 @@ public class ResourceManager {
         //Creates the enemy (atlas) texture, from the enemy.png, from the GameTextureAtlas object.
         enemyTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(gameTextureAtlas,
                 activity.getAssets(), "enemy.png", 1, 2);
+
+        //Creates the slime enemy (atlas) texture, from the slimeenemy.png, from the GameTextureAtlas object.
+        enemyTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(gameTextureAtlas,
+                activity.getAssets(), "slimeenemy.png", 1, 2);
 
         //Creates the platform (atlas) texture, from the platform.png, from the GameTextureAtlas object.
         platformTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
