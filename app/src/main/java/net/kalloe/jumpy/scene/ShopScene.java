@@ -8,6 +8,8 @@ import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.TextMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ColorMenuItemDecorator;
+import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.Text;
 import org.andengine.util.adt.color.Color;
 
 /**
@@ -16,29 +18,43 @@ import org.andengine.util.adt.color.Color;
 public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemClickListener {
 
     //Variables
-    private IMenuItem option1;
-    private MenuSceneTextItemDecorator amountGold;
+    private IMenuItem itemShield, shopMenuItem;
+    private MenuSceneTextItemDecorator soundMenuItem;
+    private Text coinText;
 
     @Override
     public void populate() {
 
         //Creates a new MenuScene object and sets the background color.
-        MenuScene shopScene = new MenuScene(camera);
-        shopScene.getBackground().setColor(0.82f, 0.96f, 0.97f);
+        MenuScene menuScene = new MenuScene(camera);
+        menuScene.getBackground().setColor(0.82f, 0.96f, 0.97f);
 
-        //Initializes the Menu (shop) Items (passes the font, text and colors).
-        option1 = new ColorMenuItemDecorator(new TextMenuItem(0, res.font, "1 EXTRA LIFE 1000G", vbom), Color.CYAN, Color.WHITE);
-        amountGold = new MenuSceneTextItemDecorator(new TextMenuItem(1, res.font, "GOLD: " + String.valueOf(res.activity.getCoins()), vbom), Color.CYAN, Color.WHITE);
+        //Initializes the Menu Items (passes the font, text and colors).
+        itemShield = new ColorMenuItemDecorator(new TextMenuItem(0, res.font, "SHIELD", vbom), Color.CYAN, Color.WHITE);
+        shopMenuItem = new ColorMenuItemDecorator(new TextMenuItem(2, res.font, "POWER UP 1", vbom), Color.CYAN, Color.WHITE);
 
-        //Adds the menu (shop) items to the game's menu scene.
-        shopScene.addMenuItem(amountGold);
-        shopScene.addMenuItem(option1);
+        //Adds the menu items to the game's menu scene.
+        menuScene.addMenuItem(itemShield);
+        menuScene.addMenuItem(shopMenuItem);
 
-        //Make it fancy
-        shopScene.setBackgroundEnabled(true);
-        shopScene.setOnMenuItemClickListener(this);
+        //Enables animation of the game's menu scene.
+        menuScene.buildAnimations();
+        menuScene.setBackgroundEnabled(true);
+        menuScene.setOnMenuItemClickListener(this);
 
-        setChildScene(shopScene);
+        //Creates and attaches a player sprite into the game's menu scene.
+//        Sprite player = new Sprite(240, 230, res.playerTextureRegion, vbom);
+//        menuScene.attachChild(player);
+
+        //Retrieves the player's coins and displays it with a sprite and text object.
+        Sprite coinSprite = new Sprite(240, 600, res.coinTextureRegion, vbom);
+        coinText = new Text(240, 550, res.font, String.valueOf(activity.getCoins()), vbom);
+
+        //Attach all the text / sprite objects to the menu scene HUD.
+        menuScene.attachChild(coinSprite);
+        menuScene.attachChild(coinText);
+
+        setChildScene(menuScene);
     }
 
     @Override
@@ -54,17 +70,30 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
     @Override
     public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY) {
 
-        switch (pMenuItem.getID()) {
-            case 0:
-                if(res.activity.getCoins() >= 1000) {
-                    showToast("1 Life was purchased for 1000 gold", Toast.LENGTH_LONG);
-                    res.activity.setCoins((res.activity.getCoins() - 1000));
-                }
-                return true;
+        try {
+            switch (pMenuItem.getID()) {
+                case 0:
+                    if (res.activity.getCoins() >= 1000) {
+                        showToast("1 Shield was purchased for 10 gold", Toast.LENGTH_LONG);
+                        res.activity.setCoins((res.activity.getCoins() - 10));
+                        //TODO: make it, object / item . getPrice();, set setCoins in finally
+                    }
+                    return true;
 
-            default:
-                return false;
+                default:
+                    return false;
+            }
         }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        finally {
+            coinText.setText(String.valueOf(activity.getCoins()));
+        }
+
+        return false;
     }
 
     @Override
