@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import net.kalloe.jumpy.ResourceManager;
 import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.Enemy;
+import net.kalloe.jumpy.entity.KillableEntity;
 import net.kalloe.jumpy.entity.Platform;
 import net.kalloe.jumpy.entity.Player;
 
@@ -34,11 +35,17 @@ public class CollisionContactListener implements ContactListener {
      */
     @Override
     public void beginContact(Contact contact) {
-        //Check ifs the player collides with the enemy, if so; the player dies.
         if(checkContact(contact, Player.TYPE, Enemy.TYPE)) {
             if(player.getHealth() != 0) {
                 ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundHit);
                 player.dealDamage();
+
+                //Kill the collided enemy.
+                if(!(contact.getFixtureA().getBody().getUserData() instanceof KillableEntity)) {
+                    ((KillableEntity) contact.getFixtureB().getBody().getUserData()).die();
+                } else {
+                    ((KillableEntity) contact.getFixtureA().getBody().getUserData()).die();
+                }
             } else {
                 player.die();
             }
@@ -66,7 +73,7 @@ public class CollisionContactListener implements ContactListener {
             //On contact (after the fall) the platform propels the player upwards.
             //Also a sound is played which resembles the jump action of the player.
             if(!player.isDead() && player.getBody().getLinearVelocity().y < 0) {
-                player.getBody().setLinearVelocity(new Vector2(0, 30));
+                player.getBody().setLinearVelocity(new Vector2(0, 34));
                 ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundJump);
             } else {
                 contact.setEnabled(false);

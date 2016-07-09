@@ -1,5 +1,6 @@
 package net.kalloe.jumpy.entity;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 import org.andengine.entity.sprite.AnimatedSprite;
@@ -9,7 +10,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 /**
  * Created by Jamie on 5-3-2016.
  */
-public class Enemy extends AnimatedSprite implements CollidableEntity {
+public class Enemy extends AnimatedSprite implements CollidableEntity, KillableEntity {
 
     //Variables
     public static final String TYPE = "ENEMY";
@@ -57,5 +58,10 @@ public class Enemy extends AnimatedSprite implements CollidableEntity {
     @Override
     public String getType() {
         return TYPE;
+    }
+
+    @Override
+    public void die() {
+        this.body.setLinearVelocity(new Vector2(0, 45));
     }
 }
