@@ -67,7 +67,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     private int pointsAchieved = 0;
     private final int coinsThreshold = 4000;
 
-
     private Text endGameText;
 
     /**
@@ -517,21 +516,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         lifePoints.setCurrentTileIndex(player.getHealth());
     }
 
-    /**
-     * Returns a string representation of the given amount of lifes/
-     * @param lifes int amount
-     * @return
-     */
-    public String getLives(int lifes) {
-        String amount = "";
-        for(int i = 0; i < lifes; i++) {
-            amount += "I";
-        }
-
-        return amount;
-    }
-
-    //Clear game
     private void clearGame() {
         setIgnoreUpdate(true);
         unregisterUpdateHandler(physicsWorld);

@@ -2,6 +2,7 @@ package net.kalloe.jumpy.scene;
 
 import android.widget.Toast;
 
+import net.kalloe.jumpy.ResourceManager;
 import net.kalloe.jumpy.SceneManager;
 
 import org.andengine.entity.scene.menu.MenuScene;
@@ -74,7 +75,7 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
             switch (pMenuItem.getID()) {
                 case 0:
                     if (res.activity.getCoins() >= 1000) {
-                        showToast("1 Shield was purchased for 10 gold", Toast.LENGTH_LONG);
+
                         res.activity.setCoins((res.activity.getCoins() - 10));
                         //TODO: make it, object / item . getPrice();, set setCoins in finally
                     }
@@ -90,7 +91,10 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
         }
 
         finally {
+            ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
             coinText.setText(String.valueOf(activity.getCoins()));
+            showToast("1 Shield was purchased for 10 gold", Toast.LENGTH_LONG);
+            //TODO: purchased 1 +"  " + powerUp.getName() + " for " + powerUp.getPrice()
         }
 
         return false;

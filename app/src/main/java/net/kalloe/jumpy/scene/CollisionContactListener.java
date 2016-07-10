@@ -35,6 +35,7 @@ public class CollisionContactListener implements ContactListener {
      */
     @Override
     public void beginContact(Contact contact) {
+        //TODO: extend check for powerup shield, (e.g !player.getPowerUp().getType().equals(PowerUp.SHIELD))
         if(checkContact(contact, Player.TYPE, Enemy.TYPE)) {
             if(player.getHealth() != 0) {
                 ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundHit);
@@ -50,6 +51,7 @@ public class CollisionContactListener implements ContactListener {
                 player.die();
             }
         }
+        //TODO: extend for in-game powerups / cash
     }
 
     /**
@@ -73,7 +75,7 @@ public class CollisionContactListener implements ContactListener {
             //On contact (after the fall) the platform propels the player upwards.
             //Also a sound is played which resembles the jump action of the player.
             if(!player.isDead() && player.getBody().getLinearVelocity().y < 0) {
-                player.getBody().setLinearVelocity(new Vector2(0, 34));
+                player.getBody().setLinearVelocity(new Vector2(0, 33));
                 ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundJump);
             } else {
                 contact.setEnabled(false);

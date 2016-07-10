@@ -60,6 +60,9 @@ public class Enemy extends AnimatedSprite implements CollidableEntity, KillableE
         return TYPE;
     }
 
+    /**
+     * Removes the enemy from the game.
+     */
     @Override
     public void die() {
         this.body.setLinearVelocity(new Vector2(0, 45));
