@@ -7,6 +7,7 @@ import net.kalloe.jumpy.entity.CollectableEntity;
 import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.Player;
 import net.kalloe.jumpy.entity.Utils;
+import net.kalloe.jumpy.shop.LifeData;
 import net.kalloe.jumpy.shop.ShopData;
 
 import org.andengine.entity.sprite.Sprite;
@@ -25,6 +26,7 @@ public class Life extends Sprite implements CollidableEntity, CollectableEntity 
 
     public Life(float pX, float pY, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
+        this.shopData = new LifeData();
     }
 
     @Override
@@ -66,6 +68,8 @@ public class Life extends Sprite implements CollidableEntity, CollectableEntity 
         //If the health of the player is not full, the player will gain 1 health.
         if(player.getHealth() != 3) {
             player.setHealth((player.getHealth() + 1));
+        } else {
+            player.addCoins((shopData.getPrice()));
         }
     }
 }

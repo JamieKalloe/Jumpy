@@ -55,11 +55,13 @@ public class CollisionContactListener implements ContactListener {
         }
 
         if(checkContact(contact, Player.TYPE, Life.TYPE)) {
-            ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundHit);
-            if(!(contact.getFixtureA().getBody().getUserData() instanceof CollectableEntity)) {
-                ((CollectableEntity) contact.getFixtureB().getBody().getUserData()).obtain(this.player);
-            } else {
-                ((CollectableEntity) contact.getFixtureA().getBody().getUserData()).obtain(this.player);
+            if(!player.isDead()) {
+                ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
+                if (!(contact.getFixtureA().getBody().getUserData() instanceof CollectableEntity)) {
+                    ((CollectableEntity) contact.getFixtureB().getBody().getUserData()).obtain(this.player);
+                } else {
+                    ((CollectableEntity) contact.getFixtureA().getBody().getUserData()).obtain(this.player);
+                }
             }
         }
         //TODO: extend for in-game powerups / cash

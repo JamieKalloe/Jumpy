@@ -4,6 +4,8 @@ import android.widget.Toast;
 
 import net.kalloe.jumpy.ResourceManager;
 import net.kalloe.jumpy.SceneManager;
+import net.kalloe.jumpy.shop.LifeData;
+import net.kalloe.jumpy.shop.ShopData;
 
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
@@ -23,6 +25,8 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
     private MenuSceneTextItemDecorator soundMenuItem;
     private Text coinText;
 
+    private final int lifeItem = 0;
+
     @Override
     public void populate() {
 
@@ -31,7 +35,7 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
         menuScene.getBackground().setColor(0.82f, 0.96f, 0.97f);
 
         //Initializes the Menu Items (passes the font, text and colors).
-        itemShield = new ColorMenuItemDecorator(new TextMenuItem(0, res.font, "SHIELD", vbom), Color.CYAN, Color.WHITE);
+        itemShield = new ColorMenuItemDecorator(new TextMenuItem(lifeItem, res.font, "SHIELD", vbom), Color.CYAN, Color.WHITE);
         shopMenuItem = new ColorMenuItemDecorator(new TextMenuItem(2, res.font, "POWER UP 1", vbom), Color.CYAN, Color.WHITE);
 
         //Adds the menu items to the game's menu scene.
@@ -70,14 +74,13 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
 
     @Override
     public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY) {
-
+        ShopData shopItem = null;
         try {
             switch (pMenuItem.getID()) {
-                case 0:
-                    if (res.activity.getCoins() >= 1000) {
-
-                        res.activity.setCoins((res.activity.getCoins() - 10));
-                        //TODO: make it, object / item . getPrice();, set setCoins in finally
+                case lifeItem:
+                    shopItem = new LifeData();
+                    if (res.activity.getCoins() >= shopItem.getPrice()) {
+                        res.activity.setCoins((res.activity.getCoins() - shopItem.getPrice()));
                     }
                     return true;
 
@@ -91,10 +94,11 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
         }
 
         finally {
-            ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
-            coinText.setText(String.valueOf(activity.getCoins()));
-            showToast("1 Shield was purchased for 10 gold", Toast.LENGTH_LONG);
-            //TODO: purchased 1 +"  " + powerUp.getName() + " for " + powerUp.getPrice()
+            if(shopItem != null) {
+                ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
+                coinText.setText(String.valueOf(activity.getCoins()));
+                showToast("1 " + shopItem.getName() + " was purchased for " + shopItem.getPrice() + " gold", Toast.LENGTH_LONG);
+            }
         }
 
         return false;

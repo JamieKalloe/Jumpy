@@ -10,7 +10,8 @@ public class LifeData implements ShopData {
 
 
     public LifeData() {
-
+        this.name = "Life";
+        this.price = 10000;
     }
 
     @Override
