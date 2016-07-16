@@ -101,6 +101,14 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             return true;
         }
 
+//        if(pSceneTouchEvent.isActionUp() && !player.isDead()) {
+//            if(pSceneTouchEvent.getX() > 400 && pSceneTouchEvent.getY() > 700) {
+//                Log.i("toucharea", "yes");
+//            } else {
+//                Log.i("toucharea", "no");
+//            }
+//        }
+
         return false;
     }
 
