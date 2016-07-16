@@ -8,22 +8,22 @@ import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.Utils;
 import net.kalloe.jumpy.shop.ShopData;
 
-import org.andengine.entity.sprite.AnimatedSprite;
-import org.andengine.opengl.texture.region.ITiledTextureRegion;
+import org.andengine.entity.sprite.Sprite;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 /**
  * Created by Jamie on 16-7-2016.
  */
-public class Life extends AnimatedSprite implements CollidableEntity, CollectableEntity {
+public class Life extends Sprite implements CollidableEntity, CollectableEntity {
 
     //Variables
     public static final String TYPE = "COLLECTABLE";
     private Body body;
     private ShopData shopData;
 
-    public Life(float pX, float pY, ITiledTextureRegion pITiledTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
-        super(pX, pY, pITiledTextureRegion, pVertexBufferObjectManager);
+    public Life(float pX, float pY, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
+        super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
     }
 
     @Override
