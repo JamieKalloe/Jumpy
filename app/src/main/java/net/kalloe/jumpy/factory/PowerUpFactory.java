@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 import net.kalloe.jumpy.ResourceManager;
 import net.kalloe.jumpy.entity.powerups.Life;
+import net.kalloe.jumpy.entity.powerups.MysteryBox;
 
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
@@ -57,5 +58,24 @@ public class PowerUpFactory {
         life.setZIndex(1);
 
         return life;
+    }
+
+    public MysteryBox createMysteryBox(float x, float y) {
+        int platformSide = random.nextInt((40 - -40) + 1) + -40;
+
+        //Create a new instance of the Life PowerUp entity with the given x and y coordinates, setting the sprite.
+        MysteryBox mysteryBox = new MysteryBox((x + platformSide), (y + 3), ResourceManager.getInstance().mysteryboxTextureRegion, vbom);
+
+        //Creates the physical Body of the Life PowerUp entity (resembles the sprite, optimized shape for collision).
+        Body mysteryBoxBody = PhysicsFactory.createBoxBody(physicsWorld, mysteryBox, BodyDef.BodyType.KinematicBody, POWER_UP_FIXTURE);
+
+        //Binds the Life object to the physics body of the life in the physics world (whole simulation).
+        mysteryBoxBody.setUserData(mysteryBox);
+        physicsWorld.registerPhysicsConnector(new PhysicsConnector(mysteryBox, mysteryBoxBody));
+
+        mysteryBox.setBody(mysteryBoxBody);
+        mysteryBox.setZIndex(1);
+
+        return mysteryBox;
     }
 }

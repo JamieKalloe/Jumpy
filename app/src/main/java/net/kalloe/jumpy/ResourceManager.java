@@ -44,6 +44,7 @@ public class ResourceManager {
     public ITextureRegion cloud2TextureRegion;
     public ITextureRegion coinTextureRegion;
     public ITextureRegion mushroomTextureRegion;
+    public ITextureRegion mysteryboxTextureRegion;
 
     //Splash scene graphics
     public ITextureRegion splashTextureRegion;
@@ -126,6 +127,9 @@ public class ResourceManager {
 
         mushroomTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
                 activity.getAssets(), "mushroompowerup.png");
+
+        mysteryboxTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
+                activity.getAssets(), "boxpowerup.png");
 
         try {
             gameTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(2, 0, 3));

@@ -13,7 +13,6 @@ import net.kalloe.jumpy.entity.Enemy;
 import net.kalloe.jumpy.entity.KillableEntity;
 import net.kalloe.jumpy.entity.Platform;
 import net.kalloe.jumpy.entity.Player;
-import net.kalloe.jumpy.entity.powerups.Life;
 
 /**
  * Created by Jamie on 5-3-2016.
@@ -54,9 +53,8 @@ public class CollisionContactListener implements ContactListener {
             }
         }
 
-        if(checkContact(contact, Player.TYPE, Life.TYPE)) {
+        if(checkContact(contact, Player.TYPE, "COLLECTABLE")) {
             if(!player.isDead()) {
-                ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
                 if (!(contact.getFixtureA().getBody().getUserData() instanceof CollectableEntity)) {
                     ((CollectableEntity) contact.getFixtureB().getBody().getUserData()).obtain(this.player);
                 } else {

@@ -5,6 +5,7 @@ import android.widget.Toast;
 import net.kalloe.jumpy.ResourceManager;
 import net.kalloe.jumpy.SceneManager;
 import net.kalloe.jumpy.shop.LifeData;
+import net.kalloe.jumpy.shop.MysteryBoxData;
 import net.kalloe.jumpy.shop.ShopData;
 
 import org.andengine.entity.scene.menu.MenuScene;
@@ -21,11 +22,12 @@ import org.andengine.util.adt.color.Color;
 public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemClickListener {
 
     //Variables
-    private IMenuItem itemShield, shopMenuItem;
+    private IMenuItem itemLife, itemMysterBox;
     private MenuSceneTextItemDecorator soundMenuItem;
     private Text coinText;
 
     private final int lifeItem = 0;
+    private final int mysterBoxItem = 1;
 
     @Override
     public void populate() {
@@ -35,12 +37,12 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
         menuScene.getBackground().setColor(0.82f, 0.96f, 0.97f);
 
         //Initializes the Menu Items (passes the font, text and colors).
-        itemShield = new ColorMenuItemDecorator(new TextMenuItem(lifeItem, res.font, "SHIELD", vbom), Color.CYAN, Color.WHITE);
-        shopMenuItem = new ColorMenuItemDecorator(new TextMenuItem(2, res.font, "POWER UP 1", vbom), Color.CYAN, Color.WHITE);
+        itemLife = new ColorMenuItemDecorator(new TextMenuItem(lifeItem, res.font, "LIFE", vbom), Color.CYAN, Color.WHITE);
+        itemMysterBox = new ColorMenuItemDecorator(new TextMenuItem(mysterBoxItem, res.font, "MYSTERY BOX", vbom), Color.CYAN, Color.WHITE);
 
         //Adds the menu items to the game's menu scene.
-        menuScene.addMenuItem(itemShield);
-        menuScene.addMenuItem(shopMenuItem);
+        menuScene.addMenuItem(itemLife);
+        menuScene.addMenuItem(itemMysterBox);
 
         //Enables animation of the game's menu scene.
         menuScene.buildAnimations();
@@ -79,6 +81,13 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
             switch (pMenuItem.getID()) {
                 case lifeItem:
                     shopItem = new LifeData();
+                    if (res.activity.getCoins() >= shopItem.getPrice()) {
+                        res.activity.setCoins((res.activity.getCoins() - shopItem.getPrice()));
+                    }
+                    return true;
+
+                case mysterBoxItem:
+                    shopItem = new MysteryBoxData();
                     if (res.activity.getCoins() >= shopItem.getPrice()) {
                         res.activity.setCoins((res.activity.getCoins() - shopItem.getPrice()));
                     }
