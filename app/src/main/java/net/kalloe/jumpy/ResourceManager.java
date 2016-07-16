@@ -125,7 +125,7 @@ public class ResourceManager {
                 activity.getAssets(), "coin.png");
 
         mushroomTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
-                activity.getAssets(), "mushroom.png");
+                activity.getAssets(), "mushroompowerup.png");
 
         try {
             gameTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(2, 0, 3));

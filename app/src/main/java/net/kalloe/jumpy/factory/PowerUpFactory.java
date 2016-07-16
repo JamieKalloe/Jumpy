@@ -29,6 +29,10 @@ public class PowerUpFactory {
     //Singleton
     private PowerUpFactory() {}
 
+    public static PowerUpFactory getInstace() {
+        return INSTANCE;
+    }
+
     public void create(PhysicsWorld physicsWorld, VertexBufferObjectManager vbom) {
         this.physicsWorld = physicsWorld;
         this.vbom = vbom;

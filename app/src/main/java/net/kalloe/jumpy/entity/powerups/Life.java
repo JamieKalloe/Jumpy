@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 
 import net.kalloe.jumpy.entity.CollectableEntity;
 import net.kalloe.jumpy.entity.CollidableEntity;
+import net.kalloe.jumpy.entity.Player;
 import net.kalloe.jumpy.entity.Utils;
 import net.kalloe.jumpy.shop.ShopData;
 
@@ -58,7 +59,13 @@ public class Life extends Sprite implements CollidableEntity, CollectableEntity 
     }
 
     @Override
-    public void obtain() {
+    public void obtain(Player player) {
+        this.setVisible(false);
         this.body.setLinearVelocity(new Vector2(0, -45));
+
+        //If the health of the player is not full, the player will gain 1 health.
+        if(player.getHealth() != 3) {
+            player.setHealth((player.getHealth() + 1));
+        }
     }
 }

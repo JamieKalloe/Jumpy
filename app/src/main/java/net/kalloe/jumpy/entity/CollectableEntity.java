@@ -10,5 +10,5 @@ public interface CollectableEntity {
     ShopData getShopData();
     void setShoData(ShopData data);
 
-    void obtain();
+    void obtain(Player player);
 }

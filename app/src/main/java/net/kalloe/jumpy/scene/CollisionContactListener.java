@@ -7,11 +7,13 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 import net.kalloe.jumpy.ResourceManager;
+import net.kalloe.jumpy.entity.CollectableEntity;
 import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.Enemy;
 import net.kalloe.jumpy.entity.KillableEntity;
 import net.kalloe.jumpy.entity.Platform;
 import net.kalloe.jumpy.entity.Player;
+import net.kalloe.jumpy.entity.powerups.Life;
 
 /**
  * Created by Jamie on 5-3-2016.
@@ -49,6 +51,15 @@ public class CollisionContactListener implements ContactListener {
                 }
             } else {
                 player.die();
+            }
+        }
+
+        if(checkContact(contact, Player.TYPE, Life.TYPE)) {
+            ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundHit);
+            if(!(contact.getFixtureA().getBody().getUserData() instanceof CollectableEntity)) {
+                ((CollectableEntity) contact.getFixtureB().getBody().getUserData()).obtain(this.player);
+            } else {
+                ((CollectableEntity) contact.getFixtureA().getBody().getUserData()).obtain(this.player);
             }
         }
         //TODO: extend for in-game powerups / cash

@@ -63,6 +63,10 @@ public class Player extends TiledSprite implements CollidableEntity {
         return this.health;
     }
 
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
     /**
      * Adds a specific amount of coins to the current amount of coins.
      * @param coins amount.

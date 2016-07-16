@@ -14,9 +14,11 @@ import net.kalloe.jumpy.entity.Enemy;
 import net.kalloe.jumpy.entity.Platform;
 import net.kalloe.jumpy.entity.Player;
 import net.kalloe.jumpy.entity.VerticalParallaxEntity;
+import net.kalloe.jumpy.entity.powerups.Life;
 import net.kalloe.jumpy.factory.EnemyFactory;
 import net.kalloe.jumpy.factory.PlatformFactory;
 import net.kalloe.jumpy.factory.PlayerFactory;
+import net.kalloe.jumpy.factory.PowerUpFactory;
 
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.Entity;
@@ -53,6 +55,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     Random rand = new Random();
     private LinkedList<Platform> platforms = new LinkedList<>();
     private LinkedList<Enemy> enemies = new LinkedList<>();
+    private LinkedList<CollidableEntity> powerUps = new LinkedList<>();
     private TiledSprite lifePoints;
 
     private ParallaxBackground parallaxBackground;
@@ -85,6 +88,9 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
         //Initializes the EnemyFactory with the physicsworld and vertex buffer object manager.
         EnemyFactory.getInstance().create(physicsWorld, vbom);
+
+        //Initializes the EnemyFactory with the physicsworld and vertex buffer object manager.
+        PowerUpFactory.getInstace().create(physicsWorld, vbom);
 
         //Registers the scene to the touch listener to listen for user input.
         this.setOnSceneTouchListener(this);
@@ -144,6 +150,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
             addPlatform(240, 100, false);
             addPlatform(340, 400, false);
+//            addPowerUp(240, 200);
             addEnemy(140, 400);
 
             //Enables the accelerometer and registers the listener to the engine.
@@ -220,8 +227,14 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             addPlatform(tx, ty, moving);
             added = true;
 
+            //create a slime enemy on a newly generated platform.
             if(rand.nextFloat() < 0.2 && !moving) {
                 addSlimeEnemy(tx, ty);
+            }
+
+            //create a power up on a newly generated platform.
+            if(rand.nextFloat() < 0.4 && !moving) {
+                addPowerUp(tx, ty);
             }
 
             if(added) {
@@ -235,6 +248,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             //Clean up (remove) the unused entities from the game scene (no longer in view).
             cleanEntities(platforms, camera.getYMin());
             cleanEntities(enemies, camera.getYMin());
+            cleanEntities(powerUps, camera.getYMin());
         }
     }
 
@@ -392,6 +406,16 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
         //Adds the enemy to the list of enemies.
         enemies.add(enemy);
+    }
+
+    //TODO: make addPowerUp random (random powerup instead of just life)
+    private void addPowerUp(float tx, float ty) {
+        Life life = PowerUpFactory.getInstace().createLife(tx, ty);
+
+        //Attaches the Life PowerUp to the scene.
+        attachChild(life);
+
+        powerUps.add(life);
     }
 
     /**
