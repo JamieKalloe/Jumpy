@@ -8,7 +8,7 @@ import net.kalloe.jumpy.shop.ShopData;
 public interface CollectableEntity {
 
     ShopData getShopData();
-    void setShoData(ShopData data);
+    void setShopData(ShopData data);
 
     void obtain(Player player);
 }

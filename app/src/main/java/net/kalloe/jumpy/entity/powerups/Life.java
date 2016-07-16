@@ -56,7 +56,7 @@ public class Life extends Sprite implements CollidableEntity, CollectableEntity 
     }
 
     @Override
-    public void setShoData(ShopData data) {
+    public void setShopData(ShopData data) {
         this.shopData = data;
     }
 

@@ -233,7 +233,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             }
 
             //create a power up on a newly generated platform.
-            if(rand.nextFloat() < 0.4 && !moving) {
+            if(rand.nextFloat() < 0.05 && !moving) {
                 addPowerUp(tx, ty);
             }
 
