@@ -1,5 +1,7 @@
 package net.kalloe.jumpy.entity.powerups;
 
+import android.util.Log;
+
 import com.badlogic.gdx.physics.box2d.Body;
 
 import net.kalloe.jumpy.ResourceManager;
@@ -68,17 +70,32 @@ public class MysteryBox extends Sprite implements CollidableEntity, CollectableE
     public void obtain(Player player) {
         this.body.setActive(false);
         this.setVisible(false);
+
         if(!player.isDead()) {
-            if(!random.nextBoolean()) {
-                ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundHit);
-                if(player.getHealth() == 0) {
-                    player.die();
-                } else {
-                    player.dealDamage();
-                }
-            } else {
-                ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
-                player.addCoins(this.shopData.getPrice());
+            switch (random.nextInt(2 - 0 + 1) + 0) {
+                case 0:
+                    Log.d("powerup", "Player received a life or (random) gold");
+                    if(player.getHealth() != 3) {
+                        player.setHealth((player.getHealth() + 1));
+                        //TODO: obtain / life sound
+                    } else {
+                        player.addCoins((shopData.getPrice()));
+                        ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
+                    }
+
+                case 1:
+                    Log.d("powerup", "Player got hit, receiving 1 damage (or dying)");
+                    ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundHit);
+                    if(player.getHealth() == 0) {
+                        player.die();
+                    } else {
+                        player.dealDamage();
+                    }
+
+                case 2:
+                    Log.d("powerup", "Player received random gold");
+                    player.addCoins((shopData.getPrice()));
+                    ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
             }
         }
     }

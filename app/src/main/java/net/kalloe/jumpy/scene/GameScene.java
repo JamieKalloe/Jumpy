@@ -14,8 +14,6 @@ import net.kalloe.jumpy.entity.Enemy;
 import net.kalloe.jumpy.entity.Platform;
 import net.kalloe.jumpy.entity.Player;
 import net.kalloe.jumpy.entity.VerticalParallaxEntity;
-import net.kalloe.jumpy.entity.powerups.Life;
-import net.kalloe.jumpy.entity.powerups.MysteryBox;
 import net.kalloe.jumpy.factory.EnemyFactory;
 import net.kalloe.jumpy.factory.PlatformFactory;
 import net.kalloe.jumpy.factory.PlayerFactory;
@@ -409,18 +407,10 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         enemies.add(enemy);
     }
 
-    //TODO: make addPowerUp random (random powerup instead of just life)
     private void addPowerUp(float tx, float ty) {
-        //TODO: implement a random with numbers / switch case later, for more than 2 power ups in factory.
-        if(rand.nextBoolean()) {
-            Life life = PowerUpFactory.getInstace().createLife(tx, ty);
-            attachChild(life);
-            powerUps.add(life);
-        } else {
-            MysteryBox mysteryBox = PowerUpFactory.getInstace().createMysteryBox(tx, ty);
-            attachChild(mysteryBox);
-            powerUps.add(mysteryBox);
-        }
+        CollidableEntity powerUp = PowerUpFactory.getInstace().createRandomPowerUp(tx, ty);
+        attachChild(powerUp);
+        powerUps.add(powerUp);
     }
 
     /**

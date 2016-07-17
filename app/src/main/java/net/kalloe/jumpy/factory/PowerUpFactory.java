@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 import net.kalloe.jumpy.ResourceManager;
+import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.powerups.Life;
 import net.kalloe.jumpy.entity.powerups.MysteryBox;
 
@@ -26,6 +27,7 @@ public class PowerUpFactory {
     private PhysicsWorld physicsWorld;
     private VertexBufferObjectManager vbom;
     private Random random = new Random();
+    private String[] powerUps;
 
     //Singleton
     private PowerUpFactory() {}
@@ -37,9 +39,24 @@ public class PowerUpFactory {
     public void create(PhysicsWorld physicsWorld, VertexBufferObjectManager vbom) {
         this.physicsWorld = physicsWorld;
         this.vbom = vbom;
+        this.powerUps = new String[] {"Life", "MysteryBox"};
     }
 
-    //TODO: create method for creating random powerup
+    public String[] getAvailablePowerUps() {
+        return this.powerUps;
+    }
+
+    public CollidableEntity createRandomPowerUp(float x, float y) {
+        switch (random.nextInt((this.powerUps.length - 1) - 0 + 1) + 0) {
+            case 0:
+                return createLife(x, y);
+
+            case 1:
+                return createMysteryBox(x, y);
+        }
+
+        return createLife(x, y);
+    }
 
     public Life createLife(float x, float y) {
         int platformSide = random.nextInt((40 - -40) + 1) + -40;
