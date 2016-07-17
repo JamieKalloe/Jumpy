@@ -2,7 +2,6 @@ package net.kalloe.jumpy.entity.powerups;
 
 import android.util.Log;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 import net.kalloe.jumpy.ResourceManager;
@@ -65,8 +64,8 @@ public class Life extends Sprite implements CollidableEntity, CollectableEntity 
 
     @Override
     public void obtain(Player player) {
+        this.body.setActive(false);
         this.setVisible(false);
-        this.body.setLinearVelocity(new Vector2(0, -45));
         ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
 
         //If the health of the player is not full, the player will gain 1 health.

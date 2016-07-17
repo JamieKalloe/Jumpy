@@ -497,18 +497,24 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
      * @param bound threshold.
      */
     private void cleanEntities(List<? extends CollidableEntity> list, float bound) {
-        Iterator<? extends CollidableEntity> iterator = list.iterator();
-        while(iterator.hasNext()) {
-            CollidableEntity collidableEntity = iterator.next();
+        try {
+            Iterator<? extends CollidableEntity> iterator = list.iterator();
+            while (iterator.hasNext()) {
+                CollidableEntity collidableEntity = iterator.next();
 
-            //If the collidable entities's y coordinate is lower the the specified bound.
-            //The entity will be removed from the list, the sprite detached from the scene.
-            //And the physics body of the collidable entity is destroyed.
-            if(collidableEntity.getY() < bound) {
-                iterator.remove();
-                collidableEntity.detachSelf();
-                physicsWorld.destroyBody(collidableEntity.getBody());
+                //If the collidable entities's y coordinate is lower the the specified bound.
+                //The entity will be removed from the list, the sprite detached from the scene.
+                //And the physics body of the collidable entity is destroyed.
+                if (collidableEntity.getY() < bound) {
+                    iterator.remove();
+                    collidableEntity.detachSelf();
+                    physicsWorld.destroyBody(collidableEntity.getBody());
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            player.die();
+            showToast("Sorry! Something went wrong :(", Toast.LENGTH_SHORT);
         }
     }
 

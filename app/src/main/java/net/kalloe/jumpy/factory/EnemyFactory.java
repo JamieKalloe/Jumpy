@@ -82,7 +82,7 @@ public class EnemyFactory {
         int platformSide = random.nextInt((40 - -40) + 1) + -40;
 
         //Create a new instance of the enemy entity with the given x and y coordinates, setting the sprite.
-        Enemy enemy = new Enemy((x + platformSide), (y - 5), ResourceManager.getInstance().slimeEnemyTextureRegion, vbom);
+        Enemy enemy = new Enemy((x + platformSide), (y - 6), ResourceManager.getInstance().slimeEnemyTextureRegion, vbom);
 
         //Set the way the enemy is facing
         if(platformSide > 0) {

@@ -1,6 +1,5 @@
 package net.kalloe.jumpy.entity.powerups;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 import net.kalloe.jumpy.ResourceManager;
@@ -67,8 +66,8 @@ public class MysteryBox extends Sprite implements CollidableEntity, CollectableE
 
     @Override
     public void obtain(Player player) {
+        this.body.setActive(false);
         this.setVisible(false);
-        this.body.setLinearVelocity(new Vector2(0, -45));
         if(!player.isDead()) {
             if(!random.nextBoolean()) {
                 ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundHit);
