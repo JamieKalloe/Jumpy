@@ -1,5 +1,6 @@
 package net.kalloe.jumpy.entity;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 import org.andengine.entity.sprite.AnimatedSprite;
@@ -14,6 +15,7 @@ public class Enemy extends AnimatedSprite implements CollidableEntity, KillableE
     //Variables
     public static final String TYPE = "ENEMY";
     private Body body;
+    private boolean stationary;
 
     /**
      * Creates a new instance of the enemy entity.
@@ -59,13 +61,25 @@ public class Enemy extends AnimatedSprite implements CollidableEntity, KillableE
         return TYPE;
     }
 
+    public boolean getStationary() {
+        return this.stationary;
+    }
+
+    public void setStationary(boolean stationary) {
+        this.stationary = stationary;
+    }
+
     /**
      * Removes the enemy from the game.
      */
     @Override
     public void die() {
-        this.body.setActive(false);
-//        this.setVisible(false);
-        setCurrentTileIndex(1);
+        if(this.stationary) {
+            this.body.setActive(false);
+            setCurrentTileIndex(1);
+        } else {
+            this.setFlipped(true, true);
+            this.body.setLinearVelocity(new Vector2(0, -20));
+        }
     }
 }

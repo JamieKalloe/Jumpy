@@ -68,6 +68,7 @@ public class EnemyFactory {
         enemyBody.setLinearVelocity(-1, 0);
         enemy.animate(75);
         enemy.setZIndex(1);
+        enemy.setStationary(false);
 
         return enemy;
     }
@@ -97,9 +98,8 @@ public class EnemyFactory {
         physicsWorld.registerPhysicsConnector(new PhysicsConnector(enemy, enemyBody));
 
         enemy.setBody(enemyBody);
-//        enemyBody.setLinearVelocity(-1, 0);
-//        enemy.animate(75);
         enemy.setZIndex(1);
+        enemy.setStationary(true);
 
         return enemy;
     }
