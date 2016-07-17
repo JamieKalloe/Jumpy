@@ -82,6 +82,7 @@ public class MysteryBox extends Sprite implements CollidableEntity, CollectableE
                         player.addCoins((shopData.getPrice()));
                         ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
                     }
+                    break;
 
                 case 1:
                     Log.d("powerup", "Player got hit, receiving 1 damage (or dying)");
@@ -91,11 +92,13 @@ public class MysteryBox extends Sprite implements CollidableEntity, CollectableE
                     } else {
                         player.dealDamage();
                     }
+                    break;
 
                 case 2:
                     Log.d("powerup", "Player received random gold");
                     player.addCoins((shopData.getPrice()));
                     ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
+                    break;
             }
         }
     }
