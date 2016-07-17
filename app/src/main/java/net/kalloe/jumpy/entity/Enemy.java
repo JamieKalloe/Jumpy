@@ -65,6 +65,6 @@ public class Enemy extends AnimatedSprite implements CollidableEntity, KillableE
      */
     @Override
     public void die() {
-        this.body.setLinearVelocity(new Vector2(0, 45));
+        this.body.setLinearVelocity(new Vector2(0, -45));
     }
 }

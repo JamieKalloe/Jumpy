@@ -10,7 +10,7 @@ public class MysteryBoxData implements ShopData {
 
     public MysteryBoxData() {
         this.name = "Mystery Box";
-        this.price = (int)(Math.random() * 1000);
+        this.price = (int)(Math.random() * 10000);
     }
 
     @Override

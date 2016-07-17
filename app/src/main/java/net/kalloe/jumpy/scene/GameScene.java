@@ -247,9 +247,9 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             calculateCoins(cal);
 
             //Clean up (remove) the unused entities from the game scene (no longer in view).
+            cleanEntities(powerUps, camera.getYMin());
             cleanEntities(platforms, camera.getYMin());
             cleanEntities(enemies, camera.getYMin());
-            cleanEntities(powerUps, camera.getYMin());
         }
     }
 
