@@ -244,7 +244,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
             //Calculates the score the player has reached.
             calculateScore();
-            calculateCoins(cal);
+            calculateCoins(true);
 
             //Clean up (remove) the unused entities from the game scene (no longer in view).
             cleanEntities(powerUps, camera.getYMin());
@@ -535,19 +535,27 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
      * @param allow boolean, award coins.
      */
     private void calculateCoins(boolean allow) {
-        if(allow) {
-            if(pointsAchieved >= coinsThreshold) {
-                pointsAchieved = 0;
-                player.addCoins((int)((Math.random() * (10 - 1)) + 1) * 10);
-                coinsText.setText(String.valueOf(player.getCoins()));
+        try {
+            if (allow) {
+                if (pointsAchieved >= coinsThreshold) {
+                    pointsAchieved = 0;
+                    player.addCoins((int) ((Math.random() * (10 - 1)) + 1) * 10);
+                    coinsText.setText(String.valueOf(player.getCoins()));
 
-                //Play cash sound
-                ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
-
-                //Adjust placement of Text object, when the coins score increases.
-                if(coinsText.getText().length() > 2) {
-                    coinsText.setPosition(93 + (((coinsText.getText().length() - 2) * 13)),700);
+                    //Play cash sound
+                    ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
+                } else {
+                    coinsText.setText(String.valueOf(player.getCoins()));
                 }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        finally {
+            //Adjust placement of Text object, when the coins score increases.
+            if(coinsText.getText().length() > 2) {
+                coinsText.setPosition(93 + (((coinsText.getText().length() - 2) * 13)),700);
             }
         }
     }
