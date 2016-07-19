@@ -29,7 +29,7 @@ public class PowerUpFactory {
     private PhysicsWorld physicsWorld;
     private VertexBufferObjectManager vbom;
     private Random random = new Random();
-    public static PowerUpType[] POWER_UPS = PowerUpType.values();
+    public final static PowerUpType[] POWER_UPS = PowerUpType.values();
 
 
     //Singleton
@@ -51,7 +51,6 @@ public class PowerUpFactory {
     public void create(PhysicsWorld physicsWorld, VertexBufferObjectManager vbom) {
         this.physicsWorld = physicsWorld;
         this.vbom = vbom;
-        POWER_UPS = PowerUpType.values();
     }
 
     /**
