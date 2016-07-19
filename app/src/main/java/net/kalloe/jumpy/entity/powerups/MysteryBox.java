@@ -2,6 +2,7 @@ package net.kalloe.jumpy.entity.powerups;
 
 import android.util.Log;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 import net.kalloe.jumpy.ResourceManager;
@@ -72,7 +73,7 @@ public class MysteryBox extends Sprite implements CollidableEntity, CollectableE
         this.setVisible(false);
 
         if(!player.isDead()) {
-            switch (random.nextInt(2 - 0 + 1) + 0) {
+            switch (random.nextInt(3 - 0 + 1) + 0) {
                 case 0:
                     Log.d("powerup", "Player received a life or (random) gold");
                     if(player.getHealth() != 3) {
@@ -98,6 +99,12 @@ public class MysteryBox extends Sprite implements CollidableEntity, CollectableE
                     Log.d("powerup", "Player received random gold");
                     player.addCoins((shopData.getPrice()));
                     ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
+                    break;
+
+                case 3:
+                    Log.d("powerup", "Player received a super jump");
+                    player.getBody().setLinearVelocity(new Vector2(0, 65));
+                    ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundJump);
                     break;
             }
         }

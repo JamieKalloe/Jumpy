@@ -3,6 +3,7 @@ package net.kalloe.jumpy.entity.powerups;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
+import net.kalloe.jumpy.ResourceManager;
 import net.kalloe.jumpy.entity.CollectableEntity;
 import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.Player;
@@ -61,6 +62,9 @@ public class SuperJump extends Sprite implements CollidableEntity, CollectableEn
 
     @Override
     public void obtain(Player player) {
-        this.body.setLinearVelocity(new Vector2(0, 40));
+        this.body.setActive(false);
+        this.setVisible(false);
+        player.getBody().setLinearVelocity(new Vector2(0, 65));
+        ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundJump);
     }
 }
