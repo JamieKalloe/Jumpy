@@ -7,6 +7,7 @@ import net.kalloe.jumpy.SceneManager;
 import net.kalloe.jumpy.shop.LifeData;
 import net.kalloe.jumpy.shop.MysteryBoxData;
 import net.kalloe.jumpy.shop.ShopData;
+import net.kalloe.jumpy.shop.SuperJumpData;
 
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
@@ -22,12 +23,13 @@ import org.andengine.util.adt.color.Color;
 public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemClickListener {
 
     //Variables
-    private IMenuItem itemLife, itemMysterBox;
+    private IMenuItem itemLife, itemMysterBox, itemSuperJump;
     private MenuSceneTextItemDecorator soundMenuItem;
     private Text coinText;
 
     private final int lifeItem = 0;
     private final int mysterBoxItem = 1;
+    private final int superJumpItem = 2;
 
     @Override
     public void populate() {
@@ -39,10 +41,13 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
         //Initializes the Menu Items (passes the font, text and colors).
         itemLife = new ColorMenuItemDecorator(new TextMenuItem(lifeItem, res.font, "LIFE", vbom), Color.CYAN, Color.WHITE);
         itemMysterBox = new ColorMenuItemDecorator(new TextMenuItem(mysterBoxItem, res.font, "MYSTERY BOX", vbom), Color.CYAN, Color.WHITE);
+        itemSuperJump = new ColorMenuItemDecorator(new TextMenuItem(superJumpItem, res.font, "SUPER JUMP", vbom), Color.CYAN, Color.WHITE);
+
 
         //Adds the menu items to the game's menu scene.
         menuScene.addMenuItem(itemLife);
         menuScene.addMenuItem(itemMysterBox);
+        menuScene.addMenuItem(itemSuperJump);
 
         //Enables animation of the game's menu scene.
         menuScene.buildAnimations();
@@ -81,16 +86,14 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
             switch (pMenuItem.getID()) {
                 case lifeItem:
                     shopItem = new LifeData();
-                    if (res.activity.getCoins() >= shopItem.getPrice()) {
-                        res.activity.setCoins((res.activity.getCoins() - shopItem.getPrice()));
-                    }
                     return true;
 
                 case mysterBoxItem:
                     shopItem = new MysteryBoxData();
-                    if (res.activity.getCoins() >= shopItem.getPrice()) {
-                        res.activity.setCoins((res.activity.getCoins() - shopItem.getPrice()));
-                    }
+                    return true;
+
+                case superJumpItem:
+                    shopItem = new SuperJumpData();
                     return true;
 
                 default:
@@ -104,6 +107,9 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
 
         finally {
             if(shopItem != null) {
+                if (res.activity.getCoins() >= shopItem.getPrice()) {
+                    res.activity.setCoins((res.activity.getCoins() - shopItem.getPrice()));
+                }
                 ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
                 coinText.setText(String.valueOf(activity.getCoins()));
                 showToast("1 " + shopItem.getName() + " was purchased for " + shopItem.getPrice() + " gold", Toast.LENGTH_LONG);
