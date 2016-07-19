@@ -386,6 +386,11 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         attachChild(player);
     }
 
+    /**
+     * Creates a new instance of a Enemy entity and adds it to the gamescene.
+     * @param tx X coordinates of the Enemy entity.
+     * @param ty Y coordinates of the Enemy entity.
+     */
     private void addEnemy(float tx, float ty) {
         Enemy enemy = EnemyFactory.getInstance().createEnemy(tx, ty);
 
@@ -396,6 +401,11 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         enemies.add(enemy);
     }
 
+    /**
+     * Creates a new instance of a SlimeEnemy entity and adds it to the gamescene.
+     * @param tx X coordinates of the SlimeEnemy entity.
+     * @param ty Y coordinates of the SlimeEnemy entity.
+     */
     private void addSlimeEnemy(float tx, float ty) {
         Enemy enemy = EnemyFactory.getInstance().createSlimeEnemy(tx, ty);
 
@@ -406,6 +416,11 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         enemies.add(enemy);
     }
 
+    /**
+     * Creates a new instance of a PowerUp entity and adds it to the gamescene.
+     * @param tx X coordinates of the PowerUp entity.
+     * @param ty Y coordinates of the PowerUp entity.
+     */
     private void addPowerUp(float tx, float ty) {
         CollidableEntity powerUp = PowerUpFactory.getInstance().createRandomPowerUp(tx, ty);
         attachChild(powerUp);

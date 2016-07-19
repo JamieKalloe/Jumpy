@@ -9,6 +9,5 @@ public interface CollectableEntity {
 
     ShopData getShopData();
     void setShopData(ShopData data);
-
     void obtain(Player player);
 }

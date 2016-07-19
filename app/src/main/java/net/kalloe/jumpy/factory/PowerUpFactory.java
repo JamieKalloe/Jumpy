@@ -35,33 +35,54 @@ public class PowerUpFactory {
     //Singleton
     private PowerUpFactory() {}
 
+    /**
+     * Returns the singleton instance of the PowerUpFactory.
+     * @return PowerUpFactory
+     */
     public static PowerUpFactory getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Sets the physicsworld and vertexbufferobjectmanager to the PowerUpFactory.
+     * @param physicsWorld physics world.
+     * @param vbom vertex buffer object manager.
+     */
     public void create(PhysicsWorld physicsWorld, VertexBufferObjectManager vbom) {
         this.physicsWorld = physicsWorld;
         this.vbom = vbom;
         POWER_UPS = PowerUpType.values();
     }
 
+    /**
+     * Creates a random PowerUp.
+     * @param x X coordinates of the PowerUp entity.
+     * @param y Y coordinates of the PowerUp entity.
+     * @return random PowerUp.
+     */
     public CollidableEntity createRandomPowerUp(float x, float y) {
         switch (POWER_UPS[random.nextInt((POWER_UPS.length - 1) - 0 + 1) + 0]) {
 
             case LIFE:
-                return createLife(x, y);
+                return this.createLife(x, y);
 
             case MYSTERYBOX:
-                return createMysteryBox(x, y);
+                return this.createMysteryBox(x, y);
 
             case SUPERJUMP:
-                return createSuperJump(x, y);
+                return this.createSuperJump(x, y);
         }
 
         return createLife(x, y);
     }
 
-    public Life createLife(float x, float y) {
+    /**
+     * Creates a new Life entity with the specified x and y coordinates.
+     * @param x x coordinates of the Life.
+     * @param y y coordinates of the Life.
+     * @return new instance of the Life entity.
+     */
+    private Life createLife(float x, float y) {
         int platformSide = random.nextInt((40 - -40) + 1) + -40;
 
         //Create a new instance of the Life PowerUp entity with the given x and y coordinates, setting the sprite.
@@ -80,7 +101,13 @@ public class PowerUpFactory {
         return life;
     }
 
-    public MysteryBox createMysteryBox(float x, float y) {
+    /**
+     * Creates a new MysteryBox entity with the specified x and y coordinates.
+     * @param x x coordinates of the MysteryBox.
+     * @param y y coordinates of the MysteryBox.
+     * @return new instance of the MysteryBox entity.
+     */
+    private MysteryBox createMysteryBox(float x, float y) {
         int platformSide = random.nextInt((40 - -40) + 1) + -40;
 
         //Create a new instance of the Life PowerUp entity with the given x and y coordinates, setting the sprite.
@@ -99,7 +126,13 @@ public class PowerUpFactory {
         return mysteryBox;
     }
 
-    public SuperJump createSuperJump(float x, float y) {
+    /**
+     * Creates a new SuperJump entity with the specified x and y coordinates.
+     * @param x x coordinates of the SuperJump.
+     * @param y y coordinates of the SuperJump.
+     * @return new instance of the SuperJump entity.
+     */
+    private SuperJump createSuperJump(float x, float y) {
         int platformSide = random.nextInt((40 - -40) + 1) + -40;
 
         //Create a new instance of the Life PowerUp entity with the given x and y coordinates, setting the sprite.

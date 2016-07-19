@@ -30,43 +30,79 @@ public class MysteryBox extends Sprite implements CollidableEntity, CollectableE
     private ShopData shopData;
     private Random random;
 
+    /**
+     * Creates a new instance of the MysteryBox PowerUp entity.
+     * A MysteryBox PowerUp grants a random buff or debuff (e.g cash, life, money, jump).
+     * @param pX X coordinates of the MysteryBox object / sprite.
+     * @param pY Y coordinates of the MysteryBox object / sprite.
+     * @param pTextureRegion MysteryBox sprite / texture.
+     * @param pVertexBufferObjectManager vbom manager.
+     */
     public MysteryBox(float pX, float pY, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
         this.shopData = new MysteryBoxData();
         this.random = new Random();
     }
 
+    /**
+     * Updates the MysteryBox sprite.
+     * @param pSecondsElapsed
+     */
     @Override
     protected void onManagedUpdate(float pSecondsElapsed) {
         super.onManagedUpdate(pSecondsElapsed);
         Utils.wrapAround(this);
     }
 
+    /**
+     * Sets the physics body of the MysteryBox entity.
+     * @param body physics body of the MysteryBox.
+     */
     @Override
     public void setBody(Body body) {
         this.body = body;
     }
 
+    /**
+     * Gets the physics body of the MysteryBox entity.
+     * @return physics body of the MysteryBox.
+     */
     @Override
     public Body getBody() {
         return this.body;
     }
 
+    /**
+     * Returns the String type of the MysteryBox entity.
+     * @return String type.
+     */
     @Override
     public String getType() {
         return TYPE;
     }
 
+    /**
+     * Returns the ShopData of the MysteryBox entity.
+     * @return
+     */
     @Override
     public ShopData getShopData() {
         return this.shopData;
     }
 
+    /**
+     * Sets the ShopData of the MysteryBox entity.
+     * @param data ShopData data.
+     */
     @Override
     public void setShopData(ShopData data) {
         this.shopData = data;
     }
 
+    /**
+     * Grants a random buff or debuff (e.g cash, life, money, jump).
+     * @param player playing player.
+     */
     @Override
     public void obtain(Player player) {
         this.body.setActive(false);

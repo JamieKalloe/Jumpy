@@ -61,10 +61,18 @@ public class Enemy extends AnimatedSprite implements CollidableEntity, KillableE
         return TYPE;
     }
 
+    /**
+     * Returns a boolean value.
+     * @return Returns if the enemy is stationary on a platform (true) of not (false).
+     */
     public boolean getStationary() {
         return this.stationary;
     }
 
+    /**
+     * Sets a boolean value.
+     * @param stationary Sets a boolean if the enemy is stationary on a platform (true) of not (false).
+     */
     public void setStationary(boolean stationary) {
         this.stationary = stationary;
     }
