@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 import net.kalloe.jumpy.ResourceManager;
 import net.kalloe.jumpy.entity.CollidableEntity;
+import net.kalloe.jumpy.entity.powerups.Gold;
 import net.kalloe.jumpy.entity.powerups.Life;
 import net.kalloe.jumpy.entity.powerups.MysteryBox;
 import net.kalloe.jumpy.entity.powerups.PowerUpType;
@@ -70,6 +71,9 @@ public class PowerUpFactory {
 
             case SUPERJUMP:
                 return this.createSuperJump(x, y);
+
+            case GOLD:
+                return this.createGold(x, y);
         }
 
         return createLife(x, y);
@@ -148,5 +152,35 @@ public class PowerUpFactory {
         superJump.setZIndex(1);
 
         return superJump;
+    }
+
+    /**
+     * Creates a new Life entity with the specified x and y coordinates.
+     * @param x x coordinates of the Life.
+     * @param y y coordinates of the Life.
+     * @return new instance of the Life entity.
+     */
+    private Gold createGold(float x, float y) {
+        int platformSide = random.nextInt((40 - -40) + 1) + -40;
+
+        //Create a new instance of the Life PowerUp entity with the given x and y coordinates, setting the sprite.
+        Gold gold = new Gold((x + platformSide), (y - 5), ResourceManager.getInstance().goldTextureRegion, vbom);
+
+        //Set the way the gold is facing
+        if(platformSide > 0) {
+            gold.setFlippedHorizontal(true);
+        }
+
+        //Creates the physical Body of the Life PowerUp entity (resembles the sprite, optimized shape for collision).
+        Body goldBody = PhysicsFactory.createBoxBody(physicsWorld, gold, BodyDef.BodyType.KinematicBody, POWER_UP_FIXTURE);
+
+        //Binds the Life object to the physics body of the life in the physics world (whole simulation).
+        goldBody.setUserData(gold);
+        physicsWorld.registerPhysicsConnector(new PhysicsConnector(gold, goldBody));
+
+        gold.setBody(goldBody);
+        gold.setZIndex(1);
+
+        return gold;
     }
 }

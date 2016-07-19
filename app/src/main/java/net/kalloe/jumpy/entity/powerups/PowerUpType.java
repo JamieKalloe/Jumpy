@@ -6,5 +6,6 @@ package net.kalloe.jumpy.entity.powerups;
 public enum PowerUpType {
     LIFE,
     MYSTERYBOX,
-    SUPERJUMP
+    SUPERJUMP,
+    GOLD
 }
