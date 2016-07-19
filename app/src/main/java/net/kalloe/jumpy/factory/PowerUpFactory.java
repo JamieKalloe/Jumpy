@@ -8,6 +8,7 @@ import net.kalloe.jumpy.ResourceManager;
 import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.powerups.Life;
 import net.kalloe.jumpy.entity.powerups.MysteryBox;
+import net.kalloe.jumpy.entity.powerups.PowerUpType;
 import net.kalloe.jumpy.entity.powerups.SuperJump;
 
 import org.andengine.extension.physics.box2d.PhysicsConnector;
@@ -28,34 +29,32 @@ public class PowerUpFactory {
     private PhysicsWorld physicsWorld;
     private VertexBufferObjectManager vbom;
     private Random random = new Random();
-    private String[] powerUps;
+    public static PowerUpType[] POWER_UPS = PowerUpType.values();
+
 
     //Singleton
     private PowerUpFactory() {}
 
-    public static PowerUpFactory getInstace() {
+    public static PowerUpFactory getInstance() {
         return INSTANCE;
     }
 
     public void create(PhysicsWorld physicsWorld, VertexBufferObjectManager vbom) {
         this.physicsWorld = physicsWorld;
         this.vbom = vbom;
-        this.powerUps = new String[] {"Life", "MysteryBox", "SuperJump"};
-    }
-
-    public String[] getAvailablePowerUps() {
-        return this.powerUps;
+        POWER_UPS = PowerUpType.values();
     }
 
     public CollidableEntity createRandomPowerUp(float x, float y) {
-        switch (random.nextInt((this.powerUps.length - 1) - 0 + 1) + 0) {
-            case 0:
+        switch (POWER_UPS[random.nextInt((POWER_UPS.length - 1) - 0 + 1) + 0]) {
+
+            case LIFE:
                 return createLife(x, y);
 
-            case 1:
+            case MYSTERYBOX:
                 return createMysteryBox(x, y);
 
-            case 2:
+            case SUPERJUMP:
                 return createSuperJump(x, y);
         }
 

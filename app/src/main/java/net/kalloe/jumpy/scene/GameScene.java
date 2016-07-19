@@ -68,7 +68,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     private int oldScore = 0;
     private int pointsAchieved = 0;
     private final int coinsThreshold = 4000;
-
     private Text endGameText;
 
     /**
@@ -89,7 +88,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         EnemyFactory.getInstance().create(physicsWorld, vbom);
 
         //Initializes the EnemyFactory with the physicsworld and vertex buffer object manager.
-        PowerUpFactory.getInstace().create(physicsWorld, vbom);
+        PowerUpFactory.getInstance().create(physicsWorld, vbom);
 
         //Registers the scene to the touch listener to listen for user input.
         this.setOnSceneTouchListener(this);
@@ -408,7 +407,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     }
 
     private void addPowerUp(float tx, float ty) {
-        CollidableEntity powerUp = PowerUpFactory.getInstace().createRandomPowerUp(tx, ty);
+        CollidableEntity powerUp = PowerUpFactory.getInstance().createRandomPowerUp(tx, ty);
         attachChild(powerUp);
         powerUps.add(powerUp);
     }
