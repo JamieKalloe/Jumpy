@@ -130,7 +130,7 @@ public class ResourceManager {
                 activity.getAssets(), "mushroompowerup.png");
 
         mushroomJumpTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
-                activity.getAssets(), "mushroombrownpowerup.png.png");
+                activity.getAssets(), "mushroombrownpowerup.png");
 
         mysteryboxTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
                 activity.getAssets(), "boxpowerup.png");

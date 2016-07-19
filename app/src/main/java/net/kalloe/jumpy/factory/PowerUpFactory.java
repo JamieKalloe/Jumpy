@@ -8,6 +8,7 @@ import net.kalloe.jumpy.ResourceManager;
 import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.powerups.Life;
 import net.kalloe.jumpy.entity.powerups.MysteryBox;
+import net.kalloe.jumpy.entity.powerups.SuperJump;
 
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
@@ -39,7 +40,7 @@ public class PowerUpFactory {
     public void create(PhysicsWorld physicsWorld, VertexBufferObjectManager vbom) {
         this.physicsWorld = physicsWorld;
         this.vbom = vbom;
-        this.powerUps = new String[] {"Life", "MysteryBox"};
+        this.powerUps = new String[] {"Life", "MysteryBox", "SuperJump"};
     }
 
     public String[] getAvailablePowerUps() {
@@ -53,6 +54,9 @@ public class PowerUpFactory {
 
             case 1:
                 return createMysteryBox(x, y);
+
+            case 2:
+                return createSuperJump(x, y);
         }
 
         return createLife(x, y);
@@ -94,5 +98,24 @@ public class PowerUpFactory {
         mysteryBox.setZIndex(1);
 
         return mysteryBox;
+    }
+
+    public SuperJump createSuperJump(float x, float y) {
+        int platformSide = random.nextInt((40 - -40) + 1) + -40;
+
+        //Create a new instance of the Life PowerUp entity with the given x and y coordinates, setting the sprite.
+        SuperJump superJump = new SuperJump((x + platformSide), (y - 5), ResourceManager.getInstance().mushroomJumpTextureRegion, vbom);
+
+        //Creates the physical Body of the Life PowerUp entity (resembles the sprite, optimized shape for collision).
+        Body superJumpBody = PhysicsFactory.createBoxBody(physicsWorld, superJump, BodyDef.BodyType.KinematicBody, POWER_UP_FIXTURE);
+
+        //Binds the Life object to the physics body of the life in the physics world (whole simulation).
+        superJumpBody.setUserData(superJump);
+        physicsWorld.registerPhysicsConnector(new PhysicsConnector(superJump, superJumpBody));
+
+        superJump.setBody(superJumpBody);
+        superJump.setZIndex(1);
+
+        return superJump;
     }
 }
