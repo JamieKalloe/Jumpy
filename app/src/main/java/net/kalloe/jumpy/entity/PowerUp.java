@@ -1,12 +1,8 @@
-package net.kalloe.jumpy.entity.powerups;
+package net.kalloe.jumpy.entity;
 
 import com.badlogic.gdx.physics.box2d.Body;
 
-import net.kalloe.jumpy.ResourceManager;
-import net.kalloe.jumpy.entity.CollectableEntity;
-import net.kalloe.jumpy.entity.CollidableEntity;
-import net.kalloe.jumpy.entity.Player;
-import net.kalloe.jumpy.entity.Utils;
+import net.kalloe.jumpy.entity.powerups.PowerUpBehaviour;
 import net.kalloe.jumpy.shop.ShopData;
 
 import org.andengine.entity.sprite.Sprite;
@@ -16,12 +12,13 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 /**
  * Created by Jamie on 19-7-2016.
  */
-public class Gold  extends Sprite implements CollidableEntity, CollectableEntity {
+public class PowerUp extends Sprite implements CollidableEntity, CollectableEntity {
 
     //Variables
     public static final String TYPE = "COLLECTABLE";
     private Body body;
     private ShopData shopData;
+    private PowerUpBehaviour powerUpBehaviour;
 
     /**
      * Creates a new instance of the Gold PowerUp entity.
@@ -31,7 +28,7 @@ public class Gold  extends Sprite implements CollidableEntity, CollectableEntity
      * @param pTextureRegion Life sprite / texture.
      * @param pVertexBufferObjectManager vbom manager.
      */
-    public Gold(float pX, float pY, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
+    public PowerUp(float pX, float pY, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
     }
 
@@ -76,7 +73,6 @@ public class Gold  extends Sprite implements CollidableEntity, CollectableEntity
      * Returns the ShopData of the Gold entity.
      * @return
      */
-    @Override
     public ShopData getShopData() {
         return this.shopData;
     }
@@ -85,9 +81,16 @@ public class Gold  extends Sprite implements CollidableEntity, CollectableEntity
      * Sets the ShopData of the Gold entity.
      * @param data ShopData data.
      */
-    @Override
     public void setShopData(ShopData data) {
         this.shopData = data;
+    }
+
+    public PowerUpBehaviour getPowerUpBehaviour() {
+        return this.powerUpBehaviour;
+    }
+
+    public void setPowerUpBehaviour(PowerUpBehaviour powerUpBehaviour) {
+        this.powerUpBehaviour = powerUpBehaviour;
     }
 
     /**
@@ -98,7 +101,6 @@ public class Gold  extends Sprite implements CollidableEntity, CollectableEntity
     public void obtain(Player player) {
         this.body.setActive(false);
         this.setVisible(false);
-        player.addCoins(this.shopData.getPrice());
-        ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
+        this.powerUpBehaviour.executePowerUp(player);
     }
 }
