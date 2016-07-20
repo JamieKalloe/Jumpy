@@ -1,6 +1,8 @@
 package net.kalloe.jumpy;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Vibrator;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ public class GameActivity extends BaseGameActivity {
     private final String KEY_COINS = "Coins";
 
     private SharedPreferences settings;
+    private Vibrator vibrator;
 
     /**
      * This method defines the (AndEngine) engine options. It's run by the onCreate method first.
@@ -57,6 +60,7 @@ public class GameActivity extends BaseGameActivity {
 
         //Initializes the shared preferences for the game.
         settings = getSharedPreferences("jumpy_game_prefs", MODE_PRIVATE);
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         Debug.i("Engine configured");
 
@@ -167,6 +171,10 @@ public class GameActivity extends BaseGameActivity {
         if(isSound()) {
             soundToPlay.play();
         }
+    }
+
+    public void vibrate(long milliseconds) {
+        this.vibrator.vibrate(milliseconds);
     }
 
     /**

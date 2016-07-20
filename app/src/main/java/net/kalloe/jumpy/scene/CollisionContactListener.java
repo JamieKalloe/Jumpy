@@ -39,8 +39,11 @@ public class CollisionContactListener implements ContactListener {
         //TODO: extend check for powerup shield, (e.g !player.getPowerUp().getType().equals(PowerUp.SHIELD))
         if(checkContact(contact, Player.TYPE, Enemy.TYPE)) {
             if(player.getHealth() != 0) {
+                ResourceManager.getInstance().activity.vibrate(100);
                 ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundHit);
                 player.dealDamage();
+
+
 
                 //Kill the collided enemy.
                 if(!(contact.getFixtureA().getBody().getUserData() instanceof KillableEntity)) {
