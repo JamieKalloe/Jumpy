@@ -9,7 +9,6 @@ import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.Player;
 import net.kalloe.jumpy.entity.Utils;
 import net.kalloe.jumpy.shop.ShopData;
-import net.kalloe.jumpy.shop.SuperJumpData;
 
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
@@ -34,7 +33,6 @@ public class SuperJump extends Sprite implements CollidableEntity, CollectableEn
      */
     public SuperJump(float pX, float pY, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
-        this.shopData = new SuperJumpData();
     }
 
     /**

@@ -7,7 +7,6 @@ import net.kalloe.jumpy.entity.CollectableEntity;
 import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.Player;
 import net.kalloe.jumpy.entity.Utils;
-import net.kalloe.jumpy.shop.GoldData;
 import net.kalloe.jumpy.shop.ShopData;
 
 import org.andengine.entity.sprite.Sprite;
@@ -34,7 +33,6 @@ public class Gold  extends Sprite implements CollidableEntity, CollectableEntity
      */
     public Gold(float pX, float pY, ITextureRegion pTextureRegion, VertexBufferObjectManager pVertexBufferObjectManager) {
         super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
-        this.shopData = new GoldData();
     }
 
     /**

@@ -11,6 +11,10 @@ import net.kalloe.jumpy.entity.powerups.Life;
 import net.kalloe.jumpy.entity.powerups.MysteryBox;
 import net.kalloe.jumpy.entity.powerups.PowerUpType;
 import net.kalloe.jumpy.entity.powerups.SuperJump;
+import net.kalloe.jumpy.shop.GoldData;
+import net.kalloe.jumpy.shop.LifeData;
+import net.kalloe.jumpy.shop.MysteryBoxData;
+import net.kalloe.jumpy.shop.SuperJumpData;
 
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
@@ -90,6 +94,7 @@ public class PowerUpFactory {
 
         //Create a new instance of the Life PowerUp entity with the given x and y coordinates, setting the sprite.
         Life life = new Life((x + platformSide), (y - 5), ResourceManager.getInstance().mushroomTextureRegion, vbom);
+        life.setShopData(new LifeData());
 
         //Creates the physical Body of the Life PowerUp entity (resembles the sprite, optimized shape for collision).
         Body lifeBody = PhysicsFactory.createBoxBody(physicsWorld, life, BodyDef.BodyType.KinematicBody, POWER_UP_FIXTURE);
@@ -115,6 +120,7 @@ public class PowerUpFactory {
 
         //Create a new instance of the Life PowerUp entity with the given x and y coordinates, setting the sprite.
         MysteryBox mysteryBox = new MysteryBox((x + platformSide), (y + 3), ResourceManager.getInstance().mysteryboxTextureRegion, vbom);
+        mysteryBox.setShopData(new MysteryBoxData());
 
         //Creates the physical Body of the Life PowerUp entity (resembles the sprite, optimized shape for collision).
         Body mysteryBoxBody = PhysicsFactory.createBoxBody(physicsWorld, mysteryBox, BodyDef.BodyType.KinematicBody, POWER_UP_FIXTURE);
@@ -140,6 +146,7 @@ public class PowerUpFactory {
 
         //Create a new instance of the Life PowerUp entity with the given x and y coordinates, setting the sprite.
         SuperJump superJump = new SuperJump((x + platformSide), (y - 5), ResourceManager.getInstance().mushroomJumpTextureRegion, vbom);
+        superJump.setShopData(new SuperJumpData());
 
         //Creates the physical Body of the Life PowerUp entity (resembles the sprite, optimized shape for collision).
         Body superJumpBody = PhysicsFactory.createBoxBody(physicsWorld, superJump, BodyDef.BodyType.KinematicBody, POWER_UP_FIXTURE);
@@ -165,6 +172,7 @@ public class PowerUpFactory {
 
         //Create a new instance of the Life PowerUp entity with the given x and y coordinates, setting the sprite.
         Gold gold = new Gold((x + platformSide), (y - 5), ResourceManager.getInstance().goldTextureRegion, vbom);
+        gold.setShopData(new GoldData());
 
         //Set the way the gold is facing
         if(platformSide > 0) {
