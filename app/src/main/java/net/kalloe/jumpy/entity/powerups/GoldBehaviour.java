@@ -8,6 +8,10 @@ import net.kalloe.jumpy.entity.Player;
  */
 public class GoldBehaviour implements PowerUpBehaviour {
 
+    /**
+     * Grants the player a random amount of gold between 100.000 and 1.000.000.
+     * @param player entity which receives the PowerUp.
+     */
     @Override
     public void executePowerUp(Player player) {
         player.addCoins((int)(Math.random() * 100000));

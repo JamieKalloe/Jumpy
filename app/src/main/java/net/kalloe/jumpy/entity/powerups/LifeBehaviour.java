@@ -8,6 +8,10 @@ import net.kalloe.jumpy.entity.Player;
  */
 public class LifeBehaviour implements PowerUpBehaviour {
 
+    /**
+     * Grants the player +1 health point or 10.000 gold if the health is full (3).
+     * @param player entity which receives the PowerUp.
+     */
     @Override
     public void executePowerUp(Player player) {
         ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);

@@ -85,10 +85,18 @@ public class PowerUp extends Sprite implements CollidableEntity, CollectableEnti
         this.shopData = data;
     }
 
+    /**
+     * Returns the PowerUp behaviour of the PowerUp entity.
+     * @return behaviour of the PowerUp entity.
+     */
     public PowerUpBehaviour getPowerUpBehaviour() {
         return this.powerUpBehaviour;
     }
 
+    /**
+     * Sets the behaviour of the PowerUp entity.
+     * @param powerUpBehaviour behaviour of the PowerUp entity.
+     */
     public void setPowerUpBehaviour(PowerUpBehaviour powerUpBehaviour) {
         this.powerUpBehaviour = powerUpBehaviour;
     }

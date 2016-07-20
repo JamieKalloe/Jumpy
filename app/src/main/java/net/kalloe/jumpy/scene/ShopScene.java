@@ -109,10 +109,10 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
             if(shopItem != null) {
                 if (res.activity.getCoins() >= shopItem.getPrice()) {
                     res.activity.setCoins((res.activity.getCoins() - shopItem.getPrice()));
+                    ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
+                    coinText.setText(String.valueOf(activity.getCoins()));
+                    showToast("1 " + shopItem.getName() + " was purchased for " + shopItem.getPrice() + " gold", Toast.LENGTH_LONG);
                 }
-                ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
-                coinText.setText(String.valueOf(activity.getCoins()));
-                showToast("1 " + shopItem.getName() + " was purchased for " + shopItem.getPrice() + " gold", Toast.LENGTH_LONG);
             }
         }
 

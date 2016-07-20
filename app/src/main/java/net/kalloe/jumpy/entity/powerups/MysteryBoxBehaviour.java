@@ -10,6 +10,10 @@ import net.kalloe.jumpy.entity.Player;
  */
 public class MysteryBoxBehaviour implements PowerUpBehaviour {
 
+    /**
+     * Grants the player a random buff or debuff.
+     * @param player entity which receives the PowerUp.
+     */
     @Override
     public void executePowerUp(Player player) {
 

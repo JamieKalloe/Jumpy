@@ -10,6 +10,10 @@ import net.kalloe.jumpy.entity.Player;
  */
 public class SuperJumpBehaviour implements PowerUpBehaviour {
 
+    /**
+     * Grants the player one high jump.
+     * @param player entity which receives the PowerUp.
+     */
     @Override
     public void executePowerUp(Player player) {
         player.getBody().setLinearVelocity(new Vector2(0, 65));
