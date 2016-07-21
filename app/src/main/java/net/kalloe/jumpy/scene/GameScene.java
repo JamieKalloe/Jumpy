@@ -64,7 +64,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     private static final float MAX = 250f;
 
     private Text scoreText, coinsText;
-    private int score;
     private boolean cal = true;
     private int oldScore = 0;
     private int pointsAchieved = 0;
@@ -191,16 +190,16 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             endGameText.setVisible(true);
 
             //Saves the score of the player, if a new high score is achieved.
-            if(score > activity.getHighScore()) {
-                activity.setHighScore(score);
-                score = 0;
+            if(player.getScore() > activity.getHighScore()) {
+                activity.setHighScore(player.getScore());
+                player.setScore(0);
             }
 
             //Saves the amount of coins the player was awarded.
-            if(player.getCoins() > 0) {
-                activity.setCoins(activity.getCoins() + player.getCoins());
-                player.setCoins(0);
-            }
+//            if(player.getCoins() > 0) {
+//                activity.setCoins(activity.getCoins() + player.getCoins());
+//                player.setCoins(0);
+//            }
         }
 
         while(camera.getYMax() > platforms.getLast().getY()) {
@@ -473,8 +472,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         lifePoints = new TiledSprite(430, 755, res.lifeTextureRegion, vbom);
 
         //Initializes the score and sets it as the HUD score text.
-        score = 0;
-        scoreText.setText(String.valueOf(score));
+//        score = 0;
+        scoreText.setText(String.valueOf(0));
 //        coinsText.setText(String.valueOf(player.getCoins()));
 
         //Attaches the text objects to the hud.
@@ -527,11 +526,11 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
      * Calculates and sets the players's score to the HUD text.
      */
     private void calculateScore() {
-        if(camera.getYMin() > score) {
-            oldScore = score;
-            score = Math.round(camera.getYMin());
-            pointsAchieved += (score - oldScore);
-            scoreText.setText(String.valueOf(score));
+        if(camera.getYMin() > player.getScore()) {
+            oldScore = player.getScore();
+            player.setScore(Math.round(camera.getYMin()));
+//            pointsAchieved += (player.getCoins() - oldScore);
+            scoreText.setText(String.valueOf(player.getScore()));
         }
     }
 

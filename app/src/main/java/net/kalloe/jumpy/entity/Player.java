@@ -19,6 +19,7 @@ public class Player extends TiledSprite implements CollidableEntity {
     public static final String TYPE = "Player";
     private int health = 3;
     private int coins = 0;
+    private int score = 0;
 
     /**
      * Creates a new instance of the Player entity.
@@ -97,6 +98,18 @@ public class Player extends TiledSprite implements CollidableEntity {
      */
     public void removeCoins(int coins) {
         this.coins -= coins;
+    }
+
+    public int getScore() {
+        return this.score;
+    }
+
+    public void addScore(int score) {
+        this.score += score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     /**
