@@ -242,7 +242,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
             //Calculates the score the player has reached.
             calculateScore();
-            calculateCoins(true);
+//            calculateCoins(true);
 
             //Clean up (remove) the unused entities from the game scene (no longer in view).
             cleanEntities(powerUps, camera.getYMin());
@@ -464,10 +464,10 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         scoreText.setAnchorCenter(0, 1);
 
         //Creates a new text label for the amount of coins, using the font from the ResourceManager.
-        coinsText = new Text(93, 700, res.font, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+//        coinsText = new Text(93, 700, res.font, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 
         //Create a new sprite for the coin icon.
-        Sprite coinSprite = new Sprite(40, 700, res.coinTextureRegion, vbom);
+//        Sprite coinSprite = new Sprite(40, 700, res.coinTextureRegion, vbom);
 
         //Create a new text tiled sprite for the amount of lives.
         lifePoints = new TiledSprite(430, 755, res.lifeTextureRegion, vbom);
@@ -475,12 +475,12 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         //Initializes the score and sets it as the HUD score text.
         score = 0;
         scoreText.setText(String.valueOf(score));
-        coinsText.setText(String.valueOf(player.getCoins()));
+//        coinsText.setText(String.valueOf(player.getCoins()));
 
         //Attaches the text objects to the hud.
         hud.attachChild(scoreText);
-        hud.attachChild(coinsText);
-        hud.attachChild(coinSprite);
+//        hud.attachChild(coinsText);
+//        hud.attachChild(coinSprite);
         hud.attachChild(lifePoints);
 
         //Initialize the game over message for when the player dies.
@@ -604,6 +604,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         unregisterUpdateHandler(physicsWorld);
         enemies.clear();
         platforms.clear();
+        powerUps.clear();
         physicsWorld.clearForces();
         physicsWorld.clearPhysicsConnectors();
 
