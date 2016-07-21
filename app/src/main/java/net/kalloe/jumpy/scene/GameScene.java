@@ -13,6 +13,7 @@ import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.Enemy;
 import net.kalloe.jumpy.entity.Platform;
 import net.kalloe.jumpy.entity.Player;
+import net.kalloe.jumpy.entity.PowerUp;
 import net.kalloe.jumpy.entity.VerticalParallaxEntity;
 import net.kalloe.jumpy.factory.EnemyFactory;
 import net.kalloe.jumpy.factory.PlatformFactory;
@@ -54,7 +55,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     Random rand = new Random();
     private LinkedList<Platform> platforms = new LinkedList<>();
     private LinkedList<Enemy> enemies = new LinkedList<>();
-    private LinkedList<CollidableEntity> powerUps = new LinkedList<>();
+    private LinkedList<PowerUp> powerUps = new LinkedList<>();
     private TiledSprite lifePoints;
 
     private ParallaxBackground parallaxBackground;
@@ -422,7 +423,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
      * @param ty Y coordinates of the PowerUp entity.
      */
     private void addPowerUp(float tx, float ty) {
-        CollidableEntity powerUp = PowerUpFactory.getInstance().createRandomPowerUp(tx, ty);
+        PowerUp powerUp = PowerUpFactory.getInstance().createRandomPowerUp(tx, ty);
         attachChild(powerUp);
         powerUps.add(powerUp);
     }

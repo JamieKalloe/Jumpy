@@ -5,7 +5,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 import net.kalloe.jumpy.ResourceManager;
-import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.PowerUp;
 import net.kalloe.jumpy.entity.powerups.Gold;
 import net.kalloe.jumpy.entity.powerups.Life;
@@ -58,7 +57,8 @@ public class PowerUpFactory {
         this.physicsWorld = physicsWorld;
         this.vbom = vbom;
     }
-    public CollidableEntity createPowerUp(PowerUpType type, float x, float y) {
+
+    public PowerUp createPowerUp(PowerUpType type, float x, float y) {
         switch (type) {
 
             case LIFE:
@@ -83,7 +83,7 @@ public class PowerUpFactory {
      * @param y Y coordinates of the PowerUp entity.
      * @return random PowerUp.
      */
-    public CollidableEntity createRandomPowerUp(float x, float y) {
+    public PowerUp createRandomPowerUp(float x, float y) {
         return this.createPowerUp(POWER_UPS[random.nextInt((POWER_UPS.length - 1) - 0 + 1) + 0], x, y);
     }
 
