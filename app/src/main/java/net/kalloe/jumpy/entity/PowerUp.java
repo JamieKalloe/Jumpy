@@ -102,7 +102,7 @@ public class PowerUp extends Sprite implements CollidableEntity, CollectableEnti
     }
 
     /**
-     * Grants the player 10.000 to 100.000 coins worth of gold.
+     * Executes the effect of the PowerUp.
      * @param player playing player.
      */
     @Override

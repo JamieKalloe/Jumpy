@@ -3,7 +3,7 @@ package net.kalloe.jumpy.shop;
 /**
  * Created by Jamie on 19-7-2016.
  */
-public class GoldData implements ShopData{
+public class GoldShopData implements ShopData{
 
     private String name;
     private int price;
@@ -11,7 +11,7 @@ public class GoldData implements ShopData{
     /**
      * Creates a new instance of the Life (PowerUp) shop data.
      */
-    public GoldData() {
+    public GoldShopData() {
         this.name = "Gold";
         this.price = (int)(Math.random() * 100000);
     }

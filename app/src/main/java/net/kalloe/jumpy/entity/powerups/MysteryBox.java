@@ -8,7 +8,7 @@ import net.kalloe.jumpy.entity.Player;
 /**
  * Created by Jamie on 20-7-2016.
  */
-public class MysteryBoxBehaviour implements PowerUpBehaviour {
+public class MysteryBox implements PowerUpBehaviour {
 
     /**
      * Grants the player a random buff or debuff.
@@ -20,7 +20,7 @@ public class MysteryBoxBehaviour implements PowerUpBehaviour {
         switch ((int)(Math.random() * 10)) {
             case 0:
                 Log.d("powerup", "Player received a life or (random) gold");
-                new LifeBehaviour().executePowerUp(player);
+                new Life().executePowerUp(player);
                 break;
 
             case 1:
@@ -34,11 +34,11 @@ public class MysteryBoxBehaviour implements PowerUpBehaviour {
                 break;
 
             case 2:
-                new GoldBehaviour().executePowerUp(player);
+                new Gold().executePowerUp(player);
                 break;
 
             case 3:
-                new SuperJumpBehaviour().executePowerUp(player);
+                new SuperJump().executePowerUp(player);
                 break;
 
             default:

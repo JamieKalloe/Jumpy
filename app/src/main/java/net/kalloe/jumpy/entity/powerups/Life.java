@@ -6,7 +6,7 @@ import net.kalloe.jumpy.entity.Player;
 /**
  * Created by Jamie on 20-7-2016.
  */
-public class LifeBehaviour implements PowerUpBehaviour {
+public class Life implements PowerUpBehaviour {
 
     /**
      * Grants the player +1 health point or 10.000 gold if the health is full (3).

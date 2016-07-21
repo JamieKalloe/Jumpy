@@ -1,9 +1,9 @@
 package net.kalloe.jumpy.shop;
 
 /**
- * Created by Jamie on 16-7-2016.
+ * Created by Jamie on 19-7-2016.
  */
-public class MysteryBoxData implements ShopData {
+public class SuperJumpShopData implements ShopData {
 
     private String name;
     private int price;
@@ -11,9 +11,9 @@ public class MysteryBoxData implements ShopData {
     /**
      * Creates a new instance of the MysteryBox (PowerUp) shop data.
      */
-    public MysteryBoxData() {
-        this.name = "Mystery Box";
-        this.price = (int)(Math.random() * 10000);
+    public SuperJumpShopData() {
+        this.name = "Super Jump";
+        this.price = 1000;
     }
 
     /**

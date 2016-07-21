@@ -4,10 +4,10 @@ import android.widget.Toast;
 
 import net.kalloe.jumpy.ResourceManager;
 import net.kalloe.jumpy.SceneManager;
-import net.kalloe.jumpy.shop.LifeData;
-import net.kalloe.jumpy.shop.MysteryBoxData;
+import net.kalloe.jumpy.shop.LifeShopData;
+import net.kalloe.jumpy.shop.MysteryBoxShopData;
 import net.kalloe.jumpy.shop.ShopData;
-import net.kalloe.jumpy.shop.SuperJumpData;
+import net.kalloe.jumpy.shop.SuperJumpShopData;
 
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
@@ -85,15 +85,15 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
         try {
             switch (pMenuItem.getID()) {
                 case lifeItem:
-                    shopItem = new LifeData();
+                    shopItem = new LifeShopData();
                     return true;
 
                 case mysterBoxItem:
-                    shopItem = new MysteryBoxData();
+                    shopItem = new MysteryBoxShopData();
                     return true;
 
                 case superJumpItem:
-                    shopItem = new SuperJumpData();
+                    shopItem = new SuperJumpShopData();
                     return true;
 
                 default:

@@ -1,19 +1,19 @@
 package net.kalloe.jumpy.shop;
 
 /**
- * Created by Jamie on 19-7-2016.
+ * Created by Jamie on 16-7-2016.
  */
-public class SuperJumpData implements ShopData {
+public class LifeShopData implements ShopData {
 
     private String name;
     private int price;
 
     /**
-     * Creates a new instance of the MysteryBox (PowerUp) shop data.
+     * Creates a new instance of the Life (PowerUp) shop data.
      */
-    public SuperJumpData() {
-        this.name = "Super Jump";
-        this.price = 1000;
+    public LifeShopData() {
+        this.name = "Life";
+        this.price = 10000;
     }
 
     /**
@@ -54,11 +54,11 @@ public class SuperJumpData implements ShopData {
 
     @Override
     public void buy() {
-
+        //save bought item into shared pref
     }
 
     @Override
     public void sell() {
-
+        //remove sold item from shared pref
     }
 }

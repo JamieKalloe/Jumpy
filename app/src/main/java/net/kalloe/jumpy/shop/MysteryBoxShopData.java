@@ -3,17 +3,17 @@ package net.kalloe.jumpy.shop;
 /**
  * Created by Jamie on 16-7-2016.
  */
-public class LifeData implements ShopData {
+public class MysteryBoxShopData implements ShopData {
 
     private String name;
     private int price;
 
     /**
-     * Creates a new instance of the Life (PowerUp) shop data.
+     * Creates a new instance of the MysteryBox (PowerUp) shop data.
      */
-    public LifeData() {
-        this.name = "Life";
-        this.price = 10000;
+    public MysteryBoxShopData() {
+        this.name = "Mystery Box";
+        this.price = (int)(Math.random() * 10000);
     }
 
     /**
@@ -54,11 +54,11 @@ public class LifeData implements ShopData {
 
     @Override
     public void buy() {
-        //save bought item into shared pref
+
     }
 
     @Override
     public void sell() {
-        //remove sold item from shared pref
+
     }
 }
