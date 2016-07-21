@@ -576,6 +576,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         unregisterUpdateHandler(physicsWorld);
         enemies.clear();
         platforms.clear();
+        powerUps.clear();
         physicsWorld.clearForces();
         physicsWorld.clearPhysicsConnectors();
 

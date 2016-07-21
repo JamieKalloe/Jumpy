@@ -53,7 +53,7 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
 
         //Adds the menu items to the game's menu scene.
         menuScene.addMenuItem(playMenuItem);
-        menuScene.addMenuItem(shopMenuItem);
+//        menuScene.addMenuItem(shopMenuItem);
         menuScene.addMenuItem(soundMenuItem);
 
         //Enables animation of the game's menu scene.

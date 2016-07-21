@@ -58,15 +58,8 @@ public class PowerUpFactory {
         this.physicsWorld = physicsWorld;
         this.vbom = vbom;
     }
-
-    /**
-     * Creates a random PowerUp.
-     * @param x X coordinates of the PowerUp entity.
-     * @param y Y coordinates of the PowerUp entity.
-     * @return random PowerUp.
-     */
-    public CollidableEntity createRandomPowerUp(float x, float y) {
-        switch (POWER_UPS[random.nextInt((POWER_UPS.length - 1) - 0 + 1) + 0]) {
+    public CollidableEntity createPowerUp(PowerUpType type, float x, float y) {
+        switch (type) {
 
             case LIFE:
                 return this.createLife(x, y);
@@ -82,6 +75,16 @@ public class PowerUpFactory {
         }
 
         return createLife(x, y);
+    }
+
+    /**
+     * Creates a random PowerUp.
+     * @param x X coordinates of the PowerUp entity.
+     * @param y Y coordinates of the PowerUp entity.
+     * @return random PowerUp.
+     */
+    public CollidableEntity createRandomPowerUp(float x, float y) {
+        return this.createPowerUp(POWER_UPS[random.nextInt((POWER_UPS.length - 1) - 0 + 1) + 0], x, y);
     }
 
     /**
