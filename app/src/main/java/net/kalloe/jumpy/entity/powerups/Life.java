@@ -20,7 +20,7 @@ public class Life implements PowerUpBehaviour {
         if(player.getHealth() != 3) {
             player.setHealth((player.getHealth() + 1));
         } else {
-            player.addScore(10000);
+            player.addBonusPoints(5000);
         }
     }
 }

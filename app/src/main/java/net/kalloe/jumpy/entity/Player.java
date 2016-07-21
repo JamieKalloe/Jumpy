@@ -18,7 +18,7 @@ public class Player extends TiledSprite implements CollidableEntity {
     private Body body;
     public static final String TYPE = "Player";
     private int health = 3;
-    private int coins = 0;
+    private int bonusPoints = 0;
     private int score = 0;
 
     /**
@@ -69,35 +69,35 @@ public class Player extends TiledSprite implements CollidableEntity {
     }
 
     /**
-     * Adds a specific amount of coins to the current amount of coins.
-     * @param coins amount.
+     * Adds a specific amount of bonusPoints to the current amount of coins.
+     * @param bonusPoints amount.
      */
-    public void addCoins(int coins) {
-        this.coins += coins;
+    public void addBonusPoints(int bonusPoints) {
+        this.bonusPoints += bonusPoints;
     }
 
     /**
-     * Sets a specific amount of coins as the current amount of coins.
-     * @param coins amount.
+     * Sets a specific amount of bonusPoints as the current amount of coins.
+     * @param bonusPoints amount.
      */
-    public void setCoins(int coins) {
-        this.coins = coins;
+    public void setBonusPoints(int bonusPoints) {
+        this.bonusPoints = bonusPoints;
     }
 
     /**
      * Retrieves the amount of coins the player has acquired.
      * @return amount of coins.
      */
-    public int getCoins() {
-        return this.coins;
+    public int getBonusPoints() {
+        return this.bonusPoints;
     }
 
     /**
      * Removes a specific amount of coins from the current amount of coins.
-     * @param coins amount.
+     * @param bonusPoints amount.
      */
-    public void removeCoins(int coins) {
-        this.coins -= coins;
+    public void removeCoins(int bonusPoints) {
+        this.bonusPoints -= bonusPoints;
     }
 
     public int getScore() {

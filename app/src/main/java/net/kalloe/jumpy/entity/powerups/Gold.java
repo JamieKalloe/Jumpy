@@ -14,7 +14,7 @@ public class Gold implements PowerUpBehaviour {
      */
     @Override
     public void executePowerUp(Player player) {
-        player.addScore((int)(Math.random() * 100000));
+        player.addBonusPoints((int) (Math.random() * 10000));
         ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
     }
 }

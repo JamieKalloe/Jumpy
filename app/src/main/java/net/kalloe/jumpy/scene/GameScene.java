@@ -190,9 +190,10 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             endGameText.setVisible(true);
 
             //Saves the score of the player, if a new high score is achieved.
-            if(player.getScore() > activity.getHighScore()) {
-                activity.setHighScore(player.getScore());
+            if((player.getScore() + player.getBonusPoints()) > activity.getHighScore()) {
+                activity.setHighScore((player.getScore() + player.getBonusPoints()));
                 player.setScore(0);
+                player.setBonusPoints(0);
             }
 
             //Saves the amount of coins the player was awarded.
@@ -530,7 +531,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             oldScore = player.getScore();
             player.setScore(Math.round(camera.getYMin()));
 //            pointsAchieved += (player.getCoins() - oldScore);
-            scoreText.setText(String.valueOf(player.getScore()));
+            scoreText.setText(String.valueOf((player.getScore() + player.getBonusPoints())));
         }
     }
 
@@ -543,13 +544,13 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             if (allow) {
                 if (pointsAchieved >= coinsThreshold) {
                     pointsAchieved = 0;
-                    player.addCoins((int) ((Math.random() * (10 - 1)) + 1) * 10);
-                    coinsText.setText(String.valueOf(player.getCoins()));
+                    player.addBonusPoints((int) ((Math.random() * (10 - 1)) + 1) * 10);
+                    coinsText.setText(String.valueOf(player.getBonusPoints()));
 
                     //Play cash sound
                     ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
                 } else {
-                    coinsText.setText(String.valueOf(player.getCoins()));
+                    coinsText.setText(String.valueOf(player.getBonusPoints()));
                 }
             }
         } catch (Exception e) {
