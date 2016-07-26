@@ -182,7 +182,6 @@ public class GameActivity extends BaseGameActivity implements
 
     @Override
     public void onConnected(Bundle bundle) {
-        //hide sign in button..
         showToast("Player is signed in", Toast.LENGTH_LONG);
     }
 

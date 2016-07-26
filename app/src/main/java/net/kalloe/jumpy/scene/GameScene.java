@@ -4,9 +4,11 @@ import android.hardware.SensorManager;
 import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
+import com.google.android.gms.games.Games;
 
 import net.kalloe.jumpy.GameActivity;
 import net.kalloe.jumpy.MusicPlayer;
+import net.kalloe.jumpy.R;
 import net.kalloe.jumpy.ResourceManager;
 import net.kalloe.jumpy.SceneManager;
 import net.kalloe.jumpy.entity.CollidableEntity;
@@ -37,7 +39,6 @@ import org.andengine.input.sensor.acceleration.AccelerationData;
 import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.adt.align.HorizontalAlign;
-import org.andengine.util.debug.Debug;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -191,7 +192,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
         //Shows a message if the player dies and save the high score if achieved.
         if(player.isDead() && this.updateOnDeath) {
-            Debug.i("onDeath", "onDeath code block was called");
             this.updated++;
             endGameText.setVisible(true);
 
@@ -205,9 +205,10 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             //TODO: push score to leaderboard
             if(activity.getGoogleApiClient() != null) {
                 if(activity.getGoogleApiClient().isConnected()) {
-                    showToast("Player is connected\nPush score", Toast.LENGTH_LONG);
-                } else {
-                    showToast("Player is not connected\nSaving score locally", Toast.LENGTH_LONG);
+                    showToast("Pushed score to Leaderboard", Toast.LENGTH_SHORT);
+                    Games.Leaderboards.submitScore(activity.getGoogleApiClient(),
+                            activity.getString(R.string.leaderboard_highscores),
+                            (player.getScore() + player.getBonusPoints()));
                 }
             }
 
