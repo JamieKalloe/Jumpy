@@ -37,6 +37,7 @@ import org.andengine.input.sensor.acceleration.AccelerationData;
 import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.adt.align.HorizontalAlign;
+import org.andengine.util.debug.Debug;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -69,6 +70,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     private int pointsAchieved = 0;
     private final int coinsThreshold = 4000;
     private Text endGameText;
+    private boolean updateOnDeath;
+    private int updated;
 
     /**
      * Creates a new instance of the GameScene (main scene).
@@ -136,7 +139,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     @Override
     public void populate() {
         try {
-
+            this.updated = 0;
+            this.updateOnDeath = true;
             //Allow calculation of coins.
             cal = true;
             //Create and load the game entities.
@@ -186,7 +190,9 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         }
 
         //Shows a message if the player dies and save the high score if achieved.
-        if(player.isDead()) {
+        if(player.isDead() && this.updateOnDeath) {
+            Debug.i("onDeath", "onDeath code block was called");
+            this.updated++;
             endGameText.setVisible(true);
 
             //Saves the score of the player, if a new high score is achieved.
@@ -196,11 +202,18 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
                 player.setBonusPoints(0);
             }
 
-            //Saves the amount of coins the player was awarded.
-//            if(player.getCoins() > 0) {
-//                activity.setCoins(activity.getCoins() + player.getCoins());
-//                player.setCoins(0);
-//            }
+            //TODO: push score to leaderboard
+            if(activity.getGoogleApiClient() != null) {
+                if(activity.getGoogleApiClient().isConnected()) {
+                    showToast("Player is connected\nPush score", Toast.LENGTH_LONG);
+                } else {
+                    showToast("Player is not connected\nSaving score locally", Toast.LENGTH_LONG);
+                }
+            }
+
+            if(this.updated != 0) {
+                this.updateOnDeath = false;
+            }
         }
 
         while(camera.getYMax() > platforms.getLast().getY()) {

@@ -1,8 +1,15 @@
 package net.kalloe.jumpy;
 
+import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
 
 import org.andengine.audio.sound.Sound;
 import org.andengine.engine.camera.Camera;
@@ -17,7 +24,8 @@ import org.andengine.util.debug.Debug;
 
 import java.io.IOException;
 
-public class GameActivity extends BaseGameActivity {
+public class GameActivity extends BaseGameActivity implements
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     //Variables
     public static final int CAMERA_WIDTH = 480;
@@ -29,6 +37,21 @@ public class GameActivity extends BaseGameActivity {
     private final String KEY_COINS = "Coins";
 
     private SharedPreferences settings;
+    private GoogleApiClient googleApiClient;
+
+    @Override
+    protected void onCreate(Bundle pSavedInstanceState) {
+        super.onCreate(pSavedInstanceState);
+        Debug.d("onCreate", "Oncreated was called");
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            this.googleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+                    .setViewForPopups(findViewById(android.R.id.content))
+                    .build();
+        }
+    }
 
     /**
      * This method defines the (AndEngine) engine options. It's run by the onCreate method first.
@@ -139,6 +162,51 @@ public class GameActivity extends BaseGameActivity {
     public synchronized void onPauseGame() {
         super.onPauseGame();
         SceneManager.getInstance().getCurrentScene().onPause();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            this.googleApiClient.connect();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+            this.googleApiClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        //hide sign in button..
+        showToast("Player is signed in", Toast.LENGTH_LONG);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        this.googleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        showToast("Unable to sign in", Toast.LENGTH_LONG);
+        Debug.d("GooglePlayServices", String.valueOf(connectionResult.getErrorCode()));
+
+        if(connectionResult.hasResolution()) {
+            try {
+                connectionResult.startResolutionForResult(this, connectionResult.getErrorCode());
+            } catch (IntentSender.SendIntentException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public GoogleApiClient getGoogleApiClient() {
+        return this.googleApiClient;
     }
 
     /**
