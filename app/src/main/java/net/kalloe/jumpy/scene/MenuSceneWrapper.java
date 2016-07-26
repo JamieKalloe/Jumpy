@@ -1,5 +1,9 @@
 package net.kalloe.jumpy.scene;
 
+import com.google.android.gms.games.Games;
+
+import net.kalloe.jumpy.R;
+import net.kalloe.jumpy.ResourceManager;
 import net.kalloe.jumpy.SceneManager;
 
 import org.andengine.entity.particle.BatchedSpriteParticleSystem;
@@ -23,7 +27,7 @@ import org.andengine.util.adt.color.Color;
 public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenuItemClickListener {
 
     //Variables
-    private IMenuItem playMenuItem, shopMenuItem;
+    private IMenuItem playMenuItem, shopMenuItem, playLeaderboards;
     private MenuSceneTextItemDecorator soundMenuItem;
 
     @Override
@@ -50,11 +54,13 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
         playMenuItem = new ColorMenuItemDecorator(new TextMenuItem(0, res.font, "PLAY", vbom), Color.CYAN, Color.WHITE);
         shopMenuItem = new ColorMenuItemDecorator(new TextMenuItem(2, res.font, "SHOP", vbom), Color.CYAN, Color.WHITE);
         soundMenuItem = new MenuSceneTextItemDecorator(new TextMenuItem(1, res.font, getSoundLabel(), vbom), Color.CYAN, Color.WHITE);
+        playLeaderboards = new ColorMenuItemDecorator(new TextMenuItem(3, res.font, "LEADERBOARD", vbom), Color.CYAN, Color.WHITE);
 
         //Adds the menu items to the game's menu scene.
         menuScene.addMenuItem(playMenuItem);
 //        menuScene.addMenuItem(shopMenuItem);
         menuScene.addMenuItem(soundMenuItem);
+        menuScene.addMenuItem(playLeaderboards);
 
         //Enables animation of the game's menu scene.
         menuScene.buildAnimations();
@@ -129,6 +135,12 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
             //The user opens the shop
             case 2:
                 SceneManager.getInstance().showShopScene();
+                return true;
+
+            case 3:
+                ResourceManager.getInstance().activity.startActivityForResult(
+                        Games.Leaderboards.getLeaderboardIntent(ResourceManager.getInstance().activity.getGoogleApiClient(),
+                                ResourceManager.getInstance().activity.getString(R.string.leaderboard_highscores)), 101);
                 return true;
 
             default:
