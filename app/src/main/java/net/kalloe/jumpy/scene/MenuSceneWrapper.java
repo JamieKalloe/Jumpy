@@ -140,14 +140,26 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
                 return true;
 
             case 3:
-                ResourceManager.getInstance().activity.startActivityForResult(
-                        Games.Leaderboards.getLeaderboardIntent(ResourceManager.getInstance().activity.getGoogleApiClient(),
-                                ResourceManager.getInstance().activity.getString(R.string.leaderboard_highscores)), 101);
+                if(activity.getGoogleApiClient() != null) {
+                    if (activity.getGoogleApiClient().isConnected()) {
+                        ResourceManager.getInstance().activity.startActivityForResult(
+                                Games.Leaderboards.getLeaderboardIntent(ResourceManager.getInstance().activity.getGoogleApiClient(),
+                                        ResourceManager.getInstance().activity.getString(R.string.leaderboard_highscores)), 101);
+                    } else {
+                        activity.showToast("Sign in to Google Play Games", 100);
+                    }
+                }
                 return true;
 
             case 4:
-                ResourceManager.getInstance().activity.startActivityForResult(Games.Achievements.getAchievementsIntent(
-                        ResourceManager.getInstance().activity.getGoogleApiClient()), 102);
+                if(activity.getGoogleApiClient() != null) {
+                    if (activity.getGoogleApiClient().isConnected()) {
+                        ResourceManager.getInstance().activity.startActivityForResult(Games.Achievements.getAchievementsIntent(
+                                ResourceManager.getInstance().activity.getGoogleApiClient()), 101);
+                    } else {
+                        activity.showToast("Sign in to Google Play Games", 100);
+                    }
+                }
                 return true;
 
             default:
