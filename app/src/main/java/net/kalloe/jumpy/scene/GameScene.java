@@ -109,14 +109,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             return true;
         }
 
-//        if(pSceneTouchEvent.isActionUp() && !player.isDead()) {
-//            if(pSceneTouchEvent.getX() > 400 && pSceneTouchEvent.getY() > 700) {
-//                Log.i("toucharea", "yes");
-//            } else {
-//                Log.i("toucharea", "no");
-//            }
-//        }
-
         return false;
     }
 
@@ -145,7 +137,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             //Allow calculation of coins.
             cal = true;
             //Create and load the game entities.
-//            createBackground();
             createParallaxBackground();
             createPlayer();
             camera.setChaseEntity(player);
@@ -153,7 +144,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
             addPlatform(240, 100, false);
             addPlatform(340, 400, false);
-//            addPowerUp(240, 200);
             addEnemy(140, 400);
 
             //Enables the accelerometer and registers the listener to the engine.
@@ -202,7 +192,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
                 player.setBonusPoints(0);
             }
 
-            //TODO: push score to leaderboard
+            //Pushes the achieved score to the Google Play Games Leaderboard (if the user is connected).
             if(activity.getGoogleApiClient() != null) {
                 if(activity.getGoogleApiClient().isConnected()) {
                     showToast("Pushed score to Leaderboard", Toast.LENGTH_SHORT);
@@ -600,9 +590,6 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             physicsWorld.destroyBody(physicsWorld.getBodies().next());
         }
 
-        //Resets the view of the camera to the center.
-        //Clears the HUD.
-        //Clears the chase entity (which is the player) from the camera.
         camera.reset();
         camera.setHUD(null);
         camera.setChaseEntity(null);
