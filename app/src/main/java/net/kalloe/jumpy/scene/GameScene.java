@@ -40,6 +40,7 @@ import org.andengine.input.sensor.acceleration.AccelerationData;
 import org.andengine.input.sensor.acceleration.IAccelerationListener;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.adt.align.HorizontalAlign;
+import org.andengine.util.debug.Debug;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -118,12 +119,10 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
      */
     @Override
     public void onBackKeyPressed() {
-        if(!player.isDead()) {
-            showToast("You're in a game!", Toast.LENGTH_SHORT);
-        } else {
+        if(player.isDead()) {
             endGameText.setVisible(false);
-            SceneManager.getInstance().showMenuScene();
             clearGame();
+            SceneManager.getInstance().showMenuScene();
         }
     }
 
@@ -521,6 +520,26 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         }
     }
 
+    private void clearEntities(List<? extends CollidableEntity> list) {
+        try {
+            Iterator<? extends CollidableEntity> iterator = list.iterator();
+            while (iterator.hasNext()) {
+                CollidableEntity collidableEntity = iterator.next();
+
+                //If the collidable entities's y coordinate is lower the the specified bound.
+                //The entity will be removed from the list, the sprite detached from the scene.
+                //And the physics body of the collidable entity is destroyed.
+                    iterator.remove();
+                    collidableEntity.detachSelf();
+                    physicsWorld.destroyBody(collidableEntity.getBody());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            player.die();
+            showToast("Sorry! Something went wrong :(", Toast.LENGTH_SHORT);
+        }
+    }
+
     /**
      * Calculates and sets the players's score to the HUD text.
      */
@@ -573,9 +592,12 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
     private void clearGame() {
         setIgnoreUpdate(true);
         unregisterUpdateHandler(physicsWorld);
-        enemies.clear();
-        platforms.clear();
-        powerUps.clear();
+        clearEntities(enemies);
+        clearEntities(platforms);
+        clearEntities(powerUps);
+//        enemies.clear();
+//        platforms.clear();
+//        powerUps.clear();
         physicsWorld.clearForces();
         physicsWorld.clearPhysicsConnectors();
 
@@ -588,6 +610,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         camera.setHUD(null);
         camera.setChaseEntity(null);
         detachChildren();
+        Debug.i("entities", "Platforms: " + platforms.size() + "\tEnemies: " + enemies.size() + "\tPowerUps: " + powerUps.size());
     }
 
     /**
