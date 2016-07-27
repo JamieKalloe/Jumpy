@@ -183,7 +183,7 @@ public class GameActivity extends BaseGameActivity implements
 
     @Override
     public void onConnected(Bundle bundle) {
-        showToast("You have signed in", Toast.LENGTH_LONG);
+        showToast("You have signed in", Toast.LENGTH_SHORT);
     }
 
     @Override
