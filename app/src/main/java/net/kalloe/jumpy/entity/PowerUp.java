@@ -12,7 +12,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 /**
  * Created by Jamie on 19-7-2016.
  */
-public class PowerUp extends Sprite implements CollidableEntity, CollectableEntity {
+public class PowerUp extends Sprite implements CollidableEntity, ObtainableEntity {
 
     //Variables
     public static final String TYPE = "COLLECTABLE";

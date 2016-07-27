@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.badlogic.gdx.math.Vector2;
 import com.google.android.gms.games.Games;
 
+import net.kalloe.jumpy.Achievements;
 import net.kalloe.jumpy.GameActivity;
 import net.kalloe.jumpy.MusicPlayer;
 import net.kalloe.jumpy.R;
@@ -201,6 +202,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
                             (player.getScore() + player.getBonusPoints()));
                 }
             }
+
+            Achievements.track(ResourceManager.getInstance(), player);
 
             if(this.updated != 0) {
                 this.updateOnDeath = false;

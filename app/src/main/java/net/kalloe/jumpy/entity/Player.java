@@ -20,6 +20,7 @@ public class Player extends TiledSprite implements CollidableEntity {
     private int health = 3;
     private int bonusPoints = 0;
     private int score = 0;
+    private int enemiesKilled = 0;
 
     /**
      * Creates a new instance of the Player entity.
@@ -90,6 +91,18 @@ public class Player extends TiledSprite implements CollidableEntity {
      */
     public int getBonusPoints() {
         return this.bonusPoints;
+    }
+
+    public int getEnemiesKilled() {
+        return this.enemiesKilled;
+    }
+
+    public void setEnemiesKilled(int enemiesKilled) {
+        this.enemiesKilled = enemiesKilled;
+    }
+
+    public void killEnemy() {
+        this.enemiesKilled++;
     }
 
     /**

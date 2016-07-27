@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 import net.kalloe.jumpy.ResourceManager;
-import net.kalloe.jumpy.entity.CollectableEntity;
+import net.kalloe.jumpy.entity.ObtainableEntity;
 import net.kalloe.jumpy.entity.CollidableEntity;
 import net.kalloe.jumpy.entity.Enemy;
 import net.kalloe.jumpy.entity.KillableEntity;
@@ -41,6 +41,8 @@ public class CollisionContactListener implements ContactListener {
             if(player.getHealth() != 0) {
                 ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundHit);
                 player.dealDamage();
+                player.killEnemy();
+                player.addBonusPoints(50);
 
                 //Kill the collided enemy.
                 if(!(contact.getFixtureA().getBody().getUserData() instanceof KillableEntity)) {
@@ -55,10 +57,10 @@ public class CollisionContactListener implements ContactListener {
 
         if(checkContact(contact, Player.TYPE, "COLLECTABLE")) {
             if(!player.isDead()) {
-                if (!(contact.getFixtureA().getBody().getUserData() instanceof CollectableEntity)) {
-                    ((CollectableEntity) contact.getFixtureB().getBody().getUserData()).obtain(this.player);
+                if (!(contact.getFixtureA().getBody().getUserData() instanceof ObtainableEntity)) {
+                    ((ObtainableEntity) contact.getFixtureB().getBody().getUserData()).obtain(this.player);
                 } else {
-                    ((CollectableEntity) contact.getFixtureA().getBody().getUserData()).obtain(this.player);
+                    ((ObtainableEntity) contact.getFixtureA().getBody().getUserData()).obtain(this.player);
                 }
             }
         }
