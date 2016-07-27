@@ -27,7 +27,7 @@ import org.andengine.util.adt.color.Color;
 public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenuItemClickListener {
 
     //Variables
-    private IMenuItem playMenuItem, shopMenuItem, playLeaderboards;
+    private IMenuItem playMenuItem, shopMenuItem, playLeaderboards, playAchievements;
     private MenuSceneTextItemDecorator soundMenuItem;
 
     @Override
@@ -55,11 +55,13 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
         shopMenuItem = new ColorMenuItemDecorator(new TextMenuItem(2, res.font, "SHOP", vbom), Color.CYAN, Color.WHITE);
         soundMenuItem = new MenuSceneTextItemDecorator(new TextMenuItem(1, res.font, getSoundLabel(), vbom), Color.CYAN, Color.WHITE);
         playLeaderboards = new ColorMenuItemDecorator(new TextMenuItem(3, res.font, "LEADERBOARD", vbom), Color.CYAN, Color.WHITE);
+        playAchievements = new ColorMenuItemDecorator(new TextMenuItem(4, res.font, "ACHIEMENTS", vbom), Color.CYAN, Color.WHITE);
 
         //Adds the menu items to the game's menu scene.
         menuScene.addMenuItem(playMenuItem);
 //        menuScene.addMenuItem(shopMenuItem);
         menuScene.addMenuItem(soundMenuItem);
+        menuScene.addMenuItem(playAchievements);
         menuScene.addMenuItem(playLeaderboards);
 
         //Enables animation of the game's menu scene.
@@ -141,6 +143,11 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
                 ResourceManager.getInstance().activity.startActivityForResult(
                         Games.Leaderboards.getLeaderboardIntent(ResourceManager.getInstance().activity.getGoogleApiClient(),
                                 ResourceManager.getInstance().activity.getString(R.string.leaderboard_highscores)), 101);
+                return true;
+
+            case 4:
+                ResourceManager.getInstance().activity.startActivityForResult(Games.Achievements.getAchievementsIntent(
+                        ResourceManager.getInstance().activity.getGoogleApiClient()), 102);
                 return true;
 
             default:

@@ -1,5 +1,7 @@
 package net.kalloe.jumpy;
 
+import com.google.android.gms.games.Games;
+
 import net.kalloe.jumpy.entity.Player;
 
 /**
@@ -17,59 +19,67 @@ public class Achievements {
 
         //Checks if the player has unlocked an achievement based on the total score.
         if(totalScore >= 1000) {
-//            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
-//                    resourceManager.activity.getString(R.string.achievement_beginner));
+            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
+                    resourceManager.activity.getString(R.string.achievement_beginner));
         }
 
         if(totalScore >= 5000) {
-//            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
-//                    resourceManager.activity.getString(R.string.achievement_novice));
+            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
+                    resourceManager.activity.getString(R.string.achievement_novice));
         }
 
         if(totalScore >= 10000) {
-//            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
-//                    resourceManager.activity.getString(R.string.achievement_novice));
+            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
+                    resourceManager.activity.getString(R.string.achievement_ace));
         }
 
         if(totalScore >= 25000) {
-//            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
-//                    resourceManager.activity.getString(R.string.achievement_novice));
+            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
+                    resourceManager.activity.getString(R.string.achievement_expert));
         }
 
         if(totalScore >= 50000) {
-//            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
-//                    resourceManager.activity.getString(R.string.achievement_novice));
+            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
+                    resourceManager.activity.getString(R.string.achievement_master));
         }
 
         if(totalScore >= 75000) {
-//            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
-//                    resourceManager.activity.getString(R.string.achievement_novice));
+            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
+                    resourceManager.activity.getString(R.string.achievement_grand_master));
         }
 
         if(totalScore >= 100000) {
-//            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
-//                    resourceManager.activity.getString(R.string.achievement_novice));
+            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
+                    resourceManager.activity.getString(R.string.achievement_sage));
         }
 
-        if(totalScore >= 1000000) {
-//            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
-//                    resourceManager.activity.getString(R.string.achievement_novice));
-        }
+        //Checks if the player has unlocked an achievement by incrementing the achievements requirement for bonuspoints.
+        Games.Achievements.increment(resourceManager.activity.getGoogleApiClient(),
+                resourceManager.activity.getString(R.string.achievement_lucky), player.getBonusPoints());
 
-        //Checks if the player has unlocked an achievement based on the bonuspoints (received from PowerUps).
-        if(player.getBonusPoints() >= 5000) {
+        Games.Achievements.increment(resourceManager.activity.getGoogleApiClient(),
+                resourceManager.activity.getString(R.string.achievement_hunter), player.getBonusPoints());
 
-        }
+        //Checks if the player has unlocked an achievement by incrementing the achievements requirement for enemies killed.
+        Games.Achievements.increment(resourceManager.activity.getGoogleApiClient(),
+                resourceManager.activity.getString(R.string.achievement_killer), player.getEnemiesKilled());
 
-        if(player.getBonusPoints() >= 10000) {
+        Games.Achievements.increment(resourceManager.activity.getGoogleApiClient(),
+                resourceManager.activity.getString(R.string.achievement_serial_killer), player.getEnemiesKilled());
 
-        }
+        Games.Achievements.increment(resourceManager.activity.getGoogleApiClient(),
+                resourceManager.activity.getString(R.string.achievement_crusher), player.getEnemiesKilled());
 
-        //Checks if the player has unlocked an achievement based on the number of enemies killed (in total).
-        //TODO: increment enemies killed, 10, 25, 100, 250, 500, 1000
-        //Killer, Serial Killer, crusher, MAD, Assassin, Psycho
+        Games.Achievements.increment(resourceManager.activity.getGoogleApiClient(),
+                resourceManager.activity.getString(R.string.achievement_mad), player.getEnemiesKilled());
 
-        //TODO: increment bonus points, 5000, 10000
-        //
+        Games.Achievements.increment(resourceManager.activity.getGoogleApiClient(),
+                resourceManager.activity.getString(R.string.achievement_assassin), player.getEnemiesKilled());
+
+        Games.Achievements.increment(resourceManager.activity.getGoogleApiClient(),
+                resourceManager.activity.getString(R.string.achievement_psycho), player.getEnemiesKilled());
+
+        Games.Achievements.increment(resourceManager.activity.getGoogleApiClient(),
+                resourceManager.activity.getString(R.string.achievement_warlord), player.getEnemiesKilled());
     }
 }
