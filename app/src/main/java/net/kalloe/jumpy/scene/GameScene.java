@@ -193,17 +193,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
                 player.setBonusPoints(0);
             }
 
-            //Pushes the achieved score to the Google Play Games Leaderboard (if the user is connected).
-            if(activity.getGoogleApiClient() != null) {
-                if(activity.getGoogleApiClient().isConnected()) {
-                    showToast("Pushed score to Leaderboard", Toast.LENGTH_SHORT);
-                    Games.Leaderboards.submitScore(activity.getGoogleApiClient(),
-                            activity.getString(R.string.leaderboard_highscores),
-                            (player.getScore() + player.getBonusPoints()));
-                }
-            }
-
-            Achievements.track(ResourceManager.getInstance(), player);
+            //updates the Google Play Games Leaderboard and Achievements (in a different thread).
+            this.updateGooglePlayGames(ResourceManager.getInstance(), player);
 
             if(this.updated != 0) {
                 this.updateOnDeath = false;
@@ -645,4 +636,20 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         });
     }
 
+    public void updateGooglePlayGames(final ResourceManager manager, final Player player) {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(activity.getGoogleApiClient() != null) {
+                    if(activity.getGoogleApiClient().isConnected()) {
+                        Achievements.track(manager, player);
+                        Games.Leaderboards.submitScore(activity.getGoogleApiClient(),
+                                activity.getString(R.string.leaderboard_highscores),
+                                (player.getScore() + player.getBonusPoints()));
+                        showToast("Updated leaderboard", 100);
+                    }
+                }
+            }
+        });
+    }
 }
