@@ -53,12 +53,15 @@ public class Achievements {
                     resourceManager.activity.getString(R.string.achievement_sage));
         }
 
-        //Checks if the player has unlocked an achievement by incrementing the achievements requirement for bonuspoints.
-        Games.Achievements.increment(resourceManager.activity.getGoogleApiClient(),
-                resourceManager.activity.getString(R.string.achievement_lucky), player.getBonusPoints());
+        if(player.getBonusPoints() >= 5000) {
+            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
+                    resourceManager.activity.getString(R.string.achievement_lucky));
+        }
 
-        Games.Achievements.increment(resourceManager.activity.getGoogleApiClient(),
-                resourceManager.activity.getString(R.string.achievement_hunter), player.getBonusPoints());
+        if(player.getBonusPoints() >= 10000) {
+            Games.Achievements.unlock(resourceManager.activity.getGoogleApiClient(),
+                    resourceManager.activity.getString(R.string.achievement_hunter));
+        }
 
         //Checks if the player has unlocked an achievement by incrementing the achievements requirement for enemies killed.
         Games.Achievements.increment(resourceManager.activity.getGoogleApiClient(),
