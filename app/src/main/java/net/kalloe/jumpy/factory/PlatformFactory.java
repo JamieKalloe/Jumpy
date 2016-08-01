@@ -13,6 +13,8 @@ import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.Constants;
 
+import java.util.Random;
+
 /**
  * Created by Jamie on 5-3-2016.
  */
@@ -24,6 +26,7 @@ public class PlatformFactory {
     private static PlatformFactory INSTANCE = new PlatformFactory();
     private PhysicsWorld physicsWorld;
     private VertexBufferObjectManager vbom;
+    private Random random;
 
     //Singleton
     private PlatformFactory() {}
@@ -44,6 +47,7 @@ public class PlatformFactory {
     public void create(PhysicsWorld physicsWorld, VertexBufferObjectManager vbom) {
         this.physicsWorld = physicsWorld;
         this.vbom = vbom;
+        this.random = new Random();
     }
 
     /**
@@ -54,10 +58,16 @@ public class PlatformFactory {
      */
     public Platform createPlatform(float x, float y) {
         //Creates a new static (non-moving) platform for the given x and y coordinates.
-        Platform platform = new Platform(x, y, ResourceManager.getInstance().platformTextureRegion, vbom);
+        Platform platform;
+        if(this.random.nextBoolean()) {
+            platform = new Platform(x, y, ResourceManager.getInstance().platformGrassTextureRegion, vbom);
+        } else {
+            platform = new Platform(x, y, ResourceManager.getInstance().platformSandTextureRegion, vbom);
+        }
 
         //Sets the platform to the center.
         platform.setAnchorCenterY(1);
+        platform.setFlippedHorizontal(this.random.nextBoolean());
 
         //Gets the x and y (center) coordinates for the given scene.
         final float[] sceneCenterCoordinates = platform.getSceneCenterCoordinates();

@@ -344,9 +344,9 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         platforms.setAnchorCenter(0, 0);
 
         //Platform sprites
-        Sprite platform1 = new Sprite(150, 200, res.platformTextureRegion, vbom);
-        Sprite platform2 = new Sprite(250, 550, res.platformTextureRegion, vbom);
-        Sprite platform3 = new Sprite(350, 450, res.platformTextureRegion, vbom);
+        Sprite platform1 = new Sprite(150, 200, res.platformGrassTextureRegion, vbom);
+        Sprite platform2 = new Sprite(250, 550, res.platformSandTextureRegion, vbom);
+        Sprite platform3 = new Sprite(350, 450, res.platformGrassTextureRegion, vbom);
 
         //Platforms are made slightly transparent with the alpha channel.
         platform1.setColor(0.3f, 0.3f, 0.3f, 0.3f);

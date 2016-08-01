@@ -13,7 +13,6 @@ import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.TextMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ColorMenuItemDecorator;
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.util.adt.color.Color;
 
@@ -59,11 +58,11 @@ public class ShopScene extends AbstractScene implements MenuScene.IOnMenuItemCli
 //        menuScene.attachChild(player);
 
         //Retrieves the player's coins and displays it with a sprite and text object.
-        Sprite coinSprite = new Sprite(240, 600, res.coinTextureRegion, vbom);
+//        Sprite coinSprite = new Sprite(240, 600, res.coinTextureRegion, vbom);
         coinText = new Text(240, 550, res.font, String.valueOf(activity.getCoins()), vbom);
 
         //Attach all the text / sprite objects to the menu scene HUD.
-        menuScene.attachChild(coinSprite);
+//        menuScene.attachChild(coinSprite);
         menuScene.attachChild(coinText);
 
         setChildScene(menuScene);

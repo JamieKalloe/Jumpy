@@ -39,10 +39,9 @@ public class ResourceManager {
     public ITiledTextureRegion lifeTextureRegion;
     public ITiledTextureRegion enemyTextureRegion;
     public ITiledTextureRegion slimeEnemyTextureRegion;
-    public ITextureRegion platformTextureRegion;
+    public ITextureRegion platformGrassTextureRegion, platformSandTextureRegion;
     public ITextureRegion cloud1TextureRegion;
     public ITextureRegion cloud2TextureRegion;
-    public ITextureRegion coinTextureRegion;
     public ITextureRegion mushroomTextureRegion;
     public ITextureRegion mushroomJumpTextureRegion;
     public ITextureRegion mysteryboxTextureRegion;
@@ -113,8 +112,11 @@ public class ResourceManager {
                 activity.getAssets(), "slimeenemy.png", 1, 2);
 
         //Creates the platform (atlas) texture, from the platform.png, from the GameTextureAtlas object.
-        platformTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
-                activity.getAssets(), "platform.png");
+        platformGrassTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
+                activity.getAssets(), "platformgrass.png");
+
+        platformSandTextureRegion= BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
+                activity.getAssets(), "platformsand.png");
 
         //Creates the cloud number 1 (atlas) texture, from the cloud1.png, from the GameTextureAtlas object.
         cloud1TextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
@@ -124,14 +126,11 @@ public class ResourceManager {
         cloud2TextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
                 activity.getAssets(), "cloud2.png");
 
-        coinTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
-                activity.getAssets(), "coin.png");
-
         mushroomTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
                 activity.getAssets(), "mushroompowerup.png");
 
         mushroomJumpTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
-                activity.getAssets(), "mushroombrownpowerup.png");
+                activity.getAssets(), "springpowerup.png");
 
         mysteryboxTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
                 activity.getAssets(), "boxpowerup.png");
