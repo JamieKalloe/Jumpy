@@ -17,6 +17,6 @@ public class SuperJump implements PowerUpBehaviour {
     @Override
     public void executePowerUp(Player player) {
         player.getBody().setLinearVelocity(new Vector2(0, 65));
-        ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundJump);
+        ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundSpring);
     }
 }

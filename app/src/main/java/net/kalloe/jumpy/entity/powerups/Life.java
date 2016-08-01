@@ -14,7 +14,7 @@ public class Life implements PowerUpBehaviour {
      */
     @Override
     public void executePowerUp(Player player) {
-        ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundCash);
+        ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundPowerUp);
 
         //If the health of the player is not full, the player will gain 1 health.
         if(player.getHealth() != 3) {

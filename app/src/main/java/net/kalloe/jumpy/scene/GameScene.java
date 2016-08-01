@@ -188,6 +188,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             //Saves the score of the player, if a new high score is achieved.
             if((player.getScore() + player.getBonusPoints()) > activity.getHighScore()) {
                 activity.setHighScore((player.getScore() + player.getBonusPoints()));
+                res.activity.playSound(res.soundHighscore);
                 player.setScore(0);
                 player.setBonusPoints(0);
             }
