@@ -55,7 +55,13 @@ public class EnemyFactory {
      */
     public Enemy createEnemy(float x, float y) {
         //Create a new instance of the enemy entity with the given x and y coordinates, setting the sprite.
-        Enemy enemy = new Enemy(x, y, ResourceManager.getInstance().enemyTextureRegion, vbom);
+        Enemy enemy;
+
+        if(random.nextBoolean()) {
+            enemy = new Enemy(x, y, ResourceManager.getInstance().enemyTextureRegion, vbom);
+        } else {
+            enemy = new Enemy(x, y, ResourceManager.getInstance().flyEnemyTextureRegion, vbom);
+        }
 
         //Creates the physical Body of the Enemy entity (resembles the sprite, optimized shape for collision).
         Body enemyBody = PhysicsFactory.createBoxBody(physicsWorld, enemy, BodyDef.BodyType.KinematicBody, ENEMY_FIXTURE);
