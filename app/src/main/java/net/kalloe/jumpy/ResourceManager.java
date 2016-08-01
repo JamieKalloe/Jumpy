@@ -40,6 +40,7 @@ public class ResourceManager {
     public ITiledTextureRegion enemyTextureRegion, flyEnemyTextureRegion;
     public ITiledTextureRegion slimeEnemyTextureRegion;
     public ITextureRegion platformGrassTextureRegion, platformSandTextureRegion;
+    public ITextureRegion buttonPlay, buttonAchievements, buttonLeaderboards;
     public ITextureRegion cloud1TextureRegion;
     public ITextureRegion cloud2TextureRegion;
     public ITextureRegion mushroomTextureRegion;
@@ -120,6 +121,16 @@ public class ResourceManager {
 
         platformSandTextureRegion= BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
                 activity.getAssets(), "platformsand.png");
+
+        //Initialize UI sprites
+        buttonPlay = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
+                activity.getAssets(), "buttonplay.png");
+
+        buttonAchievements = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
+                activity.getAssets(), "buttonachievements.png");
+
+        buttonLeaderboards = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,
+                activity.getAssets(), "buttonleaderboards.png");
 
         //Creates the cloud number 1 (atlas) texture, from the cloud1.png, from the GameTextureAtlas object.
         cloud1TextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas,

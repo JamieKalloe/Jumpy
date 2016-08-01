@@ -14,8 +14,10 @@ import org.andengine.entity.particle.initializer.VelocityParticleInitializer;
 import org.andengine.entity.particle.modifier.AlphaParticleModifier;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
+import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.scene.menu.item.TextMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ColorMenuItemDecorator;
+import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.sprite.UncoloredSprite;
 import org.andengine.entity.text.Text;
@@ -51,18 +53,18 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
         menuScene.attachChild(particleSystem);
 
         //Initializes the Menu Items (passes the font, text and colors).
-        playMenuItem = new ColorMenuItemDecorator(new TextMenuItem(0, res.font, "PLAY", vbom), Color.CYAN, Color.WHITE);
+        playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(0, res.buttonPlay, vbom), 1.05f, 1);
         shopMenuItem = new ColorMenuItemDecorator(new TextMenuItem(2, res.font, "SHOP", vbom), Color.CYAN, Color.WHITE);
         soundMenuItem = new MenuSceneTextItemDecorator(new TextMenuItem(1, res.font, getSoundLabel(), vbom), Color.CYAN, Color.WHITE);
-        playLeaderboards = new ColorMenuItemDecorator(new TextMenuItem(3, res.font, "LEADERBOARD", vbom), Color.CYAN, Color.WHITE);
-        playAchievements = new ColorMenuItemDecorator(new TextMenuItem(4, res.font, "ACHIEMENTS", vbom), Color.CYAN, Color.WHITE);
+        playLeaderboards = new ScaleMenuItemDecorator(new SpriteMenuItem(3, res.buttonLeaderboards, vbom), 1.05f, 1);
+        playAchievements = new ScaleMenuItemDecorator(new SpriteMenuItem(4, res.buttonAchievements, vbom), 1.05f, 1);
 
         //Adds the menu items to the game's menu scene.
         menuScene.addMenuItem(playMenuItem);
 //        menuScene.addMenuItem(shopMenuItem);
-        menuScene.addMenuItem(soundMenuItem);
         menuScene.addMenuItem(playAchievements);
         menuScene.addMenuItem(playLeaderboards);
+        menuScene.addMenuItem(soundMenuItem);
 
         //Enables animation of the game's menu scene.
         menuScene.buildAnimations();
@@ -71,7 +73,7 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
         menuScene.setOnMenuItemClickListener(this);
 
         //Creates and attaches a player sprite into the game's menu scene.
-        Sprite player = new Sprite(240, 230, res.playerTextureRegion, vbom);
+        Sprite player = new Sprite(240, 180, res.playerTextureRegion, vbom);
         menuScene.attachChild(player);
 
         //Retrieves the player's high score and displays it in an Text object which is attached to the menu scene.
