@@ -13,6 +13,7 @@ import net.kalloe.jumpy.entity.Enemy;
 import net.kalloe.jumpy.entity.KillableEntity;
 import net.kalloe.jumpy.entity.Platform;
 import net.kalloe.jumpy.entity.Player;
+import net.kalloe.jumpy.entity.PowerUp;
 
 /**
  * Created by Jamie on 5-3-2016.
@@ -36,7 +37,6 @@ public class CollisionContactListener implements ContactListener {
      */
     @Override
     public void beginContact(Contact contact) {
-        //TODO: extend check for powerup shield, (e.g !player.getPowerUp().getType().equals(PowerUp.SHIELD))
         if(checkContact(contact, Player.TYPE, Enemy.TYPE)) {
             if(player.getHealth() != 0) {
                 ResourceManager.getInstance().activity.playSound(ResourceManager.getInstance().soundHit);
@@ -55,7 +55,7 @@ public class CollisionContactListener implements ContactListener {
             }
         }
 
-        if(checkContact(contact, Player.TYPE, "COLLECTABLE")) {
+        if(checkContact(contact, Player.TYPE, PowerUp.TYPE)) {
             if(!player.isDead()) {
                 if (!(contact.getFixtureA().getBody().getUserData() instanceof ObtainableEntity)) {
                     ((ObtainableEntity) contact.getFixtureB().getBody().getUserData()).obtain(this.player);
@@ -64,7 +64,6 @@ public class CollisionContactListener implements ContactListener {
                 }
             }
         }
-        //TODO: extend for in-game powerups / cash
     }
 
     /**
