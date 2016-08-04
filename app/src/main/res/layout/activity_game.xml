@@ -10,15 +10,14 @@
         android:layout_centerInParent="true"
         android:gravity="center"/>
 
-    <com.google.ads.AdView
-        xmlns:ads = "http://schemas.android.com/apk/lib/com.google.ads"
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/gameSurfaceView"
+        android:layout_centerHorizontal="true"
         ads:adUnitId="@string/banner_ad_id"
-        ads:adSize="SMART_BANNER"
-        ads:testDevices="TEST_EMULATOR, TEST_DEVICE_ID"
-        ads:loadAdOnCreate="true"
+        ads:adSize="BANNER"
         />
 </RelativeLayout>

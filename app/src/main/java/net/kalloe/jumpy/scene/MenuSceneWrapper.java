@@ -108,6 +108,7 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
     public void destory() {
         super.destory();
         Debug.i("Menuscene", "onDestroy was called");
+        res.activity.destroyAd();
     }
 
     /**

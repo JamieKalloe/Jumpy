@@ -106,6 +106,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         //Checks if the player has touched the screen and if the player is dead.
         //If the condition is met, the game will clear all it's entities and restart.
         if(pSceneTouchEvent.isActionUp() && player.isDead()) {
+            res.activity.destroyAd();
             restartGame();
             cal = true;
             return true;
@@ -182,6 +183,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
 
         //Shows a message if the player dies and save the high score if achieved.
         if(player.isDead() && this.updateOnDeath) {
+            res.activity.loadAd();
+
             this.updated++;
             endGameText.setVisible(true);
 
