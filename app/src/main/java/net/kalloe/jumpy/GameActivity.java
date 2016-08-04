@@ -6,8 +6,11 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
@@ -21,12 +24,12 @@ import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.engine.options.resolutionpolicy.IResolutionPolicy;
 import org.andengine.entity.scene.Scene;
-import org.andengine.ui.activity.BaseGameActivity;
+import org.andengine.ui.activity.LayoutGameActivity;
 import org.andengine.util.debug.Debug;
 
 import java.io.IOException;
 
-public class GameActivity extends BaseGameActivity implements
+public class GameActivity extends LayoutGameActivity implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     //Variables
@@ -40,6 +43,8 @@ public class GameActivity extends BaseGameActivity implements
 
     private SharedPreferences settings;
     private GoogleApiClient googleApiClient;
+    private AdView adView;
+    private AdRequest adRequest;
 
     @Override
     protected void onCreate(Bundle pSavedInstanceState) {
@@ -52,6 +57,41 @@ public class GameActivity extends BaseGameActivity implements
                     .setViewForPopups(findViewById(android.R.id.content))
                     .build();
         }
+
+        this.adView = (AdView) findViewById(R.id.adView);
+        this.adRequest = new AdRequest.Builder().build();
+        this.adView.loadAd(adRequest);
+        this.adView.setVisibility(View.VISIBLE);
+    }
+
+    public void loadAd() {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adView.loadAd(adRequest);
+                adView.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    public void destroyAd() {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adView.destroy();
+                adView.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
+    protected int getLayoutID() {
+        return R.layout.activity_game;
+    }
+
+    @Override
+    protected int getRenderSurfaceViewID() {
+        return R.id.gameSurfaceView;
     }
 
     /**
