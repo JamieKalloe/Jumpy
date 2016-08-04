@@ -5,9 +5,13 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
@@ -21,6 +25,7 @@ import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.engine.options.resolutionpolicy.IResolutionPolicy;
 import org.andengine.entity.scene.Scene;
+import org.andengine.opengl.view.RenderSurfaceView;
 import org.andengine.ui.activity.BaseGameActivity;
 import org.andengine.util.debug.Debug;
 
@@ -40,6 +45,8 @@ public class GameActivity extends BaseGameActivity implements
 
     private SharedPreferences settings;
     private GoogleApiClient googleApiClient;
+    private AdView banner;
+    private AdRequest adRequest;
 
     @Override
     protected void onCreate(Bundle pSavedInstanceState) {
@@ -52,6 +59,40 @@ public class GameActivity extends BaseGameActivity implements
                     .setViewForPopups(findViewById(android.R.id.content))
                     .build();
         }
+
+        if(this.banner != null) {
+            this.banner.loadAd(adRequest);
+        }
+    }
+
+    @Override
+    protected void onSetContentView() {
+        final FrameLayout frameLayout = new FrameLayout(this);
+        final FrameLayout.LayoutParams frameLayoutLayoutParams = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT, Gravity.FILL);
+        final FrameLayout.LayoutParams adViewLayoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER | Gravity.BOTTOM);
+
+
+        this.banner = new AdView(this);
+        this.adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("AC98C820A50B4AD8A2106EDE96FB87D4")  // An example device ID
+                .build();
+
+        this.mRenderSurfaceView = new RenderSurfaceView(this);
+        mRenderSurfaceView.setRenderer(mEngine, this);
+
+
+
+        final FrameLayout.LayoutParams surfaceViewLayoutParams = new FrameLayout.LayoutParams(
+                android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+        surfaceViewLayoutParams.gravity = Gravity.CENTER;
+
+        frameLayout.addView(this.mRenderSurfaceView, surfaceViewLayoutParams);
+
+        this.setContentView(frameLayout, frameLayoutLayoutParams);
+
     }
 
     /**

@@ -22,6 +22,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.sprite.UncoloredSprite;
 import org.andengine.entity.text.Text;
 import org.andengine.util.adt.color.Color;
+import org.andengine.util.debug.Debug;
 
 /**
  * Created by Jamie on 12-3-2016.
@@ -101,6 +102,12 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
     @Override
     public void onResume() {
 
+    }
+
+    @Override
+    public void destory() {
+        super.destory();
+        Debug.i("Menuscene", "onDestroy was called");
     }
 
     /**
