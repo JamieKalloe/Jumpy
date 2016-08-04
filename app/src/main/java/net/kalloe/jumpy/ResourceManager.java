@@ -178,7 +178,7 @@ public class ResourceManager {
             soundPowerUp = SoundFactory.createSoundFromAsset(activity.getSoundManager(), activity, "powerup.mp3");
 
             //Loads the audio file data (form the mfx directory) into the music object.
-            music = MusicFactory.createMusicFromAsset(activity.getMusicManager(), activity, "music.ogg");
+            music = MusicFactory.createMusicFromAsset(activity.getMusicManager(), activity, "bgm.ogg");
             music.setVolume(2.5f);
             music.setLooping(true);
         } catch (Exception e) {
