@@ -78,7 +78,7 @@ public class GameActivity extends LayoutGameActivity implements
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                adView.destroy();
+                adView.pause();
                 adView.setVisibility(View.GONE);
             }
         });
