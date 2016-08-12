@@ -157,6 +157,7 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
                                         ResourceManager.getInstance().activity.getString(R.string.leaderboard_highscores)), 101);
                     } else {
                         activity.showToast("Sign in to Google Play Games", 100);
+                        activity.getGoogleApiClient().connect();
                     }
                 }
                 return true;
@@ -168,6 +169,7 @@ public class MenuSceneWrapper extends AbstractScene implements MenuScene.IOnMenu
                                 ResourceManager.getInstance().activity.getGoogleApiClient()), 101);
                     } else {
                         activity.showToast("Sign in to Google Play Games", 100);
+                        activity.getGoogleApiClient().connect();
                     }
                 }
                 return true;
