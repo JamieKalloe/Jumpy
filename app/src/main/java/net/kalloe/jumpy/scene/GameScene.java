@@ -189,15 +189,14 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
             endGameText.setVisible(true);
 
             //Saves the score of the player, if a new high score is achieved.
-            if((player.getScore() + player.getBonusPoints()) > activity.getHighScore()) {
+            if ((player.getScore() + player.getBonusPoints()) > activity.getHighScore()) {
                 activity.setHighScore((player.getScore() + player.getBonusPoints()));
                 res.activity.playSound(res.soundHighscore);
-                player.setScore(0);
-                player.setBonusPoints(0);
             }
 
             //updates the Google Play Games Leaderboard and Achievements (in a different thread).
-            this.updateGooglePlayGames(ResourceManager.getInstance(), player);
+            this.updateGooglePlayGames(ResourceManager.getInstance(), (player.getScore() + player.getBonusPoints()));
+
 
             if(this.updated != 0) {
                 this.updateOnDeath = false;
@@ -663,7 +662,7 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
         });
     }
 
-    public void updateGooglePlayGames(final ResourceManager manager, final Player player) {
+    public void updateGooglePlayGames(final ResourceManager manager, final int score) {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -672,7 +671,8 @@ public class GameScene extends AbstractScene implements IAccelerationListener, I
                         Achievements.track(manager, player);
                         Games.Leaderboards.submitScore(activity.getGoogleApiClient(),
                                 activity.getString(R.string.leaderboard_highscores),
-                                (player.getScore() + player.getBonusPoints()));
+                                (score));
+                        Debug.i("leaderboard", String.valueOf(score));
                         showToast("Updated leaderboard", 100);
                     }
                 }
